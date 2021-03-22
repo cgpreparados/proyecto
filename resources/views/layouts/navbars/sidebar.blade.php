@@ -30,7 +30,7 @@
                 <div class="collapse" id="laravelExamples">
                     <ul class="nav">
                         <li class="@if ($activePage == 'nueva_orden') active @endif">
-                            <a href="/proyecto/public/nueva_orden">
+                            <a href="{{ route('nueva_orden') }}">
                                 <i class="now-ui-icons ui-1_simple-add"></i>
                                 <p> {{ __("Nueva Orden") }} </p>
                             </a>
