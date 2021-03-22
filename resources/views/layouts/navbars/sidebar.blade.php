@@ -36,25 +36,25 @@
                             </a>
                         </li>
                         <li class="@if ($activePage == 'orden_proceso') active @endif">
-                            <a href="/proyecto/public/orden_proceso">
+                            <a href="{{ route('orden_proceso') }}">
                                 <i class="now-ui-icons design_bullet-list-67"></i>
                                 <p> {{ __("Ordenes en Proceso") }} </p>
                             </a>
                         </li>
                         <li class="@if ($activePage == 'orden_impresiones') active @endif">
-                            <a href="/proyecto/public/orden_impresiones">
+                            <a href="{{ route('orden_impresiones') }}">
                                 <i class="now-ui-icons files_single-copy-04"></i>
                                 <p> {{ __("Impresiones") }} </p>
                             </a>
                         </li>
                         <li class="@if ($activePage == 'rutas') active @endif">
-                            <a href="/proyecto/public/rutas">
+                            <a href="{{ route('rutas') }}">
                                 <i class="now-ui-icons location_map-big"></i>
                                 <p> {{ __("Rutas") }} </p>
                             </a>
                         </li>
                         <li class="@if ($activePage == 'lotes') active @endif">
-                            <a href="/proyecto/public/lotes">
+                            <a href="{{ route('lotes') }}">
                                 <i class="now-ui-icons shopping_box"></i>
                                 <p> {{ __("Lotes") }} </p>
                             </a>
@@ -75,13 +75,13 @@
                 <div class="collapse" id="cgStocks">
                     <ul class="nav">
                         <li class="@if ($activePage == 'stock_materiales') active @endif">
-                            <a href="/proyecto/public/stock_materiales">
+                            <a href="{{ route('stock_materiales') }}">
                                 <i class="now-ui-icons design-2_ruler-pencil"></i>
                                 <p> {{ __("Stock Materiales") }} </p>
                             </a>
                         </li>
                         <li class="@if ($activePage == 'nueva_orden') active @endif">
-                            <a href="/proyecto/public/stock_lotes">
+                            <a href="{{ route('stock_lotes') }}">
                                 <i class="now-ui-icons files_box"></i>
                                 <p> {{ __("Stock Lotes") }} </p>
                             </a>
@@ -95,13 +95,13 @@
                             <div class="collapse" id="cgCarga">
                                 <ul class="nav">
                                     <li class="@if ($activePage == 'inventario_materiales') active @endif">
-                                        <a href="/proyecto/public/inventario_materiales">
+                                        <a href="{{ route('inventario_materiales') }}">
                                             <i class="now-ui-icons design-2_ruler-pencil"></i>
                                             <p> {{ __("Inventario Materiales") }} </p>
                                         </a>
                                     </li>
                                     <li class="@if ($activePage == 'inventario_lotes') active @endif">
-                                        <a href="/proyecto/public/inventario_lotes">
+                                        <a href="{{ route('inventario_lotes') }}">
                                             <i class="now-ui-icons files_box"></i>
                                             <p> {{ __("Inventario Lotes") }} </p>
                                         </a>
@@ -110,13 +110,13 @@
                             </div>
                         </li>
                         <li class="@if ($activePage == 'inventario_impresiones') active @endif">
-                            <a href="/proyecto/public/inventario_impresiones">
+                            <a href="{{ route('inventario_impresiones') }}">
                                 <i class="now-ui-icons files_single-copy-04"></i>
                                 <p> {{ __("Inventario Impresiones") }} </p>
                             </a>
                         </li>
                         <li class="@if ($activePage == 'movimiento_materiales') active @endif">
-                            <a href="/proyecto/public/movimiento_materiales">
+                            <a href="{{ route('movimiento_materiales') }}">
                                 <i class="now-ui-icons arrows-1_refresh-69"></i>
                                 <p> {{ __("Movimiento de Materiales") }} </p>
                             </a>
@@ -128,7 +128,7 @@
             @endif
             @if((auth()->user()->type) == 1 || (auth()->user()->type) == 2 || (auth()->user()->type) == 3 || (auth()->user()->type) == 4 )
             <li class="@if ($activePage == 'productos') active @endif">
-                <a href="/proyecto/public/productos">
+                <a href="{{ route('productos') }}">
                     <i class="now-ui-icons shopping_tag-content"></i>
                     <p> {{ __("Productos") }} </p>
                 </a>
@@ -146,13 +146,13 @@
                 <div class="collapse" id="cgCompras">
                     <ul class="nav">
                         <li class="@if ($activePage == 'nueva_compra') active @endif">
-                            <a href="/proyecto/public/nueva_compra">
+                            <a href="{{ route('nueva_compra') }}">
                                 <i class="now-ui-icons shopping_basket"></i>
                                 <p> {{ __("Nueva Compra") }} </p>
                             </a>
                         </li>
                         <li class="@if ($activePage == 'impresiones_compra') active @endif">
-                            <a href="/proyecto/public/impresiones_compra">
+                            <a href="{{ route('impresiones_compra') }}">
                                 <i class="now-ui-icons education_paper"></i>
                                 <p> {{ __("Impresiones") }} </p>
                             </a>
@@ -173,13 +173,13 @@
                 <div class="collapse" id="cgEnvios">
                     <ul class="nav">
                         <li class="@if ($activePage == 'nuevo_envio') active @endif">
-                            <a href="/proyecto/public/nuevo_envio">
+                            <a href="{{ route('nuevo_envio') }}">
                                 <i class="now-ui-icons transportation_bus-front-12"></i>
                                 <p> {{ __("Nuevo Envio") }} </p>
                             </a>
                         </li>
                         <li class="@if ($activePage == 'envios_impresiones') active @endif">
-                            <a href="/proyecto/public/envios_impresiones">
+                            <a href="{{ route('envios_impresiones') }}">
                                 <i class="now-ui-icons education_paper"></i>
                                 <p> {{ __("Impresiones") }} </p>
                             </a>
@@ -190,7 +190,7 @@
             @endif
             @if((auth()->user()->type) == 1 || (auth()->user()->type) == 5 )
             <li class="@if ($activePage == 'lista_facturas') active @endif">
-                <a href="/proyecto/public/lista_facturas">
+                <a href="{{ route('lista_facturas') }}">
                     <i class="now-ui-icons ui-1_send"></i>
                     <p> {{ __("Facturas") }} </p>
                 </a>
@@ -208,19 +208,19 @@
                 <div class="collapse" id="cgCostos">
                     <ul class="nav">
                         <li class="@if ($activePage == 'cargar_costos') active @endif">
-                            <a href="/proyecto/public/cargar_costos">
+                            <a href="{{ route('cargar_costos') }}">
                                 <i class="now-ui-icons ui-2_settings-90"></i>
                                 <p> {{ __("Cargar Costos") }} </p>
                             </a>
                         </li>
                         <li class="@if ($activePage == 'consultar_costos') active @endif">
-                            <a href="/proyecto/public/consultar_costos">
+                            <a href="{{ route('consultar_costos') }}">
                                 <i class="now-ui-icons design_bullet-list-67"></i>
                                 <p> {{ __("Ver Cargas del periodo") }} </p>
                             </a>
                         </li>
                         <li class="@if ($activePage == 'productos_costos') active @endif">
-                            <a href="/proyecto/public/productos_costos">
+                            <a href="{{ route('productos_costos') }}">
                                 <i class="now-ui-icons business_chart-bar-32"></i>
                                 <p> {{ __("Costos por Producto") }} </p>
                             </a>
