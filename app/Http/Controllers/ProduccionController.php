@@ -726,10 +726,10 @@ class ProduccionController extends Controller
 
       
             $producciones = DB::select("SELECT opd.codigo_material as codigo, SUM(opd.cantidad) as sumatoria
-        FROM cg.materiales_relacion as mr 
-        JOIN cg.orden_produccion_detalle as opd on opd.codigo_material=mr.codigo_material_entrante
-        JOIN cg.orden_produccion as op on op.id_orden=opd.id_orden
-        JOIN cg.materiales as m on mr.codigo_material_saliente=m.cod_material
+        FROM cg.cgl3pc5olr5v.us-east-2.rds.amazonaws.com.cg.materiales_relacion as mr 
+        JOIN cg.cgl3pc5olr5v.us-east-2.rds.amazonaws.com.cg.orden_produccion_detalle as opd on opd.codigo_material=mr.codigo_material_entrante
+        JOIN cg.cgl3pc5olr5v.us-east-2.rds.amazonaws.com.cg.orden_produccion as op on op.id_orden=opd.id_orden
+        JOIN cg.cgl3pc5olr5v.us-east-2.rds.amazonaws.com.cg.materiales as m on mr.codigo_material_saliente=m.cod_material
         WHERE MONTH(op.fecha_carga)=2 AND YEAR(op.fecha_carga)= 2021 AND op.estado='TERMINADO'
         GROUP BY opd.codigo_material");
 
@@ -737,39 +737,39 @@ class ProduccionController extends Controller
 print_r($producciones);
 
         //----POR CADA PRODUCTO RECORRER SU RUTA PARA CALCULAR COSTOS DE MP SEGUN PRECIO DE COMPRA ----//
-        foreach($producciones as $produccion)
-        {
-           // $descripcion = $produccion->descripcion;
-            $cantidad= $produccion->sumatoria;
-            $codigo =  $produccion->codigo;
+        // foreach($producciones as $produccion)
+        // {
+        //    // $descripcion = $produccion->descripcion;
+        //     $cantidad= $produccion->sumatoria;
+        //     $codigo =  $produccion->codigo;
             
-            $mat_saliente= DB::connection('cg')->table('materiales_relacion')->where('materiales_relacion.codigo_material_entrante', $codigo)->get();
-            foreach($mat_saliente as $mat){
-                $material = $mat->codigo_material_saliente;
-            }
+        //     $mat_saliente= DB::connection('cg')->table('materiales_relacion')->where('materiales_relacion.codigo_material_entrante', $codigo)->get();
+        //     foreach($mat_saliente as $mat){
+        //         $material = $mat->codigo_material_saliente;
+        //     }
 
-            $precios=DB::select("SELECT ( (SELECT cd.precio_unitario 
-            FROM cg.compras_detalle as cd JOIN cg.compras as c on cd.id_compra=c.id_compras 
-            WHERE cd.codigo_material= f.codigo_material 
-            ORDER BY c.id_compras DESC LIMIT 1 ) * f.cantidad) as costo 
-            FROM cg.formulas as f WHERE f.codigo_material_saliente='". $material."'");
+        //     $precios=DB::select("SELECT ( (SELECT cd.precio_unitario 
+        //     FROM cg.compras_detalle as cd JOIN cg.compras as c on cd.id_compra=c.id_compras 
+        //     WHERE cd.codigo_material= f.codigo_material 
+        //     ORDER BY c.id_compras DESC LIMIT 1 ) * f.cantidad) as costo 
+        //     FROM cg.formulas as f WHERE f.codigo_material_saliente='". $material."'");
 
-            print_r($precios);
-            $sum = 0;
-            foreach($precios as $precio){
-                $costo = $precio->costo;
+        //     print_r($precios);
+        //     $sum = 0;
+        //     foreach($precios as $precio){
+        //         $costo = $precio->costo;
 
-                $costo = $costo* $cantidad;
+        //         $costo = $costo* $cantidad;
 
-                $sum = $sum + $costo;
+        //         $sum = $sum + $costo;
 
-            } 
+        //     } 
 
-            $costo_mp_unitario = $sum / $cantidad;
+        //     $costo_mp_unitario = $sum / $cantidad;
 
-            echo($costo_mp_unitario);echo ('----');
+        //     echo($costo_mp_unitario);echo ('----');
 
-        }
+        // }
          
     }
 }
