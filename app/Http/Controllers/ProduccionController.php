@@ -770,12 +770,39 @@ class ProduccionController extends Controller
         // ->limit(50)
         // ->get();
     
-        $listado = DB::connection('cg')->table('materiales_stock as s')
-        ->selectRaw('m.cod_material as codigo, m.desc_material as descripcion,s.cantidad as cantidad, m.unidad_material as unidad')
-        ->join('materiales as m','m.cod_material','=','s.codigo_material')
+        // $listado = DB::select('SELECT m.cod_material as codigo,m.desc_material as descripcion, 
+        // (SELECT SUM(l.cantidad) from cg.lotes as l where l.cod_material=s.cod_material and l.en_stock=1) as cantidad 
+        // FROM cg.lotes as s JOIN cg.materiales as m on m.cod_material = s.cod_material  
+        // GROUP BY m.cod_material, m.desc_material,s.cod_material;');
+
+        $listado_final = array();
+        $listado = DB::connection('cg')->table('lotes as s')
+        ->selectRaw('m.cod_material as codigo,m.desc_material as descripcion')
+        ->join('materiales as m','m.cod_material','s.cod_material')
+        ->groupBy('m.cod_material')
+        ->groupBy('m.desc_material')
         ->get();
 
-       print_r($listado);
+        foreach($listado as $list){
+            $codigo= $list->codigo;
+            $descripcion = $list->descripcion;
+
+            $contador = DB::connection('cg')
+            ->table('lotes as l')
+            ->selectRaw('SUM(l.cantidad) as cantidad')
+            ->where('l.cod_material',$codigo)
+            ->where('l.en_stock',1)
+            ->get();
+
+            foreach($contador as $cont){
+                $cantidad = $cont->cantidad;
+            }
+            
+            array_push($listado_final,array('codigo'=>$codigo,'descripcion'=>$descripcion,'cantidad'=>$cantidad));
+
+        }
+
+       print_r($listado_final);
          
     }
 }
