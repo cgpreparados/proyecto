@@ -723,53 +723,41 @@ class ProduccionController extends Controller
     }
 
     public function prueba(){
+
+        $año=2021;
+        $mes=05;
+        $codigo = '01-01-01001';
+
+        // $producido = DB::select("SELECT SUM(opd.cantidad) as sumatoria
+        // FROM cg.orden_produccion_detalle as opd 
+        // JOIN cg.orden_produccion as op on op.id_orden=opd.id_orden
+        // WHERE MONTH(op.fecha_carga)=$mes AND YEAR(op.fecha_carga)=$año AND op.estado='TERMINADO'
+        // GROUP BY opd.codigo_material");
+
+        $producido = DB::connection('cg')->table('orden_produccion_detalle as opd')
+        ->selectRaw('SUM(opd.cantidad) as sumatoria')
+        ->join('orden_produccion as op','op.id_orden','opd.id_orden')
+        ->whereMonth('fecha_carga',$mes)
+        ->whereYear('fecha_carga',$año)
+        ->where('estado','TERMINADO')
+        ->groupBy('opd.codigo_material')->get();
+        
+        print_r($producido);
+        //$response = array('listado'=>$listado,'total'=>$total,'code'=>0);
        
-      
-        $producciones = DB::select("SELECT opd.codigo_material as codigo, SUM(opd.cantidad) as sumatoria
-        FROM cg.materiales_relacion as mr 
-        JOIN cg.orden_produccion_detalle as opd on opd.codigo_material=mr.codigo_material_entrante
-        JOIN cg.orden_produccion as op on op.id_orden=opd.id_orden
-        JOIN cg.materiales as m on mr.codigo_material_saliente=m.cod_material
-        WHERE MONTH(op.fecha_carga)=2 AND YEAR(op.fecha_carga)= 2021 AND op.estado='TERMINADO'
-        GROUP BY opd.codigo_material");
+    //    $producciones= DB::connection('cgdb')->table('materiales_relacion as mr')->selectRaw('opd.codigo_material as codigo, SUM(opd.cantidad) as sumatoria ')
+    //    ->join('orden_produccion_detalle as opd','opd.codigo_material','=','mr.codigo_material_entrante')
+    //    ->join('orden_produccion as op','op.id_orden','=','opd.id_orden')
+    //    ->join('materiales as m','m.cod_material','=','mr.codigo_material_saliente')
+    //    ->whereMonth('op.fecha_carga',2)
+    //    ->whereYear('op.fecha_carga',2021)
+    //    ->where('op.estado','=','TERMINADO')
+    //    ->groupBy('opd.codigo_material')->get();
 
-        $sumatoria = array();
-        print_r($producciones);
+    //     $sumatoria = array();
+    //     print_r($producciones);
 
-        //----POR CADA PRODUCTO RECORRER SU RUTA PARA CALCULAR COSTOS DE MP SEGUN PRECIO DE COMPRA ----//
-        // foreach($producciones as $produccion)
-        // {
-        //    // $descripcion = $produccion->descripcion;
-        //     $cantidad= $produccion->sumatoria;
-        //     $codigo =  $produccion->codigo;
-            
-        //     $mat_saliente= DB::connection('cg')->table('materiales_relacion')->where('materiales_relacion.codigo_material_entrante', $codigo)->get();
-        //     foreach($mat_saliente as $mat){
-        //         $material = $mat->codigo_material_saliente;
-        //     }
-
-        //     $precios=DB::select("SELECT ( (SELECT cd.precio_unitario 
-        //     FROM cg.compras_detalle as cd JOIN cg.compras as c on cd.id_compra=c.id_compras 
-        //     WHERE cd.codigo_material= f.codigo_material 
-        //     ORDER BY c.id_compras DESC LIMIT 1 ) * f.cantidad) as costo 
-        //     FROM cg.formulas as f WHERE f.codigo_material_saliente='". $material."'");
-
-        //     print_r($precios);
-        //     $sum = 0;
-        //     foreach($precios as $precio){
-        //         $costo = $precio->costo;
-
-        //         $costo = $costo* $cantidad;
-
-        //         $sum = $sum + $costo;
-
-        //     } 
-
-        //     $costo_mp_unitario = $sum / $cantidad;
-
-        //     echo($costo_mp_unitario);echo ('----');
-
-        // }
+       
          
     }
 }

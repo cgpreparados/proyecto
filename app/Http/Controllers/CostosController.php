@@ -76,7 +76,12 @@ class CostosController extends Controller
 
         $listado = CostosIndirectos::on('cg')->where('mes',$mes)->where('anho',$anho)->get();
 
-        $suma = DB::select('SELECT SUM(costo) as suma FROM cg.costos_indirectos WHERE mes='.$mes. ' AND anho='.$anho);
+        $suma = DB::connection('cg')->table('costos_indirectos')
+        ->selectRaw('SUM(costo) as suma')
+        ->where('mes','=',$mes)
+        ->where('anho','=',$anho)
+        ->get();
+
         foreach($suma as $sum){
             $total = $sum->suma;
         }
@@ -109,13 +114,23 @@ class CostosController extends Controller
 
         //--------------------SELECCIONAR CANT PRODUCIDA X MATERIAL EN EL MES ----------------------//
 
-		$producciones = DB::select("SELECT opd.codigo_material as codigo, SUM(opd.cantidad) as sumatoria
-        FROM cg.materiales_relacion as mr 
-        JOIN cg.orden_produccion_detalle as opd on opd.codigo_material=mr.codigo_material_entrante
-        JOIN cg.orden_produccion as op on op.id_orden=opd.id_orden
-        JOIN cg.materiales as m on mr.codigo_material_saliente=m.cod_material
-        WHERE MONTH(op.fecha_carga)=".$mes." AND YEAR(op.fecha_carga)=".$anho." AND op.estado='TERMINADO'
-        GROUP BY opd.codigo_material");
+		// $producciones = DB::select("SELECT opd.codigo_material as codigo, SUM(opd.cantidad) as sumatoria
+        // FROM cg.materiales_relacion as mr 
+        // JOIN cg.orden_produccion_detalle as opd on opd.codigo_material=mr.codigo_material_entrante
+        // JOIN cg.orden_produccion as op on op.id_orden=opd.id_orden
+        // JOIN cg.materiales as m on mr.codigo_material_saliente=m.cod_material
+        // WHERE MONTH(op.fecha_carga)=".$mes." AND YEAR(op.fecha_carga)=".$anho." AND op.estado='TERMINADO'
+        // GROUP BY opd.codigo_material");
+
+        $producciones= DB::connection('cg')->table('materiales_relacion as mr')
+        ->selectRaw('opd.codigo_material as codigo, SUM(opd.cantidad) as sumatoria ')
+        ->join('orden_produccion_detalle as opd','opd.codigo_material','=','mr.codigo_material_entrante')
+        ->join('orden_produccion as op','op.id_orden','=','opd.id_orden')
+        ->join('materiales as m','m.cod_material','=','mr.codigo_material_saliente')
+        ->whereMonth('op.fecha_carga',$mes)
+        ->whereYear('op.fecha_carga',$anho)
+        ->where('op.estado','=','TERMINADO')
+        ->groupBy('opd.codigo_material')->get();
 
         $sumatoria = array();
 
@@ -135,27 +150,58 @@ class CostosController extends Controller
             $descripcion= Materiales::on('cg')->select('desc_material')->where('cod_material',$material)->first();     
             $descripcion= $descripcion['desc_material'];
 
-            $precios=DB::select("SELECT ( (SELECT cd.precio_unitario 
-            FROM cg.compras_detalle as cd JOIN cg.compras as c on cd.id_compra=c.id_compras 
-            WHERE cd.codigo_material= f.codigo_material 
-            ORDER BY c.id_compras DESC LIMIT 1 ) * f.cantidad) as costo 
-            FROM cg.formulas as f WHERE f.codigo_material_saliente='". $material."'");
-            $sum = 0;
-            foreach($precios as $precio){
-                $costo = $precio->costo;
+            // $precios=DB::select("SELECT ( (SELECT cd.precio_unitario 
+            // FROM cg.compras_detalle as cd JOIN cg.compras as c on cd.id_compra=c.id_compras 
+            // WHERE cd.codigo_material= f.codigo_material 
+            // ORDER BY c.id_compras DESC LIMIT 1 ) * f.cantidad) as costo 
+            // FROM cg.formulas as f WHERE f.codigo_material_saliente='". $material."'");
+            // $sum = 0;
+            // foreach($precios as $precio){
+            //     $costo = $precio->costo;
 
-                $costo = $costo* $cantidad;
+            //     $costo = $costo* $cantidad;
 
-                $sum = $sum + $costo;
+            //     $sum = $sum + $costo;
 
-            } 
+            // } 
+            $ruta = DB::connection('cg')->table('formulas as f')
+        ->selectRaw('f.cantidad as cantidad, f.codigo_material as codigo')
+        ->where('f.codigo_material_saliente','=',$material)->get();
+
+        $sum = 0;
+        foreach($ruta as $rut){
+            $codigo = $rut->codigo;
+            $cantidad = $rut->cantidad;
+
+            $precios=DB::connection('cg')->table('compras_detalle as cd')
+            ->selectRaw('cd.precio_unitario as precio')
+            ->join('compras as c','c.id_compras','=','cd.id_compra')
+            ->where('cd.codigo_material','=',$codigo)->get();
+
+            foreach($precios as $prec){
+                $total = $prec->precio;
+            }
+
+            $costo = $total * $cantidad;
+            $sum = $sum+$costo;
+        }
 
             $costo_mp_unitario = $sum / $cantidad;
 
             //------------------------INGRESAR COSTOS DE MATERIA PRIMA ------------------------------//
 
-            $contador = DB::select(" SELECT COUNT(*) AS cont FROM cg.costos_totales 
-            WHERE anho=$año AND mes = $mes AND cod_material= '".$codigo."' AND tipo_costo='Materia Prima'");
+            // $contador = DB::select(" SELECT COUNT(*) AS cont FROM cg.costos_totales 
+            // WHERE anho=$año AND mes = $mes AND cod_material= '".$codigo."' AND tipo_costo='Materia Prima'");
+
+            $contador = DB::connection('cg')
+            ->table('costos_totales')
+            ->selectRaw('COUNT(*) as cont')
+            ->where('anho',$año)
+            ->where('mes',$mes)
+            ->where('cod_material',$codigo)
+            ->where('tipo_costo', 'Materia Prima')
+            ->get();
+
             foreach($contador as $conta){
                 $cont = $conta->cont;
             }
@@ -174,16 +220,32 @@ class CostosController extends Controller
             //------------------------ SELECCIONAR OTROS COSTOS ------------------------------//
 
 
-            $costo_indirecto = DB::select("SELECT SUM(costo) as suma FROM cg.costos_indirectos WHERE anho=".$año." AND mes= ".$mes);
-            foreach($costo_indirecto as $costo){
+           // $costo_indirecto = DB::select("SELECT SUM(costo) as suma FROM cg.costos_indirectos WHERE anho=".$año." AND mes= ".$mes);
+           
+           $costo_indirecto = DB::connection('cg')->table('costos_indirectos')
+           ->selectRaw('SUM(costo) as suma')
+           ->where('anho',$año)
+           ->where('mes',$mes)
+           ->get();
+           
+           foreach($costo_indirecto as $costo){
                 $costo_ind= $costo->suma;
             }
             
-            $producido = DB::select("SELECT SUM(opd.cantidad) as sumatoria
-                FROM cg.orden_produccion_detalle as opd 
-                JOIN cg.orden_produccion as op on op.id_orden=opd.id_orden
-                WHERE MONTH(op.fecha_carga)=$mes AND YEAR(op.fecha_carga)=$año AND op.estado='TERMINADO'
-                GROUP BY opd.codigo_material");
+            // $producido = DB::select("SELECT SUM(opd.cantidad) as sumatoria
+            //     FROM cg.orden_produccion_detalle as opd 
+            //     JOIN cg.orden_produccion as op on op.id_orden=opd.id_orden
+            //     WHERE MONTH(op.fecha_carga)=$mes AND YEAR(op.fecha_carga)=$año AND op.estado='TERMINADO'
+            //     GROUP BY opd.codigo_material");
+
+            $producido = DB::connection('cg')->table('orden_produccion_detalle as opd')
+            ->selectRaw('SUM(opd.cantidad) as sumatoria')
+            ->join('orden_produccion as op','op.id_orden','opd.id_orden')
+            ->whereMonth('fecha_carga',$mes)
+            ->whereYear('fecha_carga',$año)
+            ->where('estado','TERMINADO')
+            ->groupBy('opd.codigo_material')->get();
+
             foreach($producido as $prod){
                 $cant_prod = $prod->sumatoria;
             }
@@ -193,8 +255,18 @@ class CostosController extends Controller
 
             //------------------------INGRESAR OTROS COSTOS ------------------------------//
 
-            $contador = DB::select(" SELECT COUNT(*) AS cont FROM cg.costos_totales 
-            WHERE anho=$año AND mes = $mes AND cod_material= '$codigo'AND tipo_costo='Costos Indirectos'");
+            // $contador = DB::select(" SELECT COUNT(*) AS cont FROM cg.costos_totales 
+            // WHERE anho=$año AND mes = $mes AND cod_material= '$codigo'AND tipo_costo='Costos Indirectos'");
+
+            $contador = DB::connection('cg')
+            ->table('costos_totales')
+            ->selectRaw('COUNT(*) as cont')
+            ->where('anho',$año)
+            ->where('mes',$mes)
+            ->where('cod_material',$codigo)
+            ->where('tipo_costo', 'Costos Indirectos')
+            ->get();
+
             foreach($contador as $con){
                 $cont = $con->cont;
             }
