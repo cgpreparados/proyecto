@@ -723,18 +723,18 @@ class ProduccionController extends Controller
     }
 
     public function prueba(){
-
+       
       
-            $producciones = DB::select("SELECT opd.codigo_material as codigo, SUM(opd.cantidad) as sumatoria
-        FROM cg.cgl3pc5olr5v.us-east-2.rds.amazonaws.com.cg.materiales_relacion as mr 
-        JOIN cg.cgl3pc5olr5v.us-east-2.rds.amazonaws.com.cg.orden_produccion_detalle as opd on opd.codigo_material=mr.codigo_material_entrante
-        JOIN cg.cgl3pc5olr5v.us-east-2.rds.amazonaws.com.cg.orden_produccion as op on op.id_orden=opd.id_orden
-        JOIN cg.cgl3pc5olr5v.us-east-2.rds.amazonaws.com.cg.materiales as m on mr.codigo_material_saliente=m.cod_material
+        $producciones = DB::select("SELECT opd.codigo_material as codigo, SUM(opd.cantidad) as sumatoria
+        FROM cg.materiales_relacion as mr 
+        JOIN cg.orden_produccion_detalle as opd on opd.codigo_material=mr.codigo_material_entrante
+        JOIN cg.orden_produccion as op on op.id_orden=opd.id_orden
+        JOIN cg.materiales as m on mr.codigo_material_saliente=m.cod_material
         WHERE MONTH(op.fecha_carga)=2 AND YEAR(op.fecha_carga)= 2021 AND op.estado='TERMINADO'
         GROUP BY opd.codigo_material");
 
         $sumatoria = array();
-print_r($producciones);
+        print_r($producciones);
 
         //----POR CADA PRODUCTO RECORRER SU RUTA PARA CALCULAR COSTOS DE MP SEGUN PRECIO DE COMPRA ----//
         // foreach($producciones as $produccion)

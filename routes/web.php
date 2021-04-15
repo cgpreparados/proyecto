@@ -13,15 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 
-
+Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
-
-Route::view('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+//Route::view('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 Route::get('/prueba', 'App\Http\Controllers\ProduccionController@prueba')->name('prueba');
 //------------------------------PRODUCCION----------------------------//
 //******************************NUEVA ORDEN***************************//
