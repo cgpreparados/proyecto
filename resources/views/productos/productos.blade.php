@@ -267,7 +267,7 @@ $('#tabla_productos').on('click', '#eliminar', function() {
 
     var codigo = $(this).closest('tr').find('td').eq(0).text();
     var fila = $(this).closest('tr');
-    alert(codigo);
+   // alert(codigo);
 
     $.ajaxSetup({
         headers: {
