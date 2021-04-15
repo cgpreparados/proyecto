@@ -266,8 +266,8 @@ class StockController extends Controller
             //$listado =  DB::select('SELECT fecha_carga as fecha, user as user FROM cg.carga_inventario  WHERE CAST(fecha_carga AS DATE) BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" GROUP BY fecha_carga,user');
             $listado = DB::connection('cg')->table('carga_inventario')
             ->selectRaw('fecha_carga as fecha ,user as user')
-            ->whereDate('s.fecha_carga','>=',$fecha_inicio)
-            ->whereDate('s.fecha_carga','<=',$fecha_fin)
+            ->whereDate('fecha_carga','>=',$fecha_inicio)
+            ->whereDate('fecha_carga','<=',$fecha_fin)
             ->groupBy('fecha_carga')
             ->groupBy('user')
             ->get();
