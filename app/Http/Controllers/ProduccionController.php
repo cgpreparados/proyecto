@@ -759,23 +759,23 @@ class ProduccionController extends Controller
         $id=1;
         $lote = 1;
 
-        // $listado= DB::select('Select l.lote_nro as lote, l.id_lote as id, l.fecha_lote as fecha_elab,
-        // m.desc_material as descripcion,
-        // l.cantidad as cantidad FROM cg.lotes as l JOIN cg.materiales as m on m.cod_material=l.cod_material WHERE l.lote_nro='.$lote.'
-        // ORDER BY l.id_lote DESC LIMIT 50');
 
-        $sql = DB::connection('cg')
-        ->table('lotes as l')
-        ->selectRaw('l.fecha_lote as fecha_elab, l.cod_material as codigo, l.nro as lote, 
-        l.orden_produccion as orden, l.cantidad as cantidad, m.desc_material as descri, l.fecha_vencimiento as fecha_vto')
-        ->join('materiales as m','m.cod_material','l.cod_material')
-        ->where('l.lote_nro',$lote)
-        ->orderBy('l.id_lote','desc')
-        ->limit(50)
-        ->get();
+        // $sql = DB::connection('cg')
+        // ->table('lotes as l')
+        // ->selectRaw('l.fecha_lote as fecha_elab, l.cod_material as codigo, l.nro as lote, 
+        // l.orden_produccion as orden, l.cantidad as cantidad, m.desc_material as descri, l.fecha_vencimiento as fecha_vto')
+        // ->join('materiales as m','m.cod_material','l.cod_material')
+        // ->where('l.lote_nro',$lote)
+        // ->orderBy('l.id_lote','desc')
+        // ->limit(50)
+        // ->get();
     
+        $listado = DB::connection('cg')->table('materiales_stock as s')
+        ->selectRaw('m.cod_material as codigo, m.desc_material as descripcion,s.cantidad as cantidad, m.unidad_material as unidad')
+        ->join('materiales as m','m.cod_material','=','s.codigo_material')
+        ->get();
 
-       print_r($sql);
+       print_r($listado);
          
     }
 }

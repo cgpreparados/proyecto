@@ -20,7 +20,7 @@ class StockController extends Controller
 {
     public function stock_materiales(){
         //$listado = DB::select('SELECT m.cod_material as codigo,m.desc_material as descripcion,s.cantidad as cantidad, m.unidad_material as unidad FROM cg.materiales_stock as s JOIN cg.materiales as m on m.cod_material = s.codigo_material');
-        $listado = DB::connection('cg')->table('materiales_stock as m')
+        $listado = DB::connection('cg')->table('materiales_stock as s')
         ->selectRaw('m.cod_material as codigo, m.desc_material as descripcion,s.cantidad as cantidad, m.unidad_material as unidad')
         ->join('materiales as m','m.cod_material','=','s.codigo_material')
         ->get();
