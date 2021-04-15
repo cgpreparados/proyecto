@@ -3,10 +3,10 @@
     Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
 -->
     <div class="logo">
-        <a href="http://127.0.0.1/proyecto/public/home" class="simple-text logo-mini">
+        <a href="{{ route('home') }}" class="simple-text logo-mini">
             {{ __('CG') }}
         </a>
-        <a href="http://127.0.0.1/proyecto/public/home" class="simple-text logo-normal">
+        <a href="{{ route('home') }}" class="simple-text logo-normal">
             {{ __('Preparados') }}
         </a>
     </div>
