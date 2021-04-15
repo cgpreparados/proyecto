@@ -65,10 +65,20 @@ class StockController extends Controller
         $request = $request->all();
         $codigo = $request['codigo'];
 
-        $listado= DB::select('Select l.nro as contenedor, l.lote_nro as produccion, 
+        // $listado= DB::select('Select l.nro as contenedor, l.lote_nro as produccion, 
+        // l.fecha_lote as fecha_elab, l.fecha_vencimiento as vencimiento,
+        // l.cantidad as cantidad, m.unidad_material as unidad
+        // FROM cg.lotes as l JOIN cg.materiales as m on m.cod_material=l.cod_material AND l.cod_material="'.$codigo.'" AND l.en_stock=1 ORDER BY l.id_lote DESC LIMIT 50');
+
+        $listado = DB::connection('cg')->table('lotes as l')
+        ->selectRaw('l.nro as contenedor, l.lote_nro as produccion, 
         l.fecha_lote as fecha_elab, l.fecha_vencimiento as vencimiento,
-        l.cantidad as cantidad, m.unidad_material as unidad
-        FROM cg.lotes as l JOIN cg.materiales as m on m.cod_material=l.cod_material AND l.cod_material="'.$codigo.'" AND l.en_stock=1 ORDER BY l.id_lote DESC LIMIT 50');
+        l.cantidad as cantidad, m.unidad_material as unidad')
+        ->join('materiales as m','m.cod_material','l.cod_material')
+        ->where('l.cod_material',$codigo)
+        ->where('l.en_stock',1)
+        ->orderBy('l.id_lote','desc')
+        ->limit(50)->get();
 
         return response()->json($listado,200);
 
@@ -89,7 +99,13 @@ class StockController extends Controller
 
         $now = date('Y-m-d');
 
-        $cantidad = DB::select('select COUNT(*) as num from cg.carga_inventario where CAST(fecha_carga as DATE)= "'. $now . '"');
+       // $cantidad = DB::select('select COUNT(*) as num from cg.carga_inventario where CAST(fecha_carga as DATE)= "'. $now . '"');
+
+        $cantidad = DB::connection('cg')->table('carga_inventario')
+        ->selectRaw('COUNT(*) as num')
+        ->whereDate('fecha_carga',$now)
+        ->get();
+
         foreach($cantidad as $cont){
             $conta = $cont->num;
         }
@@ -130,7 +146,13 @@ class StockController extends Controller
 
     public function imprimir_inventario_materiales(String $fecha){
 
-        $listado = DB::select('SELECT s.codigo_material as codigo, m.desc_material as descripcion, s.cantidad as cantidad, s.diferencia as diferencia, m.unidad_material as unidad, s.user as user FROM cg.carga_inventario as s JOIN cg.materiales as m on m.cod_material = s.codigo_material WHERE CAST(s.fecha_carga AS DATE)="'.$fecha.'"');
+        //$listado = DB::select('SELECT s.codigo_material as codigo, m.desc_material as descripcion, s.cantidad as cantidad, s.diferencia as diferencia, m.unidad_material as unidad, s.user as user FROM cg.carga_inventario as s JOIN cg.materiales as m on m.cod_material = s.codigo_material WHERE CAST(s.fecha_carga AS DATE)="'.$fecha.'"');
+        $listado = DB::connection('cg')->table('carga_inventario as s')
+        ->selectRaw('s.codigo_material as codigo, m.desc_material as descripcion, s.cantidad as cantidad, 
+        s.diferencia as diferencia, m.unidad_material as unidad, s.user as user')
+        ->join('materiales as m', 'm.cod_material','s.codigo_material')
+        ->whereDate('fecha_carga',$fecha)
+        ->get();   
         foreach ($listado as $list){
             $user = $list->user;
         }
@@ -151,7 +173,13 @@ class StockController extends Controller
 
         $now = date('Y-m-d');
 
-        $cantidad = DB::select('select COUNT(*) as num from cg.carga_inventario_lotes where CAST(fecha_carga as DATE)= "'. $now . '"');
+        //$cantidad = DB::select('select COUNT(*) as num from cg.carga_inventario_lotes where CAST(fecha_carga as DATE)= "'. $now . '"');
+        
+        $cantidad = DB::connection('cg')->table('carga_inventario_lotes')
+        ->selectRaw('COUNT(*) as num')
+        ->whereDate('fecha_carga',$now)
+        ->get();
+
         foreach($cantidad as $cont){
             $conta = $cont->num;
         }
@@ -168,7 +196,12 @@ class StockController extends Controller
             
             if(!(is_null($codigo))){   
 
-                $diferencia = DB::select('SELECT COUNT(l.cantidad) as cantidad from cg.lotes as l WHERE l.cod_material= "'. $codigo . '"');
+                //$diferencia = DB::select('SELECT COUNT(l.cantidad) as cantidad from cg.lotes as l WHERE l.cod_material= "'. $codigo . '"');
+
+                $diferencia = DB::connection('cg')->table('lotes as l')
+                ->selectRaw('COUNT(l.cantidad) as cantidad')
+                ->where('l.cod_material',$codigo)
+                ->get(); 
                 
                 foreach($diferencia as $dif){
                     $anterior = $dif->cantidad;
@@ -192,7 +225,15 @@ class StockController extends Controller
 
     public function imprimir_inventario_lotes(String $fecha){
 
-        $listado = DB::select('SELECT s.codigo_material as codigo, m.desc_material as descripcion, s.cantidad as cantidad, s.diferencia as diferencia, m.unidad_material as unidad, s.user as user FROM cg.carga_inventario_lotes as s JOIN cg.materiales as m on m.cod_material = s.codigo_material WHERE CAST(s.fecha_carga AS DATE)="'.$fecha.'"');
+       // $listado = DB::select('SELECT s.codigo_material as codigo, m.desc_material as descripcion, s.cantidad as cantidad, s.diferencia as diferencia, m.unidad_material as unidad, s.user as user FROM cg.carga_inventario_lotes as s JOIN cg.materiales as m on m.cod_material = s.codigo_material WHERE CAST(s.fecha_carga AS DATE)="'.$fecha.'"');
+
+        $diferencia = DB::connection('cg')->table('carga_inventario_lotes as s')
+        ->selectRaw('s.codigo_material as codigo, m.desc_material as descripcion, s.cantidad as cantidad, 
+        s.diferencia as diferencia, m.unidad_material as unidad, s.user as user')
+        ->join('materiales as m','m.cod_material','s.codigo_material')
+        ->whereDate('s.fecha_carga',$fecha)
+        ->get();
+
         foreach ($listado as $list){
             $user = $list->user;
         }
@@ -213,11 +254,37 @@ class StockController extends Controller
         $tipo = $request['estado'];
 
         if($tipo == 'Lotes'){
-            $listado =  DB::select('SELECT fecha_carga as fecha ,user as user FROM cg.carga_inventario_lotes  WHERE CAST(fecha_carga AS DATE) BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'"GROUP BY fecha_carga,user');
+            //$listado =  DB::select('SELECT fecha_carga as fecha ,user as user FROM cg.carga_inventario_lotes  WHERE CAST(fecha_carga AS DATE) BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'"GROUP BY fecha_carga,user');
+            $listado = DB::connection('cg')->table('carga_inventario_lotes')
+            ->selectRaw('fecha_carga as fecha ,user as user')
+            ->whereDate('s.fecha_carga','>=',$fecha_inicio)
+            ->whereDate('s.fecha_carga','<=',$fecha_fin)
+            ->groupBy('fecha_carga')
+            ->groupBy('user')
+            ->get();  
         }else if($tipo == 'Materiales'){
-            $listado =  DB::select('SELECT fecha_carga as fecha, user as user FROM cg.carga_inventario  WHERE CAST(fecha_carga AS DATE) BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" GROUP BY fecha_carga,user');
+            //$listado =  DB::select('SELECT fecha_carga as fecha, user as user FROM cg.carga_inventario  WHERE CAST(fecha_carga AS DATE) BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" GROUP BY fecha_carga,user');
+            $listado = DB::connection('cg')->table('carga_inventario')
+            ->selectRaw('fecha_carga as fecha ,user as user')
+            ->whereDate('s.fecha_carga','>=',$fecha_inicio)
+            ->whereDate('s.fecha_carga','<=',$fecha_fin)
+            ->groupBy('fecha_carga')
+            ->groupBy('user')
+            ->get();
         }else{
-            $listado = DB::select('SELECT l.fecha_operacion as fecha, l.user as user, l.id_operacion as id from cg.materiales_operaciones_head as l  where l.tipo_operacion = "'.$tipo.'" AND CAST(fecha_operacion AS DATE) BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" GROUP BY fecha_operacion,user,id_operacion');
+            // $listado = DB::select('SELECT l.fecha_operacion as fecha, l.user as user, l.id_operacion as id 
+            // from cg.materiales_operaciones_head as l  
+            // where l.tipo_operacion = "'.$tipo.'" AND CAST(fecha_operacion AS DATE) BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" 
+            // GROUP BY fecha_operacion,user,id_operacion');
+
+            $listado = DB::connection('cg')->table('materiales_operaciones_head')
+            ->selectRaw('l.fecha_operacion as fecha, l.user as user, l.id_operacion as id')
+            ->whereDate('fecha_operacion','>=',$fecha_inicio)
+            ->whereDate('fecha_operacion','<=',$fecha_fin)
+            ->groupBy('fecha_operacion')
+            ->groupBy('user')
+            ->groupBy('id_operacion')
+            ->get();
         }
 
         return response()->json($listado,200);
@@ -295,7 +362,15 @@ class StockController extends Controller
 
     public function imprimir_inventario_movimiento(Int $id){
 
-        $listado = DB::select('SELECT l.codigo_material as codigo, m.desc_material as descripcion, l.cantidad as cantidad,m.unidad_material as unidad, l.observacion as observacion,l.fecha as fecha, l.operacion as operacion, l.user as user from cg.materiales_operaciones as l join cg.materiales as m on m.cod_material=l.codigo_material where l.id_operacion_head='.$id);
+       // $listado = DB::select('SELECT l.codigo_material as codigo, m.desc_material as descripcion, l.cantidad as cantidad,m.unidad_material as unidad, l.observacion as observacion,l.fecha as fecha, l.operacion as operacion, l.user as user from cg.materiales_operaciones as l join cg.materiales as m on m.cod_material=l.codigo_material where l.id_operacion_head='.$id);
+
+        $listado = DB::connection('cg')->table('materiales_operaciones as l')
+        ->selectRaw('l.codigo_material as codigo, m.desc_material as descripcion, l.cantidad as cantidad,
+        m.unidad_material as unidad, l.observacion as observacion,l.fecha as fecha, l.operacion as operacion, l.user as user')
+        ->join('materiales as m','m.cod_material','l.codigo_material')
+        ->where('l.id_operacion_head', $id)
+        ->get();  
+
         foreach($listado as $list){
             $user = $list->user;
             $fecha = $list->fecha;

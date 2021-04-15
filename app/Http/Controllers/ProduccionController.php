@@ -755,54 +755,26 @@ class ProduccionController extends Controller
 
         $year=2021;
         $month=05;
-        $material = '01-01-01001';
+        $codigo = '01-01-01001';
         $id=1;
         $lote = 1;
+        $now = date('Y-m-d');
+        $fecha= '02/04/2021';
 
+        // $listado = DB::select('SELECT l.codigo_material as codigo, m.desc_material as descripcion, l.cantidad as cantidad,
+        // m.unidad_material as unidad, l.observacion as observacion,l.fecha as fecha, l.operacion as operacion, l.user as user 
+        // from cg.materiales_operaciones as l 
+        // join cg.materiales as m on m.cod_material=l.codigo_material 
+        // where l.id_operacion_head='.$id);
 
-        // $sql = DB::connection('cg')
-        // ->table('lotes as l')
-        // ->selectRaw('l.fecha_lote as fecha_elab, l.cod_material as codigo, l.nro as lote, 
-        // l.orden_produccion as orden, l.cantidad as cantidad, m.desc_material as descri, l.fecha_vencimiento as fecha_vto')
-        // ->join('materiales as m','m.cod_material','l.cod_material')
-        // ->where('l.lote_nro',$lote)
-        // ->orderBy('l.id_lote','desc')
-        // ->limit(50)
-        // ->get();
-    
-        // $listado = DB::select('SELECT m.cod_material as codigo,m.desc_material as descripcion, 
-        // (SELECT SUM(l.cantidad) from cg.lotes as l where l.cod_material=s.cod_material and l.en_stock=1) as cantidad 
-        // FROM cg.lotes as s JOIN cg.materiales as m on m.cod_material = s.cod_material  
-        // GROUP BY m.cod_material, m.desc_material,s.cod_material;');
+        $diferencia = DB::connection('cg')->table('materiales_operaciones as l')
+        ->selectRaw('l.codigo_material as codigo, m.desc_material as descripcion, l.cantidad as cantidad,
+        m.unidad_material as unidad, l.observacion as observacion,l.fecha as fecha, l.operacion as operacion, l.user as user')
+        ->join('materiales as m','m.cod_material','l.codigo_material')
+        ->where('l.id_operacion_head', $id)
+        ->get();        
 
-        $listado_final = array();
-        $listado = DB::connection('cg')->table('lotes as s')
-        ->selectRaw('m.cod_material as codigo,m.desc_material as descripcion')
-        ->join('materiales as m','m.cod_material','s.cod_material')
-        ->groupBy('m.cod_material')
-        ->groupBy('m.desc_material')
-        ->get();
-
-        foreach($listado as $list){
-            $codigo= $list->codigo;
-            $descripcion = $list->descripcion;
-
-            $contador = DB::connection('cg')
-            ->table('lotes as l')
-            ->selectRaw('SUM(l.cantidad) as cantidad')
-            ->where('l.cod_material',$codigo)
-            ->where('l.en_stock',1)
-            ->get();
-
-            foreach($contador as $cont){
-                $cantidad = $cont->cantidad;
-            }
-            
-            array_push($listado_final,array('codigo'=>$codigo,'descripcion'=>$descripcion,'cantidad'=>$cantidad));
-
-        }
-
-       print_r($listado_final);
+       print_r($diferencia);
          
     }
 }
