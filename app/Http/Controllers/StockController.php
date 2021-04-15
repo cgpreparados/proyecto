@@ -278,7 +278,7 @@ class StockController extends Controller
             // GROUP BY fecha_operacion,user,id_operacion');
 
             $listado = DB::connection('cg')->table('materiales_operaciones_head')
-            ->selectRaw('l.fecha_operacion as fecha, l.user as user, l.id_operacion as id')
+            ->selectRaw('fecha_operacion as fecha, user as user, id_operacion as id')
             ->whereDate('fecha_operacion','>=',$fecha_inicio)
             ->whereDate('fecha_operacion','<=',$fecha_fin)
             ->groupBy('fecha_operacion')
