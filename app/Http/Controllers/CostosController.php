@@ -165,8 +165,8 @@ class CostosController extends Controller
 
             // } 
             $ruta = DB::connection('cg')->table('formulas as f')
-        ->selectRaw('f.cantidad as cantidad, f.codigo_material as codigo')
-        ->where('f.codigo_material_saliente','=',$material)->get();
+            ->selectRaw('f.cantidad as cantidad, f.codigo_material as codigo')
+            ->where('f.codigo_material_saliente','=',$material)->get();
 
         $sum = 0;
         foreach($ruta as $rut){
