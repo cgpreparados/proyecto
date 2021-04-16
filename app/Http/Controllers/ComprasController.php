@@ -91,7 +91,6 @@ class ComprasController extends Controller
                     
                 
             }
-            
 
             $response =array('code'=>0);
         }catch(Exception $e){
@@ -119,8 +118,16 @@ class ComprasController extends Controller
             $total = $comp->factura_total;
         }
 
-        $listado = ComprasDetalle::on('cg')->where('id_compra',$id)->get();
-        $listado = DB::select('select d.codigo_material as codigo, m.desc_material as descripcion, m.unidad_material as unidad, d.cantidad as cantidad, d.precio_unitario as precio from cg.compras_detalle as d join cg.materiales as m on m.cod_material=d.codigo_material where id_compra = '.$id);
+       // $listado = ComprasDetalle::on('cg')->where('id_compra',$id)->get();
+        //$listado = DB::select('select d.codigo_material as codigo, m.desc_material as descripcion, m.unidad_material as unidad, d.cantidad as cantidad, d.precio_unitario as precio from cg.compras_detalle as d join cg.materiales as m on m.cod_material=d.codigo_material where id_compra = '.$id);
+
+        $listado = DB::connection('cg')->table('compras_detalle as d')
+        ->selectRaw('d.codigo_material as codigo, m.desc_material as descripcion, m.unidad_material as unidad, 
+        d.cantidad as cantidad, d.precio_unitario as precio')
+        ->join('materiales as m','m.cod_material','d.codigo_material')
+        ->where('d.id_compra',$id)
+        ->get();
+
 
         return view('compras.imprimir_compra',['listado'=>$listado,'fecha'=>$fecha,'user'=>$user,'factura'=>$factura,'ruc'=>$ruc,'tipo'=>$tipo,'total'=>$total,'id'=>$id]);
 

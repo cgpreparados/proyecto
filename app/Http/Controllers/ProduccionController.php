@@ -762,23 +762,20 @@ class ProduccionController extends Controller
         $fecha= '02/04/2021';
         $cantidad =  1;    
 
-        $stock = MaterialesStock::on('cg')->where('codigo_material',$codigo)->get();
+        // $listado = DB::select('select d.codigo_material as codigo, m.desc_material as descripcion, m.unidad_material as unidad, 
+        // d.cantidad as cantidad, d.precio_unitario as precio 
+        // from cg.compras_detalle as d 
+        // join cg.materiales as m on m.cod_material=d.codigo_material 
+        // where id_compra = '.$id);  
 
-        print_r($stock);
+        $listado = DB::connection('cg')->table('compras_detalle as d')
+        ->selectRaw('d.codigo_material as codigo, m.desc_material as descripcion, m.unidad_material as unidad, 
+        d.cantidad as cantidad, d.precio_unitario as precio')
+        ->join('materiales as m','m.cod_material','d.codigo_material')
+        ->where('d.id_compra',$id)
+        ->get();
 
-        if(is_null($stock)){
-            foreach($stock as $st){
-                $nuevo_stock = $st->cantidad;
-            }
-            $stock = $cantidad + $nuevo_stock;
-            $stock_up = array('cantidad'=>$stock);
-            MaterialesStock::on('cg')->where('codigo_material',$codigo)->update($stock_up);
-        }else{
-            $data = array('codigo_material'=>$codigo,'cantidad'=>$cantidad);
-            MaterialesStock::on('cg')->insert($data);
-        }   
-
-       //print_r($diferencia);
+       print_r($listado);
          
     }
 }
