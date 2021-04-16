@@ -342,7 +342,7 @@ $('#guardar_producto').on('click', function() {
     var dias = $('#new_dias_material').val();
     var tipo = $('#new_tipo_material').val();
 
-    nombre = cambiarNombre(nombre);
+    //nombre = cambiarNombre(nombre);
 
     $.ajaxSetup({
         headers: {
