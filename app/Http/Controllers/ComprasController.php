@@ -49,7 +49,7 @@ class ComprasController extends Controller
             return response()->json($response,200);
         }
 
-        $dataCompra= array('fecha_compra'=>$fecha,'usuario'=>$user,'factura_nro'=>$factura,'factura_tipo'=>$tipo,'id_proveedor'=>$ruc,'factura_total'=>$factura);
+        $dataCompra= array('fecha_compra'=>$fecha,'usuario'=>$user,'factura_nro'=>$factura,'factura_tipo'=>$tipo,'id_proveedor'=>$ruc,'factura_total'=>$total);
         
         Compras::on('cg')->insert($dataCompra);
 
@@ -69,14 +69,19 @@ class ComprasController extends Controller
                     ComprasDetalle::on('cg')->insert($data);
 
                     $stock = MaterialesStock::on('cg')->where('codigo_material',$codigo)->get();
-                    foreach($stock as $st){
-                        $nuevo_stock = $st->cantidad;
+                    if(!(is_null($stock))){
+                        foreach($stock as $st){
+                            $nuevo_stock = $st->cantidad;
+                        }
+                        $stock = $cantidad + $nuevo_stock;
+                        $stock_up = array('cantidad'=>$stock);
+                        MaterialesStock::on('cg')->where('codigo_material',$codigo)->update($stock_up);
+                    }else{
+                        $data = array('codigo_material'=>$codigo,'cantidad'=>$cantidad);
+                        MaterialesStock::on('cg')->insert($data);
                     }
 
-                    $stock = $cantidad + $nuevo_stock;
-
-                    $stock_up = array('cantidad'=>$stock);
-                    MaterialesStock::on('cg')->where('codigo_material',$codigo)->update($stock_up);
+                   
 
                     $justificacion = 'Compra Nro.'.$id;
 
