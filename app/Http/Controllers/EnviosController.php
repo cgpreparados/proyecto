@@ -58,7 +58,14 @@ class EnviosController extends Controller
             $codigo = $list['codigo'];
             $cantidad = $list['cantidad'];
             if(!(is_null($codigo))){
-                $stock = DB::select('SELECT COUNT(*) as stock FROM cg.lotes AS l WHERE l.en_stock=1 AND l.cod_material="'. $codigo.'"');
+               // $stock = DB::select('SELECT COUNT(*) as stock FROM cg.lotes AS l WHERE l.en_stock=1 AND l.cod_material="'. $codigo.'"');
+
+                $listado = DB::connection('cg')->table('lotes as l')
+                ->selectRaw('COUNT(*) as stock')
+                ->where('l.en_stock',1)
+                ->where('l.cod_material',$codigo)
+                ->get();
+
                 foreach($stock as $st){
                     $en_stock = $st->stock;
                 }
@@ -81,7 +88,14 @@ class EnviosController extends Controller
         $id = Envios::on('cg')->select('id_envio')->orderBy('id_envio','desc')->first();
         $id = $id['id_envio'];
 
-        $factura = DB::select('SELECT ultima_factura as factura, id_timbrado as timbrado from cg.datos_factura order by id_timbrado desc limit 1');
+        //$factura = DB::select('SELECT ultima_factura as factura, id_timbrado as timbrado from cg.datos_factura order by id_timbrado desc limit 1');
+
+        $listado = DB::connection('cg')->table('datos_factura')
+        ->selectRaw('ultima_factura as factura, id_timbrado as timbrado')
+        ->orderBy('id_timbrado','desc')
+        ->limit(1)
+        ->get();
+
         foreach($factura as $fac){
             $nro_factura = $fac->factura;
             $timbrado = $fac->timbrado;
@@ -167,18 +181,34 @@ class EnviosController extends Controller
         $direccion = Clientes::on('cg')->select('direccion_cliente')->where('id_cliente',$cliente)->first();
         $direccion = $direccion['direccion_cliente']; 
 
-        $detalle = DB::select( "SELECT m.cod_material as codigo, l.nro as nro , m.desc_material as descripcion,l.cantidad as cantidad,m.unidad_material as unidad,
-        l.fecha_lote as fecha,l.orden_produccion as op FROM cg.envios as e 
-        JOIN cg.lotes_envios as le on le.id_envio=e.id_envio 
-        JOIN cg.lotes as l on le.id_lote=l.id_lote 
-        JOIN cg.materiales as m on l.cod_material=m.cod_material 
-        WHERE e.id_envio= ".$id);
+        // $detalle = DB::select( "SELECT m.cod_material as codigo, l.nro as nro , m.desc_material as descripcion,l.cantidad as cantidad,m.unidad_material as unidad,
+        // l.fecha_lote as fecha,l.orden_produccion as op FROM cg.envios as e 
+        // JOIN cg.lotes_envios as le on le.id_envio=e.id_envio 
+        // JOIN cg.lotes as l on le.id_lote=l.id_lote 
+        // JOIN cg.materiales as m on l.cod_material=m.cod_material 
+        // WHERE e.id_envio= ".$id);
 
-        $total = DB::select("SELECT m.cod_material as codigo, m.desc_material as descripcion, e.cantidad as cantidad, 
-        m.unidad_material as unidad
-        FROM cg.envios_detalle as e
-        JOIN cg.materiales as m on e.codigo_material=m.cod_material
-        WHERE e.id_envio=".$id);
+        $detalle = DB::connection('cg')->table('envios as e')
+        ->selectRaw('m.cod_material as codigo, l.nro as nro , m.desc_material as descripcion,l.cantidad as cantidad,m.unidad_material as unidad,
+        l.fecha_lote as fecha,l.orden_produccion as op')
+        ->join('lotes_envios as le','le.id_envio','e.id_envio')
+        ->join('lotes as l','le.id_lote','l.id_lote')
+        ->join('materiales as m','m.cod_material','l.cod_material')
+        ->where('e.id_envio',$id)
+        ->get();
+
+        // $total = DB::select("SELECT m.cod_material as codigo, m.desc_material as descripcion, e.cantidad as cantidad, 
+        // m.unidad_material as unidad
+        // FROM cg.envios_detalle as e
+        // JOIN cg.materiales as m on e.codigo_material=m.cod_material
+        // WHERE e.id_envio=".$id);
+
+        $total = DB::connection('cg')->table('envios_detalle as e')
+        ->selectRaw('m.cod_material as codigo, m.desc_material as descripcion, e.cantidad as cantidad, 
+        m.unidad_material as unidad')
+        ->join('materiales as m','m.cod_material','e.codigo_material')
+        ->where('e.id_envio',$id)
+        ->get();
 
 
         return view('envios.imprimir_envios',['detalle'=>$detalle,'destino'=>$destino,'total'=>$total,'direccion'=>$direccion,'id'=>$id,'fecha'=>$fecha,'user'=>$user]);

@@ -762,17 +762,17 @@ class ProduccionController extends Controller
         $fecha= '02/04/2021';
         $cantidad =  1;    
 
-        // $listado = DB::select('select d.codigo_material as codigo, m.desc_material as descripcion, m.unidad_material as unidad, 
-        // d.cantidad as cantidad, d.precio_unitario as precio 
-        // from cg.compras_detalle as d 
-        // join cg.materiales as m on m.cod_material=d.codigo_material 
-        // where id_compra = '.$id);  
+        // $total = DB::select("SELECT m.cod_material as codigo, m.desc_material as descripcion, e.cantidad as cantidad, 
+        // m.unidad_material as unidad
+        // FROM cg.envios_detalle as e
+        // JOIN cg.materiales as m on e.codigo_material=m.cod_material
+        // WHERE e.id_envio=".$id);
 
-        $listado = DB::connection('cg')->table('compras_detalle as d')
-        ->selectRaw('d.codigo_material as codigo, m.desc_material as descripcion, m.unidad_material as unidad, 
-        d.cantidad as cantidad, d.precio_unitario as precio')
-        ->join('materiales as m','m.cod_material','d.codigo_material')
-        ->where('d.id_compra',$id)
+        $listado = DB::connection('cg')->table('envios_detalle as e')
+        ->selectRaw('m.cod_material as codigo, m.desc_material as descripcion, e.cantidad as cantidad, 
+        m.unidad_material as unidad')
+        ->join('materiales as m','m.cod_material','e.codigo_material')
+        ->where('e.id_envio',$id)
         ->get();
 
        print_r($listado);
