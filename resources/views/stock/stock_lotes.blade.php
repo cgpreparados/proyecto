@@ -39,8 +39,8 @@
                                 @foreach($listado as $list)
                                     <tr id="ver_detalle">
                                         <td >{{$list['codigo']}}</td>
-                                        <td>{{$list->descripcion}}</td>
-                                        <td>{{$list->cantidad}}</td>
+                                        <td>{{$list->['descripcion']}}</td>
+                                        <td>{{$list->['cantidad']}}</td>
                                         <td>UN.</td>
                                     </tr>
                                 @endforeach
