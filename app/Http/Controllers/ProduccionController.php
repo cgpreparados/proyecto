@@ -760,21 +760,25 @@ class ProduccionController extends Controller
         $lote = 1;
         $now = date('Y-m-d');
         $fecha= '02/04/2021';
+        $cantidad =  1;    
 
-        // $listado = DB::select('SELECT l.codigo_material as codigo, m.desc_material as descripcion, l.cantidad as cantidad,
-        // m.unidad_material as unidad, l.observacion as observacion,l.fecha as fecha, l.operacion as operacion, l.user as user 
-        // from cg.materiales_operaciones as l 
-        // join cg.materiales as m on m.cod_material=l.codigo_material 
-        // where l.id_operacion_head='.$id);
+        $stock = MaterialesStock::on('cg')->where('codigo_material',$codigo)->get();
 
-        $diferencia = DB::connection('cg')->table('materiales_operaciones as l')
-        ->selectRaw('l.codigo_material as codigo, m.desc_material as descripcion, l.cantidad as cantidad,
-        m.unidad_material as unidad, l.observacion as observacion,l.fecha as fecha, l.operacion as operacion, l.user as user')
-        ->join('materiales as m','m.cod_material','l.codigo_material')
-        ->where('l.id_operacion_head', $id)
-        ->get();        
+        print_r($stock);
 
-       print_r($diferencia);
+        if(is_null($stock)){
+            foreach($stock as $st){
+                $nuevo_stock = $st->cantidad;
+            }
+            $stock = $cantidad + $nuevo_stock;
+            $stock_up = array('cantidad'=>$stock);
+            MaterialesStock::on('cg')->where('codigo_material',$codigo)->update($stock_up);
+        }else{
+            $data = array('codigo_material'=>$codigo,'cantidad'=>$cantidad);
+            MaterialesStock::on('cg')->insert($data);
+        }   
+
+       //print_r($diferencia);
          
     }
 }
