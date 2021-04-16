@@ -759,20 +759,18 @@ class ProduccionController extends Controller
         $id=1;
         $lote = 1;
         $now = date('Y-m-d');
-        $fecha= '02/04/2021';
+        $fecha_inicio= '02/04/2021';
+        $fecha_fin= '05/04/2021';
         $cantidad =  1;    
 
-        // $total = DB::select("SELECT m.cod_material as codigo, m.desc_material as descripcion, e.cantidad as cantidad, 
-        // m.unidad_material as unidad
-        // FROM cg.envios_detalle as e
-        // JOIN cg.materiales as m on e.codigo_material=m.cod_material
-        // WHERE e.id_envio=".$id);
+        // $total = DB::select('SELECT SUM( f.total_factura) as total
+        //     FROM cg.factura as f
+        //     where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'"');
 
-        $listado = DB::connection('cg')->table('envios_detalle as e')
-        ->selectRaw('m.cod_material as codigo, m.desc_material as descripcion, e.cantidad as cantidad, 
-        m.unidad_material as unidad')
-        ->join('materiales as m','m.cod_material','e.codigo_material')
-        ->where('e.id_envio',$id)
+        $total = DB::connection('cg')->table('factura as f')
+        ->selectRaw('SUM( f.total_factura) as total')
+        ->where('f.fecha','>=',$fecha_inicio)
+        ->where('f.fecha','<=',$fecha_fin)
         ->get();
 
        print_r($listado);

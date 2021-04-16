@@ -19,11 +19,20 @@ class FacturaController extends Controller
 {
     public function factura(Int $id, Int $tipo){
 
-        $datos = DB::select('SELECT f.fecha as fecha , c.nombre_cliente as cliente, c.ruc_cliente as ruc, c.direccion_cliente as direccion,
+        // $datos = DB::select('SELECT f.fecha as fecha , c.nombre_cliente as cliente, c.ruc_cliente as ruc, c.direccion_cliente as direccion,
+        // t.timbrado as timbrado, t.fecha_vigencia as fecha_inicio, t.fecha_fin as fin,f.nota_envio as envio, f.nro_factura as factura, 
+        // total_factura as total, f.id_factura as idf FROM cg.factura as f
+        // JOIN cg.clientes as c on c.id_cliente = f.cliente
+        // JOIN cg.datos_factura as t on t.id_timbrado = f.timbrado where id_factura='.$id);
+
+        $datos = DB::connection('cg')->table('factura as f')
+        ->selectRaw('f.fecha as fecha , c.nombre_cliente as cliente, c.ruc_cliente as ruc, c.direccion_cliente as direccion,
         t.timbrado as timbrado, t.fecha_vigencia as fecha_inicio, t.fecha_fin as fin,f.nota_envio as envio, f.nro_factura as factura, 
-        total_factura as total, f.id_factura as idf FROM cg.factura as f
-        JOIN cg.clientes as c on c.id_cliente = f.cliente
-        JOIN cg.datos_factura as t on t.id_timbrado = f.timbrado where id_factura='.$id);
+        total_factura as total, f.id_factura as idf')
+        ->join('clientes as c','c.id_cliente','f.cliente')
+        ->join('datos_factura as t','t.id_timbrado','f.timbrado')
+        ->where('f.id_factura',$id)
+        ->get();
 
         foreach($datos as $data){
             $fecha = $data->fecha;
@@ -57,13 +66,18 @@ class FacturaController extends Controller
         }
 
 
-        $detalle = DB::select('SELECT m.cod_material as codigo, m.desc_material as descripcion, f.cantidad as cantidad,
-        m.unidad_material as unidad, f.precio as precio, (f.precio * f.cantidad) as total
-        FROM cg.factura_detalles as f
-        JOIN cg.materiales as m on m.cod_material=f.codigo_material
-        WHERE f.id_factura='.$idf);
+        // $detalle = DB::select('SELECT m.cod_material as codigo, m.desc_material as descripcion, f.cantidad as cantidad,
+        // m.unidad_material as unidad, f.precio as precio, (f.precio * f.cantidad) as total
+        // FROM cg.factura_detalles as f
+        // JOIN cg.materiales as m on m.cod_material=f.codigo_material
+        // WHERE f.id_factura='.$idf);
 
-        
+        $detalle = DB::connection('cg')->table('factura_detalles as f')
+        ->selectRaw('m.cod_material as codigo, m.desc_material as descripcion, f.cantidad as cantidad,
+        m.unidad_material as unidad, f.precio as precio, (f.precio * f.cantidad) as total')
+        ->join('materiales as m','m.cod_material','f.codigo_material')
+        ->where('f.id_factura',$id)
+        ->get();
 
         return view('factura.factura',['total'=>$detalle, 'subtotal'=>$subtotal,
         'tipo'=>$tipo,'fecha'=>$fecha,'cliente'=>$cliente,'ruc'=>$ruc,'direccion'=>$direccion,
@@ -83,29 +97,61 @@ class FacturaController extends Controller
         $cliente = $request['cliente'];
 
         if($cliente == 0){
-            $listado = DB::select('SELECT f.fecha as fecha , c.nombre_cliente as cliente, f.nro_factura as factura, 
-            total_factura as total, f.id_factura as idf 
-            FROM cg.factura as f
-            JOIN cg.clientes as c on c.id_cliente = f.cliente
-            where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'"');
+            // $listado = DB::select('SELECT f.fecha as fecha , c.nombre_cliente as cliente, f.nro_factura as factura, 
+            // total_factura as total, f.id_factura as idf 
+            // FROM cg.factura as f
+            // JOIN cg.clientes as c on c.id_cliente = f.cliente
+            // where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'"');
 
-            $total = DB::select('SELECT SUM( f.total_factura) as total
-            FROM cg.factura as f
-            where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'"');
+            $listado = DB::connection('cg')->table('factura as f')
+            ->selectRaw('f.fecha as fecha , c.nombre_cliente as cliente, f.nro_factura as factura, 
+            total_factura as total, f.id_factura as idf')
+            ->join('clientes as c','c.id_cliente','f.cliente')
+            ->where('f.fecha','>=',$fecha_inicio)
+            ->where('f.fecha','<=',$fecha_fin)
+            ->get();
+
+            // $total = DB::select('SELECT SUM( f.total_factura) as total
+            // FROM cg.factura as f
+            // where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'"');
+
+            $total = DB::connection('cg')->table('factura as f')
+            ->selectRaw('SUM( f.total_factura) as total')
+            ->where('f.fecha','>=',$fecha_inicio)
+            ->where('f.fecha','<=',$fecha_fin)
+            ->get();
+
             foreach($total as $st){
                 $gs_total = $st->total;
             }
             $total = number_format($gs_total, 0,',','.');
         }else{
-            $listado = DB::select('SELECT f.fecha as fecha , c.nombre_cliente as cliente, f.nro_factura as factura, 
-            total_factura as total, f.id_factura as idf 
-            FROM cg.factura as f
-            JOIN cg.clientes as c on c.id_cliente = f.cliente
-            where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'" and f.cliente='.$cliente);
+            // $listado = DB::select('SELECT f.fecha as fecha , c.nombre_cliente as cliente, f.nro_factura as factura, 
+            // total_factura as total, f.id_factura as idf 
+            // FROM cg.factura as f
+            // JOIN cg.clientes as c on c.id_cliente = f.cliente
+            // where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'" and f.cliente='.$cliente);
 
-            $total = DB::select('SELECT SUM( f.total_factura) as total
-            FROM cg.factura as f
-            where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'"and f.cliente='.$cliente);
+            $listado = DB::connection('cg')->table('factura as f')
+            ->selectRaw('f.fecha as fecha , c.nombre_cliente as cliente, f.nro_factura as factura, 
+            total_factura as total, f.id_factura as idf')
+            ->join('clientes as c','c.id_cliente','f.cliente')
+            ->where('f.fecha','>=',$fecha_inicio)
+            ->where('f.fecha','<=',$fecha_fin)
+            ->where('f.cliente',$cliente)
+            ->get();
+
+            // $total = DB::select('SELECT SUM( f.total_factura) as total
+            // FROM cg.factura as f
+            // where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'"and f.cliente='.$cliente);
+
+            $total = DB::connection('cg')->table('factura as f')
+            ->selectRaw('SUM( f.total_factura) as total')
+            ->where('f.fecha','>=',$fecha_inicio)
+            ->where('f.fecha','<=',$fecha_fin)
+            ->where('f.cliente',$cliente)
+            ->get();
+
             foreach($total as $st){
                 $gs_total = $st->total;
             }
