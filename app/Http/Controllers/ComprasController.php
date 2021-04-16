@@ -145,7 +145,7 @@ class ComprasController extends Controller
 
     public function impresiones_compra(){
         
-        return view('Compras.impresiones_compras');
+        return view('compras.impresiones_compras');
     }
 
 }
