@@ -689,8 +689,7 @@ class ProduccionController extends Controller
 
         $listado = DB::connection('cg')
         ->table('lotes as l')
-        ->selectRaw('l.fecha_lote as fecha_elab, l.cod_material as codigo, l.nro as lote, 
-        l.orden_produccion as orden, l.cantidad as cantidad, m.desc_material as descri, l.fecha_vencimiento as fecha_vto')
+        ->selectRaw('l.lote_nro as lote, l.id_lote as id, l.fecha_lote as fecha_elab,m.desc_material as descripcion,l.cantidad as cantidad')
         ->join('materiales as m','m.cod_material','l.cod_material')
         ->where('l.lote_nro',$lote)
         ->orderBy('l.id_lote','desc')
@@ -767,12 +766,15 @@ class ProduccionController extends Controller
         //     FROM cg.factura as f
         //     where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'"');
 
-        $total = DB::connection('cg')->table('factura as f')
-        ->selectRaw('SUM( f.total_factura) as total')
-        ->where('f.fecha','>=',$fecha_inicio)
-        ->where('f.fecha','<=',$fecha_fin)
+        $listado = DB::connection('cg')
+        ->table('lotes as l')
+        ->selectRaw('l.fecha_lote as fecha_elab, l.cod_material as codigo, l.nro as lote, 
+        l.orden_produccion as orden, l.cantidad as cantidad, m.desc_material as descri, l.fecha_vencimiento as fecha_vto')
+        ->join('materiales as m','m.cod_material','l.cod_material')
+        ->where('l.lote_nro',$lote)
+        ->orderBy('l.id_lote','desc')
+        ->limit(50)
         ->get();
-
        print_r($listado);
          
     }
