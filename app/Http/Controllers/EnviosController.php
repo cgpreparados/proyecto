@@ -60,7 +60,7 @@ class EnviosController extends Controller
             if(!(is_null($codigo))){
                // $stock = DB::select('SELECT COUNT(*) as stock FROM cg.lotes AS l WHERE l.en_stock=1 AND l.cod_material="'. $codigo.'"');
 
-                $listado = DB::connection('cg')->table('lotes as l')
+                $stock = DB::connection('cg')->table('lotes as l')
                 ->selectRaw('COUNT(*) as stock')
                 ->where('l.en_stock',1)
                 ->where('l.cod_material',$codigo)
