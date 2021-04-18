@@ -90,7 +90,7 @@ class EnviosController extends Controller
 
         //$factura = DB::select('SELECT ultima_factura as factura, id_timbrado as timbrado from cg.datos_factura order by id_timbrado desc limit 1');
 
-        $listado = DB::connection('cg')->table('datos_factura')
+        $factura = DB::connection('cg')->table('datos_factura')
         ->selectRaw('ultima_factura as factura, id_timbrado as timbrado')
         ->orderBy('id_timbrado','desc')
         ->limit(1)
