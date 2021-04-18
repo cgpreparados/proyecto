@@ -108,7 +108,7 @@ $('#tabla_impresion ').on('click', '#imprimir', function() {
     var id = $(this).closest('tr').find('td').eq(0).text();
 
 
-    var url = "/proyecto/public/factura/" + id + "/1";
+    var url = "{{route('factura')}}" + id + "/1";
     window.open(url, '_blank');
 
 
