@@ -769,31 +769,24 @@ class ProduccionController extends Controller
         $month = date('m',$fechas);
         $year = date('Y',$fechas);
 
-        //echo $fechas;
-        //echo $month;
-        // echo $year;
+        $stock = MaterialesStock::on('cg')->where('codigo_material',$codigo)->get();
 
-        $contenedor = DB::connection('cg')
-                ->table('lotes')
-                ->selectRaw('COUNT(*) as num')
-                ->whereMonth('fecha_lote',$month)
-                ->whereYear('fecha_lote',$year)
-                ->where('cod_material',$material)
-                ->get();
+      //  print_r($stock);               
+        if(!(is_null($stock))){
+            echo 'null';
+            foreach($stock as $st){
+                $nuevo_stock = $st->cantidad;
+            }
+            $stock = $cantidad + $nuevo_stock;
+            $stock_up = array('cantidad'=>$stock);
+            MaterialesStock::on('cg')->where('codigo_material',$codigo)->update($stock_up);
+        }else{
+            $data = array('codigo_material'=>$codigo,'cantidad'=>$cantidad);
+            echo 'insert';
+           // MaterialesStock::on('cg')->insert($data);
+        }            
 
-                print_r($contenedor);
-
-                foreach($contenedor as $cont){
-                    $conta = $cont->num;
-                }
-                
-                if(is_null($conta)){
-                    $contenedor = 1;
-                }else{
-                    $contenedor = $conta +1;
-                }
-
-            echo $contenedor;
+            //echo $contenedor;
          
     }
 }

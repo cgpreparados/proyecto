@@ -69,7 +69,8 @@ class ComprasController extends Controller
                     ComprasDetalle::on('cg')->insert($data);
 
                     $stock = MaterialesStock::on('cg')->where('codigo_material',$codigo)->get();
-                    if(is_null($stock)){
+
+                    if(!(is_null($stock))){
                         foreach($stock as $st){
                             $nuevo_stock = $st->cantidad;
                         }
