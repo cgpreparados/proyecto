@@ -103,8 +103,13 @@ class EnviosController extends Controller
         
 
         $id_factura = Factura::on('cg')->select('id_factura')->orderBy('id_factura','desc')->first();
-        $id_factura = $id_factura['id_factura'];
-        $id_factura=$id_factura+1;
+        if(is_null($id_factura)){
+            $id_factura=1;
+        }else{
+            $id_factura = $id_factura['id_factura'];
+             $id_factura=$id_factura+1;
+        }
+        
         
         $totalFactura = 0;
         foreach($listado as $list){
