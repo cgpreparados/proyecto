@@ -377,7 +377,7 @@ class ProduccionController extends Controller
 
                 $fechas = strtotime($fecha);
                 $month = date('m',$fechas);
-                $year = date('y',$fechas);
+                $year = date('Y',$fechas);
 
                 //$contenedor = DB::select('select COUNT(*) as num from cg.lotes where MONTH(CAST(fecha_lote as DATE)) = '.$month.' and cod_material="'. $material.'"');
 
@@ -752,30 +752,48 @@ class ProduccionController extends Controller
 
     public function prueba(){
 
+      
+
         $year=2021;
-        $month=05;
+        $month=04;
         $codigo = '01-01-01001';
         $id=1;
         $lote = 1;
         $now = date('Y-m-d');
-        $fecha_inicio= '02/04/2021';
+        $fecha= '2021/04/18';
         $fecha_fin= '05/04/2021';
         $cantidad =  1;    
+        $material='100-01-01001';
 
-        // $total = DB::select('SELECT SUM( f.total_factura) as total
-        //     FROM cg.factura as f
-        //     where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'"');
+        $fechas = strtotime($fecha);
+        $month = date('m',$fechas);
+        $year = date('Y',$fechas);
 
-        $listado = DB::connection('cg')
-        ->table('lotes as l')
-        ->selectRaw('l.fecha_lote as fecha_elab, l.cod_material as codigo, l.nro as lote, 
-        l.orden_produccion as orden, l.cantidad as cantidad, m.desc_material as descri, l.fecha_vencimiento as fecha_vto')
-        ->join('materiales as m','m.cod_material','l.cod_material')
-        ->where('l.lote_nro',$lote)
-        ->orderBy('l.id_lote','desc')
-        ->limit(50)
-        ->get();
-       print_r($listado);
+        //echo $fechas;
+        //echo $month;
+        // echo $year;
+
+        $contenedor = DB::connection('cg')
+                ->table('lotes')
+                ->selectRaw('COUNT(*) as num')
+                ->whereMonth('fecha_lote',$month)
+                ->whereYear('fecha_lote',$year)
+                ->where('cod_material',$material)
+                ->get();
+
+                print_r($contenedor);
+
+                foreach($contenedor as $cont){
+                    $conta = $cont->num;
+                }
+                
+                if(is_null($conta)){
+                    $contenedor = 1;
+                }else{
+                    $contenedor = $conta +1;
+                }
+
+            echo $contenedor;
          
     }
 }
