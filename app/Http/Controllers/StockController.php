@@ -332,12 +332,14 @@ class StockController extends Controller
                 }
 
                 $stock = MaterialesStock::on('cg')->where('codigo_material',$codigo)->get();
-                if(is_null($stock)){
+
+            
+                foreach($stock as $st){
+                    $en_stock = $st->cantidad;
+                }
+                
+                if(is_null($en_stock)){
                     $en_stock=0;
-                }else{
-                    foreach($stock as $st){
-                        $en_stock = $st->cantidad;
-                    }
                 }
                 
                 if($tipo == "BAJA"){
