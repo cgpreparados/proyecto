@@ -8,12 +8,12 @@
   <div class="content">
     <div class="container">
       <div class="row">
-        <div class="col-md-5 ml-auto">
+        <!--div class="col-md-5 ml-auto">
           <div class="info-area info-horizontal mt-5">
             <div class="icon icon-primary">
               <i class="now-ui-icons media-2_sound-wave"></i>
             </div>
-            <!--div class="description">
+            <div class="description">
               <h5 class="info-title">{{ __('Marketing') }}</h5>
               <p class="description">
                 {{ __("We've created the marketing campaign of the website. It was a very interesting collaboration.") }}
@@ -40,10 +40,10 @@
               <p class="description">
                 {{ __('There is also a Fully Customizable CMS Admin Dashboard for this product.') }}
               </p>
-            </div!-->
+            </div>
           </div>
-        </div>
-        <div class="col-md-4 mr-auto">
+        </div!-->
+        <div class="col-md-4 ml-auto mr-auto">
           <div class="card card-signup text-center">
             <div class="card-header ">
               <h4 class="card-title">{{ __('Registrar Nuevo Usuario') }}</h4>
