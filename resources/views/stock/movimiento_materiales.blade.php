@@ -38,7 +38,7 @@
                     <div class="col-md-5" style="float:left; display:inline-block;">
                         <label for="">Material:</label>
                         <select id="add_mat_movimiento" class='form-control'>
-                        <option value="">Seleccionar</option>
+                        <option value="0">Seleccionar</option>
                             @foreach($elegir as $el)
                             <option value="{{$el->cod_material}}">{{$el->desc_material}}</option>
                             @endforeach
