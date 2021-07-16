@@ -38,7 +38,7 @@
                     <div class="col-md-5" style="float:left; display:inline-block;">
                         <label for="">Material:</label>
                         <select id="add_mat_movimiento" class='form-control'>
-                        
+                            <<option value="0">Seleccionar</option>
                             @foreach($elegir as $el)
                             <option value="{{$el->cod_material}}">{{$el->desc_material}}</option>
                             @endforeach
@@ -86,6 +86,47 @@
 </div>
 
 <script>
+//----------------------------AGREGAR PRODUCTOS AL LISTADO---------------------------------//
+
+$('#add_mat_movimiento').change(function() {
+    var nuevaFila = "";
+    var descripcion = $("#add_mat_movimiento option:selected").text();
+    var codigo = $("#add_mat_movimiento").val();
+    var cantidad = 0;
+    var unidad = "";
+    var enviar = {
+        "codigo": codigo
+    };
+    var observacion = "";
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: "POST",
+        url: "{{route('detalle_rutas_add')}}",
+        data: {
+            codigo: codigo
+        },
+        success: function(r) {
+            //alert(r);
+            unidad = r;
+            nuevaFila += "<tr>";
+            nuevaFila += "<td >" + codigo + " </td>";
+            nuevaFila += "<td>" + descripcion + " </td>";
+            nuevaFila += "<td contenteditable='true'>" + cantidad + " </td>";
+            nuevaFila += "<td>" + unidad + " </td>";
+            nuevaFila += "<td contenteditable='true'" + observacion + " </td>";
+            nuevaFila += "<td><center><a id='eliminar'>" +
+                "<i class='now-ui-icons ui-1_simple-remove'></i>" + " </a></center></td>";
+            nuevaFila += "</tr>";
+            $("#tabla_movimiento").append(nuevaFila);
+        }
+    });
+    return false;
+});
+
 
 //----------------------------ELIMINAR PRODUCTOS DEL LISTADO DE MOVIMIENTOS---------------------------------//
 
