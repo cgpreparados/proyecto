@@ -754,7 +754,7 @@ class ProduccionController extends Controller
 
       
 
-        $codigo='01-01-01002 ';
+        $codigo='01-01-01003 ';
         $tipo='ALTA';
         $cantidad=2;
 
