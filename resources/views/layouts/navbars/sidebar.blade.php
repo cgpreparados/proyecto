@@ -244,7 +244,7 @@
             @if((auth()->user()->type) == 1 )
             <li class="@if ($activePage == 'register') active @endif">
                 <a href="{{ route('register') }}">
-                    <i class="now-ui-icons ui-1_send"></i>
+                    <i class="now-ui-icons users_single-02"></i>
                     <p> {{ __("Registrar Usuario") }} </p>
                 </a>
             </li>
