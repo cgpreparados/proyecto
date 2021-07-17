@@ -754,33 +754,37 @@ class ProduccionController extends Controller
 
       
 
-        $year=2021;
-        $month=04;
-        $codigo = '01-01-01001';
-        $id=1;
-        $lote = 1;
-        $now = date('Y-m-d');
-        $fecha= '2021/04/18';
-        $fecha_fin= '05/04/2021';
-        $cantidad =  1;    
-        $material='100-01-01001';
+        $codigo='01-01-01002 ';
+        $tipo='ALTA';
+        $cantidad=2;
 
-        $fechas = strtotime($fecha);
-        $month = date('m',$fechas);
-        $year = date('Y',$fechas);
+        // $data = array('codigo_material'=>$codigo, 'cantidad'=>0);
+        // MaterialesStock::on('cg')->insert($data);
 
-        $listado = DB::connection('cg')->table('lotes as l')
-        ->selectRaw('COUNT(*) as stock')
-        ->where('l.en_stock',1)
-        ->where('l.cod_material',$material)
-        ->get();
+        $stock = MaterialesStock::on('cg')->where('codigo_material',$codigo)->get();
 
-        print_r($listado);
-        foreach($stock as $st){
-            $en_stock = $st->stock;
-        }         
+       // print_r ($stock);
+        //exit();
 
-            //echo $contenedor;
-         
+        if(is_null($stock)){
+            $en_stock=0;
+        }else{
+            //echo 'no vacio';
+            foreach($stock as $st){
+                $en_stock = $st->cantidad;
+            }
+        }
+         //echo $en_stock;       
+                
+                if(is_null($en_stock)){
+                    $en_stock=0;
+                }
+                
+                if($tipo == "BAJA"){
+                    $stock = $en_stock - $cantidad;
+                }else{
+                    $stock = $en_stock + $cantidad;
+                }
+         echo $stock;
     }
 }

@@ -29,7 +29,7 @@ class EnviosController extends Controller
         return view('envios.nuevo_envio',['materiales'=>$materiales,'cliente'=>$clientes]);
     }
 
-    public function guardar_envio(Request $request){
+    public function guardar_envio(Request $request){ 
         $request = $request->all();
 
         $user = $request['user'];

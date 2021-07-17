@@ -36,7 +36,7 @@
                     </div>
                     <h4 class="card-title"> Nuevo Envio</h4>
                 </div>
-                <div class="card-header">
+                <div class="card-header"> 
                     <div class="col-md-2" style='float:left; display:inline-block'>
                         <label for="">Fecha:</label>
                         <input type="date" id="fecha" name="" value="" class='form-control'>
