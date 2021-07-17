@@ -48,7 +48,7 @@
                     <div class="table-responsive">
                         <button class="btn btn-default btn-round" data-toggle="modal" data-target="#modalNuevo"><i
                                 class='now-ui-icons ui-1_simple-add'></i> Nuevo </button>
-                        <table class="table" id='tabla_productos'>
+                        <table class="table" id='tabla_clientes'>
                             <thead class=" text-primary">
                                 <th>
                                     Codigo
@@ -140,42 +140,33 @@
                 <table style="font-size: 80%;">
                     <tr>
                         <td><label>Código:</label></td>
-                        <td><input type="text" name="" id="codigo_material"
+                        <td><input type="text" name="" id="codigo_cliente"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
                     <tr>
                         <td><label>Descripción:</label></td>
-                        <td><input type="text" name="" id="desc_material"
+                        <td><input type="text" name="" id="nombre_cliente"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
                     <tr>
                         <td><label>Unidad de Medida:</label></td>
-                        <td><input type="text" name="" id="unidad_material"
+                        <td><input type="text" name="" id="ruc_cliente"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
                     <tr>
                         <td><label>Dias de Vencimiento:</label></td>
-                        <td><input type="text" name="" id="dias_material"
+                        <td><input type="text" name="" id="direccion_cliente"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
-                    </tr>
-                    <tr>
-                        <td><label>Tipo:</label></td>
-                        <td><select id="tipo_material"
-                                style="height: 32px;width: 100%; background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444; line-height: 22px;">
-                                <option value="1">Materia Prima</option>
-                                <option value="2">Producto Base</option>
-                                <option value="3">Producto Terminado</option>
-                            </select></td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="guardar_edicion_producto">Guardar</button>
+                <button type="button" class="btn btn-primary" id="guardar_edicion_cliente">Guardar</button>
             </div>
         </div>
     </div>
@@ -189,27 +180,17 @@ function cambiarNombre(nombre) {
 
 }
 //----------------------------SET DATOS EDICION---------------------------------//
-$('#tabla_productos').on('click', '#editar', function(){
+$('#tabla_clientes').on('click', '#editar', function(){
 
-  var codigo =  $(this).closest('tr').find('td').eq(0).text();
-  var nombre =  $(this).closest('tr').find('td').eq(1).text();
-  var unidad =  $(this).closest('tr').find('td').eq(2).text();
-  var dias   =  $(this).closest('tr').find('td').eq(3).text();
-  var tipo   =  $(this).closest('tr').find('td').eq(4).text();
-
-  if(tipo == "Producto Base"){
-      tipo = 2;
-  }else if(tipo == "Producto Terminado"){
-      tipo = 3;
-  }else if(tipo == "Materia Prima"){
-      tipo = 1;
-  }
-  $('#codigo_material').val(codigo);
-  $('#codigo_material_stay').val(codigo);
-  $('#desc_material').val(nombre);
-  $('#unidad_material').val(unidad);
-  $('#dias_material').val(dias);
-  $('#tipo_material').val(tipo);
+  var codigo     =  $(this).closest('tr').find('td').eq(0).text();
+  var nombre     =  $(this).closest('tr').find('td').eq(1).text();
+  var ruc        =  $(this).closest('tr').find('td').eq(2).text();
+  var direccion  =  $(this).closest('tr').find('td').eq(3).text();
+ 
+  $('#codigo_cliente').val(codigo);
+  $('#nombre_cliente').val(nombre);
+  $('#ruc_cliente').val(ruc);
+  $('#direccion').val(direccion);
 
 });
 
@@ -254,17 +235,16 @@ $('#guardar_cliente').on('click', function() {
 
 });
 
-//----------------------------GUARDAR EDICION MATERIAL---------------------------------//
+//----------------------------GUARDAR EDICION CLIENTE---------------------------------//
 
-$('#guardar_edicion_producto').on('click', function() {
+$('#guardar_edicion_cliente').on('click', function() {
 
-var codigo = $('#codigo_material').val();
-var nombre = $('#desc_material').val();
-var unidad = $('#unidad_material').val();
-var dias = $('#dias_material').val();
-var tipo = $('#tipo_material').val();
+var codigo = $('#codigo_cliente').val();
+var nombre = $('#nombre_cliente').val();
+var ruc = $('#ruc_cliente').val();
+var direccion = $('#direccion_cliente').val();
 
-//nombre = cambiarNombre(nombre);
+
 
 $.ajaxSetup({
     headers: {
@@ -273,13 +253,12 @@ $.ajaxSetup({
 });
 $.ajax({
     type: "POST",
-    url: "{{route('guardar_edicion_productos')}}",
+    url: "{{route('guardar_edicion_cliente')}}",
     data: {
         codigo: codigo,
         nombre: nombre,
-        unidad: unidad,
-        dias: dias,
-        tipo: tipo
+        ruc: ruc,
+        direccion: direccion
     },
     success: function(r) {
         var array = r;

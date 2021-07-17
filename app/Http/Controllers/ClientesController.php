@@ -42,4 +42,29 @@ class ClientesController extends Controller
         return response()->json($response,200);
 
     }
+    public function guardar_edicion_cliente(Request $request){
+
+        $request = $request->all();
+
+        $codigo = $request['codigo'];
+        $nombre = $request['nombre'];
+        $ruc = $request['ruc'];
+        $direccion = $request['direccion'];
+
+        $data = array('nombre_cliente'=>$nombre,'ruc_cliente'=> $ruc,'direccion_cliente'=>$direccion);
+
+        try {
+            Clientes::on('cg')->where('id_cliente',$codigo)->update($data);
+        } catch (Exception $e) {
+            $texto = 'Error al actualizar datos';
+            $response =array('code'=>1,'msg'=>$texto);
+            return response()->json($response,200);
+        }
+
+        $texto='Datos guardados correctamente';
+        $response =array('code'=>0,'msg'=>$texto);
+
+        return response()->json($response,200);
+
+    }
 }
