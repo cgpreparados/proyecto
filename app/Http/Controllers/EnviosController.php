@@ -232,7 +232,7 @@ class EnviosController extends Controller
         $cliente = $request['cliente'];
 
         if($cliente != 0){
-            $listado = Envios::on('cg')->where('fecha_envio','>=',$fecha_inicio)->where('fecha_envio','<=',$fecha_fin)->where('cliente',$cliente)->get();
+            $listado = Envios::on('cg')->where('fecha_envio','>=',$fecha_inicio)->where('fecha_envio','<=',$fecha_fin)->where('destino',$cliente)->get();
         }else{
             $listado = Envios::on('cg')->where('fecha_envio','>=',$fecha_inicio)->where('fecha_envio','<=',$fecha_fin)->get();
         }
