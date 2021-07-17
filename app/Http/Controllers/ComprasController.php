@@ -11,6 +11,7 @@ use App\Models\MaterialesStock;
 use App\Models\MaterialesOperaciones;
 use App\Models\Compras;
 use App\Models\ComprasDetalle;
+use App\Models\Proveedores;
 
 class ComprasController extends Controller
 {
