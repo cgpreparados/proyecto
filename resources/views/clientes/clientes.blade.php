@@ -113,7 +113,7 @@
                     </tr>
                     <tr>
                         <td><label>Dirección:</label></td>
-                        <td><input type="text" name="" id="new_dirección_cliente"
+                        <td><input type="text" name="" id="new_direccion_cliente"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
@@ -212,76 +212,7 @@ $('#tabla_productos').on('click', '#editar', function(){
   $('#tipo_material').val(tipo);
 
 });
-//----------------------------ELIMINAR PRODUCTOS ---------------------------------//
 
-$('#tabla_productos').on('click', '#eliminar', function() {
-
-    var codigo = $(this).closest('tr').find('td').eq(0).text();
-    var fila = $(this).closest('tr');
-   // alert(codigo);
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        type: "POST",
-        url: "{{route('inhabilitar_productos')}}",
-        data: {
-            codigo: codigo
-        },
-        success: function(r) {
-            var array = r;
-            if (array.code == 0) {
-                fila.css('color', 'Red');
-                document.getElementById('notificacion_varias').style.display = 'block';
-                document.getElementById('texto_noti').innerHTML = 'Producto inhabilitado';
-            } else {
-                document.getElementById('notificacion_error').style.display = 'block';
-                document.getElementById('texto_error').innerHTML = 'array.msg';
-            }
-
-
-        }
-    });
-
-});
-
-//----------------------------HABILITAR PRODUCTOS ---------------------------------//
-
-$('#tabla_productos').on('click', '#habilitar', function() {
-
-    var codigo = $(this).closest('tr').find('td').eq(0).text();
-    var fila = $(this).closest('tr');
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        type: "POST",
-        url: "{{route('habilitar_productos')}}",
-        data: {
-            codigo: codigo
-        },
-        success: function(r) {
-            var array = r;
-            if (array.code == 0) {
-                fila.css('color', 'black');
-                document.getElementById('notificacion_varias').style.display = 'block';
-                document.getElementById('texto_noti').innerHTML = 'Producto habilitado';
-            } else {
-                document.getElementById('notificacion_error').style.display = 'block';
-                document.getElementById('texto_error').innerHTML = 'array.msg';
-            }
-
-
-        }
-    });
-
-});
 
 //----------------------------GUARDAR NUEVO CLIENTE---------------------------------//
 
