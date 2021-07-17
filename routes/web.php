@@ -114,6 +114,7 @@ Route::post('/calcular_costos', 'App\Http\Controllers\CostosController@calcular_
 //------------------------------CLIENTES----------------------------//
 Route::get('/clientes', 'App\Http\Controllers\ClientesController@clientes')->name('clientes');
 Route::post('/clientes', 'App\Http\Controllers\ClientesController@guardar_cliente')->name('guardar_cliente');
+Route::post('/clientes', 'App\Http\Controllers\ClientesController@guardar_edicion_cliente')->name('guardar_edicion_cliente');
 
 
 Route::group(['middleware' => 'auth'], function () {
