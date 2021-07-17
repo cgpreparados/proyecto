@@ -24,7 +24,7 @@
                         <button type="button" aria-hidden="true" class="close" id='cerrar_noti_orden'>
                             <i class="now-ui-icons ui-1_simple-remove"></i>
                         </button>
-                        <span><b> Guardado - </b> Cliente agregado con exito</span>
+                        <span><b> Guardado - </b> <p id="texto_noti"></p></span>
                     </div>
                     <div class="alert alert-warning" id="notificacion_varias" style="display:none">
                         <button type="button" aria-hidden="true" class="close">
@@ -297,6 +297,7 @@ $.ajax({
         var array = r;
         if (array.code == 0) {
             document.getElementById('notificacion_resultado').style.display = 'block';
+            document.getElementById('texto_noti').innerHTML = array.msg;
             location.reload();
         } else {
             document.getElementById('notificacion_varias').style.display = 'block';
