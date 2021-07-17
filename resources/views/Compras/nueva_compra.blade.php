@@ -53,7 +53,7 @@
                         </select>
                     </div>
                     <div class="col-md-2" style='float:left; display:inline-block'>
-                        <label for="">Destino:</label>
+                        <label for="">Proveedor:</label>
                         <select id="ruc_proveedor" name="" value="" class='form-control'>
                             @foreach($proveedor as $pro)
                             <option value="{{$pro->id_proveedor}}">{{$cli->nombre_proveedor}}</option>
