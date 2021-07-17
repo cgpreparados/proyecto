@@ -34,7 +34,7 @@
                             <p id="texto_noti"></p>
                         </span>
                     </div>
-                    <h4 class="card-title"> Nueva Compra</h4>
+                    <h4 class="card-title"> Registrar Compra</h4>
                 </div>
                 <div class="card-header">
                     <div class="col-md-2" style='float:left; display:inline-block'>
