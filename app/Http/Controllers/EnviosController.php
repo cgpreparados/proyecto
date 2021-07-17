@@ -151,7 +151,7 @@ class EnviosController extends Controller
 
                     LotesEnvios::on('cg')->insert($lotes_envios);
 
-                }
+                } 
 
                 $precio = ProductosPrecio::on('cg')->select('precio_unitario')->where('codigo_material',$codigo)->first();
                 $precio= $precio['precio_unitario'];
@@ -231,7 +231,7 @@ class EnviosController extends Controller
         $fecha_fin = $request['fecha_fin'];
         $cliente = $request['cliente'];
 
-        if($cliente == 0){
+        if($cliente != 0){
             $listado = Envios::on('cg')->where('fecha_envio','>=',$fecha_inicio)->where('fecha_envio','<=',$fecha_fin)->where('cliente',$cliente)->get();
         }else{
             $listado = Envios::on('cg')->where('fecha_envio','>=',$fecha_inicio)->where('fecha_envio','<=',$fecha_fin)->get();
