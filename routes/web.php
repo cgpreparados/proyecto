@@ -118,7 +118,7 @@ Route::post('/guardar_edicion_cliente', 'App\Http\Controllers\ClientesController
 Route::post('/eliminar_cliente', 'App\Http\Controllers\ClientesController@eliminar_cliente')->name('eliminar_cliente')->middleware('auth');
 
 //------------------------------PROVEEDORES----------------------------//
-Route::get('/proveedores', 'App\Http\Controllers\ProveedoresController@proveedroes')->name('proveedroes')->middleware('auth');
+Route::get('/proveedores', 'App\Http\Controllers\ProveedoresController@proveedores')->name('proveedores')->middleware('auth');
 Route::post('/guardar_proveedor', 'App\Http\Controllers\ProveedoresController@guardar_proveedor')->name('guardar_proveedor')->middleware('auth');
 Route::post('/guardar_edicion_proveedor', 'App\Http\Controllers\ProveedoresController@guardar_edicion_proveedor')->name('guardar_edicion_proveedor')->middleware('auth');
 Route::post('/eliminar_proveedor', 'App\Http\Controllers\ProveedoresController@eliminar_proveedor')->name('eliminar_proveedor')->middleware('auth');
