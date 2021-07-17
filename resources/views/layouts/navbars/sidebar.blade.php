@@ -145,8 +145,8 @@
                 </a>
                 <div class="collapse" id="cgCompras">
                     <ul class="nav">
-                        <li class="@if ($activePage == 'nueva_compra') active @endif">
-                            <a href="{{ route('nueva_compra') }}">
+                        <li class="@if ($activePage == 'nuevas_compras') active @endif">
+                            <a href="{{ route('nuevas_compras') }}">
                                 <i class="now-ui-icons shopping_basket"></i>
                                 <p> {{ __("Nueva Compra") }} </p>
                             </a>

@@ -16,11 +16,11 @@ use App\Models\Proveedores;
 class ComprasController extends Controller
 {
 
-    public function nueva_compra(){
+    public function nuevas_compras(){
         $materiales = Materiales::on('cg')->where('activo',1)->where('tipo_material',1)->get();
         $proveedor = Proveedores::on('cg')->get();
 
-        return view('compras.nueva_compra',['materiales'=>$materiales,'proveedor'=>$proveedor]);
+        return view('compras.nuevas_compras',['materiales'=>$materiales,'proveedor'=>$proveedor]);
     }
 
     public function guardar_compra(Request $request){

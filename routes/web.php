@@ -81,7 +81,7 @@ Route::post('/guardar_edicion_productos', 'App\Http\Controllers\ProductosControl
 
 //------------------------------COMPRAS----------------------------//
 //******************************NUEVA COMPRA***************************//
-Route::get('/nueva_compra', 'App\Http\Controllers\ComprasController@nueva_compra')->name('nueva_compra')->middleware('auth');
+Route::get('/nuevas_compras', 'App\Http\Controllers\ComprasController@nuevas_compras')->name('nuevas_compras')->middleware('auth');
 Route::post('/guardar_compra', 'App\Http\Controllers\ComprasController@guardar_compra')->name('guardar_compra')->middleware('auth');
 Route::get('/imprimir_compra/{id}', 'App\Http\Controllers\ComprasController@imprimir_compra')->name('imprimir_compra')->middleware('auth');
 Route::get('/impresiones_compra', 'App\Http\Controllers\ComprasController@impresiones_compra')->name('impresiones_compra')->middleware('auth');
