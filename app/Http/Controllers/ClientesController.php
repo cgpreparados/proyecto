@@ -67,4 +67,27 @@ class ClientesController extends Controller
         return response()->json($response,200);
 
     }
+    public function eliminar_cliente(Request $request){
+
+        $request = $request->all();
+
+        $codigo = $request['codigo'];
+
+    
+
+        try {
+            Clientes::on('cg')->where('id_cliente',$codigo)->delete();
+        } catch (Exception $e) {
+            $texto = 'Error al actualizar datos';
+            $response =array('code'=>1,'msg'=>$texto);
+            return response()->json($response,200);
+        }
+
+        $texto='Datos eliminados correctamente';
+        $response =array('code'=>0,'msg'=>$texto);
+
+        return response()->json($response,200);
+
+    }
+
 }

@@ -277,6 +277,38 @@ $.ajax({
 
 });
 
+//----------------------------ELIMINAR CLIENTE---------------------------------//
+$('#tabla_clientes').on('click', '#eliminar', function(){
+
+var codigo     =  $(this).closest('tr').find('td').eq(0).text();
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+    type: "POST",
+    url: "{{route('eliminar_cliente')}}",
+    data: {
+        codigo: codigo
+    },
+    success: function(r) {
+        var array = r;
+        if (array.code == 0) {
+            document.getElementById('notificacion_resultado').style.display = 'block';
+            location.reload();
+        } else {
+            document.getElementById('notificacion_varias').style.display = 'block';
+            document.getElementById('texto_noti').innerHTML = array.msg;
+        }
+
+
+    }
+});
+
+
+});
 
 
 //----------------------------CERRAR NOTIFICACION  ---------------------------------//

@@ -115,6 +115,7 @@ Route::post('/calcular_costos', 'App\Http\Controllers\CostosController@calcular_
 Route::get('/clientes', 'App\Http\Controllers\ClientesController@clientes')->name('clientes');
 Route::post('/guardar_cliente', 'App\Http\Controllers\ClientesController@guardar_cliente')->name('guardar_cliente');
 Route::post('/guardar_edicion_cliente', 'App\Http\Controllers\ClientesController@guardar_edicion_cliente')->name('guardar_edicion_cliente');
+Route::post('/eliminar_cliente', 'App\Http\Controllers\ClientesController@eliminar_cliente')->name('eliminar_cliente');
 
 
 Route::group(['middleware' => 'auth'], function () {
