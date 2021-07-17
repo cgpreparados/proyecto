@@ -131,33 +131,33 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="card-title" id="exampleModalLongTitle">Editar Producto</h6>
+                <h6 class="card-title" id="exampleModalLongTitle">Editar Cliente</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <table style="font-size: 80%;">
-                    <tr>
+                    <tr style='display:none;'>
                         <td><label>Código:</label></td>
                         <td><input type="text" name="" id="codigo_cliente"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
                     <tr>
-                        <td><label>Descripción:</label></td>
+                        <td><label>Razon Social:</label></td>
                         <td><input type="text" name="" id="nombre_cliente"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
                     <tr>
-                        <td><label>Unidad de Medida:</label></td>
+                        <td><label>RUC:</label></td>
                         <td><input type="text" name="" id="ruc_cliente"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
                     <tr>
-                        <td><label>Dias de Vencimiento:</label></td>
+                        <td><label>Direccion:</label></td>
                         <td><input type="text" name="" id="direccion_cliente"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
@@ -190,7 +190,7 @@ $('#tabla_clientes').on('click', '#editar', function(){
   $('#codigo_cliente').val(codigo);
   $('#nombre_cliente').val(nombre);
   $('#ruc_cliente').val(ruc);
-  $('#direccion').val(direccion);
+  $('#direccion_cliente').val(direccion);
 
 });
 
