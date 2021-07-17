@@ -15,7 +15,7 @@ class ClientesController extends Controller
 
         $clientes = Clientes::on('cg')->get();
 
-        return view('clientes.clientes',['cliente'=>$clientes]);
+        return view('clientes.clientes',['clientes'=>$clientes]);
 
     }
     public function guardar_cliente(Request $request){
@@ -38,7 +38,7 @@ class ClientesController extends Controller
 
         $texto='Datos guardados correctamente';
         $response =array('code'=>0,'msg'=>$texto);
-        
+
         return response()->json($response,200);
 
     }
