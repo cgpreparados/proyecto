@@ -53,8 +53,12 @@
                         </select>
                     </div>
                     <div class="col-md-2" style='float:left; display:inline-block'>
-                        <label for="">RUC Proveedor:</label>
-                        <input type="" id="ruc_proveedor" name="" value="" class='form-control'>
+                        <label for="">Destino:</label>
+                        <select id="ruc_proveedor" name="" value="" class='form-control'>
+                            @foreach($proveedor as $pro)
+                            <option value="{{$pro->id_proveedor}}">{{$cli->nombre_proveedor}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-2" style='float:left; display:inline-block'>
                         <label for="">Valor Factura:</label>

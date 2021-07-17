@@ -157,6 +157,12 @@
                                 <p> {{ __("Impresiones") }} </p>
                             </a>
                         </li>
+                        <li class="@if ($activePage == 'proveedores') active @endif">
+                            <a href="{{ route('proveedores') }}">
+                                <i class="now-ui-icons shopping_shop"></i>
+                                <p> {{ __("Proveedores") }} </p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

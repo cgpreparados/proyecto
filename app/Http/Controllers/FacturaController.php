@@ -54,7 +54,7 @@ class FacturaController extends Controller
             $factura = '00000'.$factura;
         }
         elseif($factura > 99){
-            $factura = '0000'.$factura;
+            $factura = '0000'.$factura; 
         }elseif($factura > 999){
             $factura = '000'.$factura;
         }elseif($factura > 9999){

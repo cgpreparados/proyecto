@@ -223,7 +223,7 @@ $('#guardar_proveedor').on('click', function() {
             if (array.code == 0) {
                 $('#modalNuevo').modal('hide');
                 document.getElementById('notificacion_resultado').style.display = 'block';
-                // location.reload();
+                 location.reload();
             } else {
                 document.getElementById('notificacion_varias').style.display = 'block';
                 document.getElementById('texto_noti').innerHTML = array.msg;
