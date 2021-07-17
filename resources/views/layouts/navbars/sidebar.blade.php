@@ -184,6 +184,12 @@
                                 <p> {{ __("Impresiones") }} </p>
                             </a>
                         </li>
+                        <li class="@if ($activePage == 'clientes') active @endif">
+                            <a href="{{ route('clientes') }}">
+                                <i class="now-ui-icons users_circle-08"></i>
+                                <p> {{ __("Clientes") }} </p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

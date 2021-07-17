@@ -112,10 +112,10 @@ Route::get('/productos_costos', 'App\Http\Controllers\CostosController@productos
 Route::post('/calcular_costos', 'App\Http\Controllers\CostosController@calcular_costos')->name('calcular_costos')->middleware('auth');
 
 //------------------------------CLIENTES----------------------------//
-Route::get('/clientes', 'App\Http\Controllers\ClientesController@clientes')->name('clientes');
-Route::post('/guardar_cliente', 'App\Http\Controllers\ClientesController@guardar_cliente')->name('guardar_cliente');
-Route::post('/guardar_edicion_cliente', 'App\Http\Controllers\ClientesController@guardar_edicion_cliente')->name('guardar_edicion_cliente');
-Route::post('/eliminar_cliente', 'App\Http\Controllers\ClientesController@eliminar_cliente')->name('eliminar_cliente');
+Route::get('/clientes', 'App\Http\Controllers\ClientesController@clientes')->name('clientes')->middleware('auth');
+Route::post('/guardar_cliente', 'App\Http\Controllers\ClientesController@guardar_cliente')->name('guardar_cliente')->middleware('auth');
+Route::post('/guardar_edicion_cliente', 'App\Http\Controllers\ClientesController@guardar_edicion_cliente')->name('guardar_edicion_cliente')->middleware('auth');
+Route::post('/eliminar_cliente', 'App\Http\Controllers\ClientesController@eliminar_cliente')->name('eliminar_cliente')->middleware('auth');
 
 
 Route::group(['middleware' => 'auth'], function () {
