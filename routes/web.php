@@ -117,6 +117,12 @@ Route::post('/guardar_cliente', 'App\Http\Controllers\ClientesController@guardar
 Route::post('/guardar_edicion_cliente', 'App\Http\Controllers\ClientesController@guardar_edicion_cliente')->name('guardar_edicion_cliente')->middleware('auth');
 Route::post('/eliminar_cliente', 'App\Http\Controllers\ClientesController@eliminar_cliente')->name('eliminar_cliente')->middleware('auth');
 
+//------------------------------PROVEEDORES----------------------------//
+Route::get('/proveedores', 'App\Http\Controllers\ProveedorController@proveedroes')->name('proveedroes')->middleware('auth');
+Route::post('/guardar_proveedor', 'App\Http\Controllers\ProveedorController@guardar_proveedor')->name('guardar_proveedor')->middleware('auth');
+Route::post('/guardar_edicion_proveedor', 'App\Http\Controllers\ProveedorController@guardar_edicion_proveedor')->name('guardar_edicion_proveedor')->middleware('auth');
+Route::post('/eliminar_proveedor', 'App\Http\Controllers\ProveedorController@eliminar_proveedor')->name('eliminar_proveedor')->middleware('auth');
+
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
