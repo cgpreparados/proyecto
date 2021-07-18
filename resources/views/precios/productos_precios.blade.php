@@ -66,7 +66,7 @@
                             <tbody>
                                 @foreach ($productos as $pro)
                                 <tr id='ver_detalle'>
-                                    <td>{{$pro->id_precio}}</td>
+                                    <td>{{$pro->codigo_material}}</td>
                                     <td>{{$pro-> desc_material}}</td>
                                     <td>{{$pro->precio_unitario}}</td>
                                     <td>
