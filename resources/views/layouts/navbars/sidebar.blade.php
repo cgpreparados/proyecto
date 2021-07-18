@@ -209,6 +209,14 @@
             </li>
             @endif
             @if((auth()->user()->type) == 1 || (auth()->user()->type) == 5 )
+            <li class="@if ($activePage == 'precios') active @endif">
+                <a href="{{ route('productos_precio') }}">
+                    <i class="now-ui-icons media-2_sound-wave"></i>
+                    <p> {{ __("Precios") }} </p>
+                </a>
+            </li>
+            @endif
+            @if((auth()->user()->type) == 1 || (auth()->user()->type) == 5 )
             <li>
                 <a data-toggle="collapse" href="#cgCostos">
                     <i class="now-ui-icons business_money-coins"></i>
