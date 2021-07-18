@@ -173,9 +173,9 @@ $('#tabla_precios').on('click', '#editar', function(){
   var nombre     =  $(this).closest('tr').find('td').eq(1).text();
   var precio        =  $(this).closest('tr').find('td').eq(2).text();
  
-  $('#cod_material').val(codigo);
-  $('#desc_material').val(nombre);
-  $('#precio_unitario').val(precio);
+  $('#edit_cod_material').val(codigo);
+  $('#edit_desc_material').val(nombre);
+  $('#rdit_precio_unitario').val(precio);
 
 });
 
