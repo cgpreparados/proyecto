@@ -15,7 +15,7 @@ class PreciosController extends Controller
                     ->get();
         $materiales = Materiales::on('cg')->where('tipo_material',3)->get();
 
-         return view('precios.productos_precio',['productos'=>$productos,'materiales'=>$materiales]);           
+         return view('precios.productos_precios',['productos'=>$productos,'materiales'=>$materiales]);           
     }
     public function guardar_precios(Request $request){
 
