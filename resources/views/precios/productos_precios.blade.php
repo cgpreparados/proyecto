@@ -175,7 +175,7 @@ $('#tabla_precios').on('click', '#editar', function(){
  
   $('#edit_cod_material').val(codigo);
   $('#edit_desc_material').val(nombre);
-  $('#rdit_precio_unitario').val(precio);
+  $('#edit_precio_unitario').val(precio);
 
 });
 
