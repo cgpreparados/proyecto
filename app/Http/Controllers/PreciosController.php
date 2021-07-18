@@ -22,7 +22,7 @@ class PreciosController extends Controller
         $request = $request->all();
 
         $codigo= $request['cod_material'];
-        $precio = $request['precio_unitario'];
+        $precio = $request['precio'];
 
         $contador = DB::connection('cg')
                 ->table('productos_precios')
@@ -65,8 +65,8 @@ class PreciosController extends Controller
 
         $request = $request->all();
 
-        $codigo= $request['cod_material'];
-        $precio = $request['precio_unitario'];
+        $codigo= $request['codigo'];
+        $precio = $request['precio'];
         
             try {
                 $data=array('precio_unitario'=>$precio);
@@ -87,8 +87,7 @@ class PreciosController extends Controller
 
         $request = $request->all();
 
-        $codigo= $request['cod_material'];
-        $precio = $request['precio_unitario'];
+        $codigo= $request['codigo'];
         
             try {
                 PrecioUnitario::on('cg')->where('codigo_material',$codigo)->delete();
