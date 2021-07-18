@@ -17,7 +17,7 @@ class PreciosController extends Controller
 
          return view('precios.productos_precios',['productos'=>$productos,'materiales'=>$materiales]);           
     }
-    public function guardar_precios(Request $request){
+    public function guardar_precio(Request $request){
 
         $request = $request->all();
 
