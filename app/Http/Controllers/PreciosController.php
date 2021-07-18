@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ProductosPrecio;
 use App\Models\Materiales;
+use Illuminate\Support\Facades\DB;
 
 class PreciosController extends Controller
 {
