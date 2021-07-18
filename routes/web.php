@@ -125,7 +125,7 @@ Route::post('/guardar_edicion_proveedor', 'App\Http\Controllers\ProveedoresContr
 Route::post('/eliminar_proveedor', 'App\Http\Controllers\ProveedoresController@eliminar_proveedor')->name('eliminar_proveedor')->middleware('auth');
 
 //------------------------------PROVEEDORES----------------------------//
-Route::get('/productos_precio', 'App\Http\Controllers\PreciosController@productos_precios')->name('productos_precios')->middleware('auth');
+Route::get('/productos_precio', 'App\Http\Controllers\PreciosController@productos_precio')->name('productos_precio')->middleware('auth');
 Route::post('/guardar_precio', 'App\Http\Controllers\PreciosController@guardar_precio')->name('guardar_precio')->middleware('auth');
 Route::post('/guardar_edicion_precio', 'App\Http\Controllers\PreciosController@guardar_edicion_precio')->name('guardar_edicion_precio')->middleware('auth');
 Route::post('/eliminar_precio', 'App\Http\Controllers\PreciosController@eliminar_precio')->name('eliminar_precio')->middleware('auth');
