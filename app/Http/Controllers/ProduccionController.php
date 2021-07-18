@@ -752,39 +752,10 @@ class ProduccionController extends Controller
 
     public function prueba(){
 
-      
+        $productos = Materiales::on('cg')->where('tipo_material',3)
+        ->join('productos_precio as pp','pp.codigo_material','=','cod_material')
+        ->get();
 
-        $codigo='01-01-01003 ';
-        $tipo='ALTA';
-        $cantidad=2;
-
-        // $data = array('codigo_material'=>$codigo, 'cantidad'=>0);
-        // MaterialesStock::on('cg')->insert($data);
-
-        $stock = MaterialesStock::on('cg')->where('codigo_material',$codigo)->get();
-
-       // print_r ($stock);
-        //exit();
-
-        if(is_null($stock)){
-            $en_stock=0;
-        }else{
-            //echo 'no vacio';
-            foreach($stock as $st){
-                $en_stock = $st->cantidad;
-            }
-        }
-         //echo $en_stock;       
-                
-                if(is_null($en_stock)){
-                    $en_stock=0;
-                }
-                
-                if($tipo == "BAJA"){
-                    $stock = $en_stock - $cantidad;
-                }else{
-                    $stock = $en_stock + $cantidad;
-                }
-         echo $stock;
+        echo($productos);
     }
 }

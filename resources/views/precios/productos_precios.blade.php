@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-'namePage' => 'Proveedores',
+'namePage' => 'Precios',
 'class' => 'sidebar-mini',
-'activePage' => 'proveedores',
+'activePage' => 'precios',
 ])
 
 @section('content')
@@ -42,13 +42,13 @@
                             <p id="texto_error"></p>
                         </span>
                     </div>
-                    <h4 class="card-title"> Proveedores</h4>
+                    <h4 class="card-title"> Precios</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <button class="btn btn-default btn-round" data-toggle="modal" data-target="#modalNuevo"><i
                                 class='now-ui-icons ui-1_simple-add'></i> Nuevo </button>
-                        <table class="table" id='tabla_proveedor'>
+                        <table class="table" id='tabla_precios'>
                             <thead class=" text-primary">
                                 <th>
                                     Codigo
@@ -57,22 +57,18 @@
                                     Descripcion
                                 </th>
                                 <th>
-                                    Ruc
-                                </th>
-                                <th>
-                                    Dirección
+                                    Precio
                                 </th>
                                 <th>
                                     Herr.
                                 </th>
                             </thead>
                             <tbody>
-                                @foreach ($proveedores as $pro)
+                                @foreach ($productos as $pro)
                                 <tr id='ver_detalle'>
-                                    <td>{{$pro->id_proveedor}}</td>
-                                    <td>{{$pro-> nombre_proveedor}}</td>
-                                    <td>{{$pro->ruc_proveedor}}</td>
-                                    <td>{{$pro->direccion_proveedor}}</td>
+                                    <td>{{$pro->id_precio}}</td>
+                                    <td>{{$pro-> desc_material}}</td>
+                                    <td>{{$pro->precio_unitario}}</td>
                                     <td>
                                         <a id='eliminar'><i class='now-ui-icons ui-1_simple-remove'></i> </a>
                                         <a id='editar' data-toggle="modal" data-target="#modalEditar"><i class='now-ui-icons gestures_tap-01'></i> </a>
@@ -87,12 +83,12 @@
         </div>
     </div>
 </div>
-<!----------------------------MODAL NUEVO PROVEEDOR---------------------------------->
+<!----------------------------MODAL NUEVO PRECIO---------------------------------->
 <div class="modal fade" id="modalNuevo" tabindex="-1" role="dialog" aria-labelledby="modalNuevo" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="card-title" id="exampleModalLongTitle">Nuevo Proveedor</h6>
+                <h6 class="card-title" id="exampleModalLongTitle">Agregar Producto</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -100,20 +96,17 @@
             <div class="modal-body">
                 <table style="font-size: 80%;">
                     <tr>
-                        <td><label>Razón Social:</label></td>
-                        <td><input type="text" name="" id="new_desc_proveedor"
-                                style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
+                        <td><label>Producto:</label></td>
+                        <td><select id="cod_material" name="" value="" class='form-control'>
+                            @foreach($materiales as $mat)
+                            <option value="{{$mat->cod_material}}">{{$mat->desc_material}}</option>
+                            @endforeach
+                        </select>
                         </td>
                     </tr>
                     <tr>
-                        <td><label>RUC:</label></td>
-                        <td><input type="text" name="" id="new_ruc_proveedor"
-                                style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>Dirección:</label></td>
-                        <td><input type="text" name="" id="new_direccion_proveedor"
+                        <td><label>Precio:</label></td>
+                        <td><input type="text" name="" id="new_precio"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
@@ -121,17 +114,17 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="guardar_proveedor">Guardar</button>
+                <button type="button" class="btn btn-primary" id="guardar_precio">Guardar</button>
             </div>
         </div>
     </div>
 </div>
-<!----------------------------MODAL EDITAR PROVEEDOR---------------------------------->
+<!----------------------------MODAL EDITAR PRECIO---------------------------------->
 <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEditar" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="card-title" id="exampleModalLongTitle">Editar Proveedor</h6>
+                <h6 class="card-title" id="exampleModalLongTitle">Editar Precio</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -140,25 +133,19 @@
                 <table style="font-size: 80%;">
                     <tr style='display:none;'>
                         <td><label>Código:</label></td>
-                        <td><input type="text" name="" id="codigo_proveedor"
+                        <td><input type="text" name="" id="edit_cod_material"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
                     <tr>
-                        <td><label>Razon Social:</label></td>
-                        <td><input type="text" name="" id="nombre_proveedor"
+                        <td><label>Descripcion:</label></td>
+                        <td><input type="text" name="" id="edit_desc_material"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
                     <tr>
-                        <td><label>RUC:</label></td>
-                        <td><input type="text" name="" id="ruc_proveedor"
-                                style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>Direccion:</label></td>
-                        <td><input type="text" name="" id="direccion_proveedor"
+                        <td><label>Precio:</label></td>
+                        <td><input type="text" name="" id="edit_precio_unitario"
                                 style="background-color: #ffff;border: 1px solid #aaa;border-radius: 4px;outline: 0;color: #444;line-height: 22px;height: 32px;width: 100%;">
                         </td>
                     </tr>
@@ -166,7 +153,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="guardar_edicion_proveedor">Guardar</button>
+                <button type="button" class="btn btn-primary" id="guardar_edicion_precio">Guardar</button>
             </div>
         </div>
     </div>
@@ -180,28 +167,25 @@ function cambiarNombre(nombre) {
 
 }
 //----------------------------SET DATOS EDICION---------------------------------//
-$('#tabla_proveedor').on('click', '#editar', function(){
+$('#tabla_precios').on('click', '#editar', function(){
 
   var codigo     =  $(this).closest('tr').find('td').eq(0).text();
   var nombre     =  $(this).closest('tr').find('td').eq(1).text();
-  var ruc        =  $(this).closest('tr').find('td').eq(2).text();
-  var direccion  =  $(this).closest('tr').find('td').eq(3).text();
+  var precio        =  $(this).closest('tr').find('td').eq(2).text();
  
-  $('#codigo_proveedor').val(codigo);
-  $('#nombre_proveedor').val(nombre);
-  $('#ruc_proveedor').val(ruc);
-  $('#direccion_proveedor').val(direccion);
+  $('#cod_material').val(codigo);
+  $('#desc_material').val(nombre);
+  $('#precio_unitario').val(precio);
 
 });
 
 
-//----------------------------GUARDAR NUEVO proveedor---------------------------------//
+//----------------------------GUARDAR NUEVO PRECIO---------------------------------//
 
-$('#guardar_proveedor').on('click', function() {
+$('#guardar_precio').on('click', function() {
 
-    var nombre = $('#new_desc_proveedor').val();
-    var ruc = $('#new_ruc_proveedor').val();
-    var direccion = $('#new_direccion_proveedor').val();
+    var codigo = $('#cod_material').val();
+    var precio = $('#new_precio').val();
 
     //nombre = cambiarNombre(nombre);
 
@@ -212,11 +196,10 @@ $('#guardar_proveedor').on('click', function() {
     });
     $.ajax({
         type: "POST",
-        url: "{{route('guardar_proveedor')}}",
+        url: "{{route('guardar_precio')}}",
         data: {
-            nombre_proveedor: nombre,
-            ruc_proveedor: ruc,
-            direccion_proveedor: direccion
+            cod_material: codigo,
+            precio: precio
         },
         success: function(r) {
             var array = r; 
@@ -235,14 +218,12 @@ $('#guardar_proveedor').on('click', function() {
 
 });
 
-//----------------------------GUARDAR EDICION proveedor---------------------------------//
+//----------------------------GUARDAR EDICION PRECIO---------------------------------//
 
-$('#guardar_edicion_proveedor').on('click', function() {
+$('#guardar_edicion_precio').on('click', function() {
 
-var codigo = $('#codigo_proveedor').val();
-var nombre = $('#nombre_proveedor').val();
-var ruc = $('#ruc_proveedor').val();
-var direccion = $('#direccion_proveedor').val();
+var codigo = $('#edit_cod_material').val();
+var precio = $('#edit_precio_unitario').val();
 
 
 
@@ -253,12 +234,10 @@ $.ajaxSetup({
 });
 $.ajax({
     type: "POST",
-    url: "{{route('guardar_edicion_proveedor')}}",
+    url: "{{route('guardar_edicion_precio')}}",
     data: {
         codigo: codigo,
-        nombre: nombre,
-        ruc: ruc,
-        direccion: direccion
+        precio: precio
     },
     success: function(r) {
         var array = r;
@@ -277,8 +256,8 @@ $.ajax({
 
 });
 
-//----------------------------ELIMINAR proveedor---------------------------------//
-$('#tabla_proveedor').on('click', '#eliminar', function(){
+//----------------------------ELIMINAR precio---------------------------------//
+$('#tabla_precios').on('click', '#eliminar', function(){
 
 var codigo     =  $(this).closest('tr').find('td').eq(0).text();
 
@@ -289,7 +268,7 @@ $.ajaxSetup({
 });
 $.ajax({
     type: "POST",
-    url: "{{route('eliminar_proveedor')}}",
+    url: "{{route('eliminar_precio')}}",
     data: {
         codigo: codigo
     },
