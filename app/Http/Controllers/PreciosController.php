@@ -26,7 +26,7 @@ class PreciosController extends Controller
         $precio = $request['precio'];
 
         $contador = DB::connection('cg')
-                ->table('productos_precios')
+                ->table('productos_precio')
                 ->selectRaw('COUNT(*) as num')
                 ->where('codigo_material',$codigo)
                 ->get();
