@@ -38,7 +38,7 @@ class PreciosController extends Controller
         if($conta == 0){
             try {
                 $data=array('codigo_material'=>$codigo,'precio_unitario'=>$precio);
-                PrecioUnitario::on('cg')->insert($data);
+                ProductosPrecio::on('cg')->insert($data);
             }catch(Exception $e){
                 $texto = 'Error al ingresar datos';
                 $response =array('code'=>1,'msg'=>$texto);
@@ -47,7 +47,7 @@ class PreciosController extends Controller
         }else{
             try {
                 $data=array('precio_unitario'=>$precio);
-                PrecioUnitario::on('cg')->where('codigo_material',$codigo)->update($data);
+                ProductosPrecio::on('cg')->where('codigo_material',$codigo)->update($data);
             }catch(Exception $e){
                 $texto = 'Error al ingresar datos';
                 $response =array('code'=>1,'msg'=>$texto);
@@ -71,7 +71,7 @@ class PreciosController extends Controller
         
             try {
                 $data=array('precio_unitario'=>$precio);
-                PrecioUnitario::on('cg')->where('codigo_material',$codigo)->update($data);
+                ProductosPrecio::on('cg')->where('codigo_material',$codigo)->update($data);
             }catch(Exception $e){
                 $texto = 'Error al ingresar datos';
                 $response =array('code'=>1,'msg'=>$texto);
@@ -91,7 +91,7 @@ class PreciosController extends Controller
         $codigo= $request['codigo'];
         
             try {
-                PrecioUnitario::on('cg')->where('codigo_material',$codigo)->delete();
+                ProductosPrecio::on('cg')->where('codigo_material',$codigo)->delete();
             }catch(Exception $e){
                 $texto = 'Error al ingresar datos';
                 $response =array('code'=>1,'msg'=>$texto);
