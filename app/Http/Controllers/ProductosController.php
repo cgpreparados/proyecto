@@ -47,8 +47,11 @@ class ProductosController extends Controller
             return response()->json($response,200);
         }
 
-        $data = array('codigo_material'=>$codigo, 'cantidad'=>0);
-        MaterialesStock::on('cg')->insert($data);
+        if($tipo == 1){
+            $data = array('codigo_material'=>$codigo, 'cantidad'=>0);
+            MaterialesStock::on('cg')->insert($data);
+        }
+        
         $response = array('code'=>0);
         return response()->json($response,200);
     }
