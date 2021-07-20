@@ -11,9 +11,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="resources/js/daterangepicker/daterangepicker.css">
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
-  
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
 <meta name="csrf-token" content="{{csrf_token()}}">
 <div class="panel-header panel-header-sm">
 </div>
@@ -54,15 +52,14 @@
         </div>
     </div>
 </div>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
-
-  <script type="text/javascript">
-  	$(document).ready(function() {
- 		 $('#tabla_stock_materiales').DataTable({
-       responsive: true
-     });
-
-	});
+  <script >
+  	$(document).ready( function () {
+    $('#tabla_stock_materiales').DataTable();
+} );
 
 
   </script>
