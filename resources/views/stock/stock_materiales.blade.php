@@ -53,3 +53,19 @@
 </div>
 
 @endsection
+@section('plugins_page_js')
+  <!-- Page level plugins -->
+
+  <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+  <script type="text/javascript">
+  	$(document).ready(function() {
+ 		 $('#tabla_stock_materiales').DataTable({
+       responsive: true
+     });
+
+	});
+
+
+  </script>
+@endsection
