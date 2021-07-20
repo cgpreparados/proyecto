@@ -28,7 +28,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id='tabla_stock_materiales'>
+                        <table class="table" id='tabla_stock_materiales'>
                             <thead>
                                 <tr>
                                     <th>Codigo</th>
@@ -55,9 +55,6 @@
     </div>
 </div>
 
-@endsection
-@section('plugins_page_js')
-  <!-- Page level plugins -->
 
   <script type="text/javascript">
   	$(document).ready(function() {
