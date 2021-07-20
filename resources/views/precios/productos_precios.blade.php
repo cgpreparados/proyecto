@@ -30,7 +30,7 @@
                         <button type="button" aria-hidden="true" class="close">
                             <i class="now-ui-icons ui-1_simple-remove" id='cerrar_noti_varias'></i>
                         </button>
-                        <span><b> Alerta - </b>
+                        <span><b> Alertas - </b>
                             <p id="texto_noti"></p>
                         </span>
                     </div>
