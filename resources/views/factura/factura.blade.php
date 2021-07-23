@@ -394,11 +394,11 @@ return $num_letrammd;
                     <div style="position=relative; text-align:center; margin:25px;">
                         <img src="{{ asset('assets') }}/img/logo_final.png" style=" width: 70px;height: 70px;"></i>
                         <b>
-                            <p>CG EIRL</p>
+                            <p>de Maria Carlota Gracia de Soerensen EIRL</p>
                         </b>
-                        <p style="line-height: 34%;">area/rubro</p>
-                        <p style="line-height: 34%;">Chile Nro. 123 esq. 4ta.</p>
-                        <p style="line-height: 34%;">Telef: (0991)235-698 - Asunción - Paraguay</p>
+                        <p style="line-height: 34%;">Elaboración de otros productos alimenticios N.C.P.</p>
+                        <p style="line-height: 34%;">Roma y Chile 1596</p>
+                        <p style="line-height: 34%;">Telef: (0983)352-111 - Asunción - Paraguay</p>
 
                     </div>
 
@@ -410,7 +410,7 @@ return $num_letrammd;
                         <p style="line-height: 34%;">Fecha Inicio Vigencia: {{$fecha_inicio}}</p>
                         <p style="line-height: 34%;">Fecha Fin Vigencia: {{$fecha_fin}}</p>
                         <b>
-                            <p style="line-height: 34%;">RUC: 80002854-6</p>
+                            <p style="line-height: 34%;">RUC: 80111418-7</p>
                             <h3 style="line-height: 34%;">FACTURA</h3>
                         </b>
                         <h4 style="line-height: 34%;">N° 001-001-{{$factura}}</h4>
