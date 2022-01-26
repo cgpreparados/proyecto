@@ -97,7 +97,7 @@ Route::get('/envios_impresiones', 'App\Http\Controllers\EnviosController@envios_
 Route::post('/buscar_envios', 'App\Http\Controllers\EnviosController@buscar_envios')->name('buscar_envios')->middleware('auth');
 
 //------------------------------FACTURAS----------------------------//
-Route::get('/factura/{id}/{tipo}', 'App\Http\Controllers\FacturaController@factura')->name('factura')->middleware('auth');
+Route::get('proyecto/public/factura/{id}/{tipo}', 'App\Http\Controllers\FacturaController@factura')->name('factura')->middleware('auth');
 Route::get('/lista_facturas', 'App\Http\Controllers\FacturaController@lista_facturas')->name('lista_facturas')->middleware('auth');
 Route::post('/buscar_facturas', 'App\Http\Controllers\FacturaController@buscar_facturas')->name('buscar_facturas')->middleware('auth');
 

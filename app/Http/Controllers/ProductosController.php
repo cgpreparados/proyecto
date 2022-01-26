@@ -44,7 +44,7 @@ class ProductosController extends Controller
         }catch(Exception $e){
             $texto = "Error al insertar datos";
             $response = array('code'=>1,'msg'=>$texto);
-            return response()->json($response,200);
+            return response()->json($responrse,200);
         }
 
         if($tipo == 1){

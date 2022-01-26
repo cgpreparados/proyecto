@@ -132,7 +132,7 @@ class ComprasController extends Controller
         ->join('materiales as m','m.cod_material','d.codigo_material')
         ->where('d.id_compra',$id)
         ->get();
-
+ 
 
         return view('compras.imprimir_compra',['listado'=>$listado,'fecha'=>$fecha,'user'=>$user,'factura'=>$factura,'ruc'=>$ruc,'tipo'=>$tipo,'total'=>$total,'id'=>$id]);
 
@@ -149,7 +149,7 @@ class ComprasController extends Controller
     }
 
     public function impresiones_compra(){
-        
+         
         return view('compras.impresiones_compras');
     }
 

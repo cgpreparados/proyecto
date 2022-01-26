@@ -17,7 +17,7 @@
 <body>
     <div class="wrapper">
         <section class="invoice">
-            <div class="row">
+            <div class="row"> 
                 <div class="col-12">
                     <h2 style="font-size: 20px;">
                         <img src="{{ asset('assets') }}/img/logo_final.png" style=" width: 50px;height: 50px;"></i>

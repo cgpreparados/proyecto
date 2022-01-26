@@ -105,10 +105,10 @@ $('#cerrar_alert_orden').on('click', function() {
 
 $('#tabla_impresion ').on('click', '#imprimir', function() {
 
-    var id = $(this).closest('tr').find('td').eq(0).text();
+    var id = $(this).closest('tr').find('td').eq(0).text(); 
 
 
-    var url = "/factura/" + id + "/1";
+    var url = "proyecto/public/factura/" + id + "/1";
     window.open(url, '_blank');
 
 
