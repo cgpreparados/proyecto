@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CG PREPARADOS | ORDEN PRODUCCION </title>
+    <title>CARO | ORDEN PRODUCCION </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
@@ -12,7 +12,7 @@
     <link href="{{ asset('assets') }}/css/now-ui-dashboard.css?v=1.3.0" rel="stylesheet" />
     <link href="{{ asset('assets') }}/demo/demo.css" rel="stylesheet" />
 </head>
-<body>
+<body style='max-width=60%;'>
     <div class="wrapper">
         <section class="invoice">
             <div class="row">
@@ -54,10 +54,10 @@
                         <tbody>
                             @foreach($detalle as $deta)
                             <tr style='background-color:#00004d; color:#fff;'>
-                                <td>{{$deta['codigo']}}</td>
+                               <u> <td>{{$deta['codigo']}}</td>
                                 <td>{{$deta['descripcion']}}</td>
                                 <td>{{$deta['cantidad']}}</td>
-                                <td>{{$deta['unidad']}}</td>
+                                <td>{{$deta['unidad']}}</td></ud>
                             </tr>
                             @foreach($deta['listado'] as $list)
                             <tr>
