@@ -4,10 +4,10 @@
 -->
     <div class="logo">
         <a href="{{ route('home') }}" class="simple-text logo-mini">
-            {{ __('CG') }}
+            {{ __('Caro') }}
         </a>
         <a href="{{ route('home') }}" class="simple-text logo-normal">
-            {{ __('Preparados') }}
+            {{ __('Ice Cream Bases') }}
         </a>
     </div>
     <div class="sidebar-wrapper" id="sidebar-wrapper">
