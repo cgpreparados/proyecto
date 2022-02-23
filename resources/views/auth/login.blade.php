@@ -31,7 +31,7 @@
             <div class="card card-login card-plain">
                 <div class="card-header ">
                 <div class="logo-container">
-                    <img src="{{ asset('assets/img/logo_final.png') }}" style="width:150%"alt="">
+                    <img src="{{ asset('assets/img/logo-caro.png') }}" style="width:150%"alt="">
                 </div>
                 </div>
                 <div class="card-body ">

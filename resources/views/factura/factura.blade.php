@@ -392,7 +392,7 @@ return $num_letrammd;
             <div class="row" style="margin:10px;">
                 <div class="col-6" id='borde'>
                     <div style="position=relative; text-align:center; margin:25px;">
-                        <img src="{{ asset('assets') }}/img/logo_final.png" style=" width: 70px;height: 70px;"></i>
+                        <img src="{{ asset('assets') }}/img/logo-caro.png" style=" width: 70px;height: 70px;"></i>
                         <b>
                             <p>de Maria Carlota Gracia de Soerensen EIRL</p>
                         </b>
