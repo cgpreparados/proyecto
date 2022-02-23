@@ -12,11 +12,11 @@
     <link href="{{ asset('assets') }}/css/now-ui-dashboard.css?v=1.3.0" rel="stylesheet" />
     <link href="{{ asset('assets') }}/demo/demo.css" rel="stylesheet" />
 </head>
-<body style='max-width=60%;'>
+<body style="max-width:60%;">
     <div class="wrapper">
         <section class="invoice">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12" >
                     <h2 style="font-size: 20px;">
                         <img src="{{ asset('assets') }}/img/logo-caro.png" style=" width: 50px;height: 50px;"></i>
                         Orden de Producción.
@@ -54,10 +54,10 @@
                         <tbody>
                             @foreach($detalle as $deta)
                             <tr style='background-color:#00004d; color:#fff;'>
-                               <u> <td>{{$deta['codigo']}}</td>
-                                <td>{{$deta['descripcion']}}</td>
-                                <td>{{$deta['cantidad']}}</td>
-                                <td>{{$deta['unidad']}}</td></ud>
+                               <td><u>{{$deta['codigo']}}</u></td>
+                                <td><u>{{$deta['descripcion']}}</u></td>
+                                <td><u>{{$deta['cantidad']}}</u></td>
+                                <td><u>{{$deta['unidad']}}</u></td>
                             </tr>
                             @foreach($deta['listado'] as $list)
                             <tr>
