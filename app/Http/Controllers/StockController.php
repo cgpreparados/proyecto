@@ -342,6 +342,9 @@ class StockController extends Controller
                     $en_stock=0;
                 }
                 
+                if($tipo == "DESPERDICIO"){
+                    $stock = $en_stock - $cantidad;
+                }
                 if($tipo == "BAJA"){
                     $stock = $en_stock - $cantidad;
                 }else{
