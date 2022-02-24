@@ -21,7 +21,9 @@
                 <div class="col-12">
                     <h2 style="font-size: 20px;">
                         <img src="{{ asset('assets') }}/img/logo-caro.png" style=" width: 50px;height: 50px;"></i>
-                        NOTA DE ENVIO.
+                        NOTA DE ENVIO <br>
+                        Maria C. Gracia EIRL - 80111418-7<br>
+                        Chile esq. Roma
 
                         <small class="float-right" style="font-size: 20px;">NRO.: {{$id}} </small>
                     </h2>
