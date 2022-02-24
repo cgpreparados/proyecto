@@ -46,6 +46,7 @@ Route::post('/guardar_resultado', 'App\Http\Controllers\ProduccionController@gua
 Route::post('/guardar_formula', 'App\Http\Controllers\ProduccionController@guardar_formula')->name('guardar_formula')->middleware('auth');
 //******************************CONTROL DE LOTES***************************//
 Route::get('/lotes', 'App\Http\Controllers\ProduccionController@lotes')->name('lotes')->middleware('auth');
+Route::get('/lotes2', 'App\Http\Controllers\ProduccionController@lotes')->name('lotes2')->middleware('auth');
 Route::post('/buscar_lote', 'App\Http\Controllers\ProduccionController@buscar_lote')->name('buscar_lote')->middleware('auth');
 Route::post('/detalle_lotes', 'App\Http\Controllers\ProduccionController@detalle_lotes')->name('detalle_lotes')->middleware('auth');
 Route::post('/modificar_lotes', 'App\Http\Controllers\ProduccionController@modificar_lotes')->name('modificar_lotes')->middleware('auth');

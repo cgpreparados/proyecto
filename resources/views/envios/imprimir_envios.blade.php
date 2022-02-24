@@ -47,6 +47,8 @@
                                 <th>Descripcion</th>
                                 <th>Nro</th>
                                 <th>Lote</th>
+                                <th>Fecha Elab.</th>
+                                <th>Fecha Venc.</th>
                                 <th>Cantidad</th>
                                 <th>Unidad</th>
                             </tr>
@@ -58,6 +60,8 @@
                                 <td>{{$deta->descripcion}}</td>
                                 <td>{{$deta->nro}}</td>
                                 <td>{{$deta->op}}</td> 
+                                <td>{{$deta->fecha}}</td> 
+                                <td>{{$deta->vencimiento}}</td> 
                                 <td>{{$deta->cantidad}}</td>
                                 <td>{{$deta->unidad}}</td>
 

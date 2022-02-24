@@ -30,6 +30,7 @@ class EnviosController extends Controller
     }
 
     public function guardar_envio(Request $request){ 
+
         $request = $request->all();
 
         $user = $request['user'];
@@ -38,6 +39,7 @@ class EnviosController extends Controller
         $fecha = $request['fecha'];
 
         if(is_null($fecha) || is_null($cliente)){
+
             $texto= 'Favor completar todos los campos'; 
             $response =array('code'=>1,'msg'=>$texto);
             return response()->json($response,200);
@@ -101,7 +103,6 @@ class EnviosController extends Controller
             $timbrado = $fac->timbrado;
         }
         
-
         $id_factura = Factura::on('cg')->select('id_factura')->orderBy('id_factura','desc')->first();
         if(is_null($id_factura)){
             $id_factura=1;
@@ -109,7 +110,6 @@ class EnviosController extends Controller
             $id_factura = $id_factura['id_factura'];
              $id_factura=$id_factura+1;
         }
-        
         
         $totalFactura = 0;
         foreach($listado as $list){
@@ -195,7 +195,7 @@ class EnviosController extends Controller
 
         $detalle = DB::connection('cg')->table('envios as e')
         ->selectRaw('m.cod_material as codigo, l.nro as nro , m.desc_material as descripcion,l.cantidad as cantidad,m.unidad_material as unidad,
-        l.fecha_lote as fecha,l.orden_produccion as op')
+        l.fecha_lote as fecha, l.fecha_vencimiento as vencimiento,l.orden_produccion as op')
         ->join('lotes_envios as le','le.id_envio','e.id_envio')
         ->join('lotes as l','le.id_lote','l.id_lote')
         ->join('materiales as m','m.cod_material','l.cod_material')
