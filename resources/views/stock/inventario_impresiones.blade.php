@@ -47,6 +47,7 @@
                             <option value="Lotes">Inventario Lotes</option>
                             <option value="Alta">Alta</option>
                             <option value="Baja">Baja</option>
+                            <option value="Desperdicio">Desperdicio</option>
                         </select>
                     </div>
                     <div class="col-md-2" style='float:left; display:inline-block'>
