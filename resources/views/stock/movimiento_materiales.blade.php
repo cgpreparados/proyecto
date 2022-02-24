@@ -49,7 +49,7 @@
                         <select id="tipo_movimiento" class='form-control'>
                             <option value="ALTA">ALTA</option>
                             <option value="BAJA">BAJA</option>
-                            <option value="BAJA">DESPERDICIO</option>
+                            <option value="Perdida">Perdida</option>
 
                         </select>
                     </div>
