@@ -691,7 +691,7 @@ class ProduccionController extends Controller
         ->table('lotes as l')
         ->selectRaw('l.lote_nro as lote, l.id_lote as id, l.fecha_lote as fecha_elab,m.desc_material as descripcion,l.cantidad as cantidad')
         ->join('materiales as m','m.cod_material','l.cod_material')
-        ->where('l.lote_nro',$lote)
+        ->where('l.nro',$lote)
         ->orderBy('l.id_lote','desc')
         ->limit(50)
         ->get();

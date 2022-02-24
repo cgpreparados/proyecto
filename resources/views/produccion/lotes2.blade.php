@@ -90,6 +90,8 @@ $('#tabla_lotes ').on('click', '#ver_detalle', function() {
         },
         datatype: 'json',
         success: function(r) {
+
+           
             document.getElementById('lotes_detalle').style.display = 'block';
             var array = r
             var data_length = array.length;
