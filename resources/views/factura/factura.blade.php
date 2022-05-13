@@ -390,28 +390,36 @@ return $num_letrammd;
     <div class="wrapper">
         <section class="invoice">
             <div class="row" style="margin:10px;">
-                <div class="col-6" id='borde'>
-                    <div style="position=relative; text-align:center; margin:25px;">
-                        <img src="{{ asset('assets') }}/img/logo-caro.png" style=" width: 70px;height: 70px;"></i>
+                <div id='borde' style="margin-right:20px; width:55%;float:left; display:inline-block;"  >
+                    <div class="col-5" style="display:inline-block; float:left; padding-top:30px; ">
+                        <img src="{{ asset('assets') }}/img/logo_caro_vector.png" style=" width: 120px;height:130px; padding-top:10px;">
+                    </div>
+                    <div class="col-7" style="float:left; display:inline-block; text-align:right; padding-top:35px;">
+                        
                         <b>
-                            <p>de Maria Carlota Gracia de Soerensen EIRL</p>
+                            <p style="line-height: 34%;"> Maria Carlota Gracia de Soerensen EIRL</p>
                         </b>
-                        <p style="line-height: 34%;">Elaboración de otros productos alimenticios N.C.P.</p>
-                        <p style="line-height: 34%;">Roma y Chile 1596</p>
-                        <p style="line-height: 34%;">Telef: (0983)352-111 - Asunción - Paraguay</p>
+                        <p >ELABORACIÓN DE OTROS PRODUCTOS ALIMENTICIOS N.C.P.</p>
+                        <br>
+                        <p style="line-height: 34%;">Roma y Chile N° 1596</p>
+                        <p style="line-height: 34%;">Cel.: (0983)352-111</p>
+                        <p style="line-height: 34%;">Asunción - Paraguay</p>
 
                     </div>
 
                 </div>
-                <div class="col-1"></div>
-                <div class="col-5" id='borde'>
-                    <div style="position=relative; text-align:center; margin:25px;">
-                        <p style="line-height: 34%;">Timbrado N° {{$timbrado}}</p>
-                        <p style="line-height: 34%;">Fecha Inicio Vigencia: {{$fecha_inicio}}</p>
-                        <p style="line-height: 34%;">Fecha Fin Vigencia: {{$fecha_fin}}</p>
+                <div style=" width:1%; float:left; display:inline-block;"></div>
+                
+                <div  id='borde' style=" width:42%; float:left; display:inline-block;">
+                    <div style=" text-align:center; padding:25px; ">
                         <b>
                             <p style="line-height: 34%;">RUC: 80111418-7</p>
-                            <h3 style="line-height: 34%;">FACTURA</h3>
+                            <p style="line-height: 34%;">Timbrado N° {{$timbrado}}</p>
+                        </b>
+                        <p style="line-height: 34%;">Fecha Inicio Vigencia: @php echo date("d-m-Y", strtotime($fecha_inicio)); @endphp</p>
+                        <p style="line-height: 34%;">Fecha Fin Vigencia: @php echo date("d-m-Y", strtotime($fecha_fin)); @endphp</p>
+                        <b>
+                            <h3 style="line-height: 45%;">FACTURA</h3>
                         </b>
                         <h4 style="line-height: 34%;">N° 001-001-{{$factura}}</h4>
                     </div>
@@ -419,7 +427,7 @@ return $num_letrammd;
                 <div class="col-12" id='datos' style="margin-top:25px;">
                     <div style="position=relative; margin:25px;">
                         <div class="col-6" style="display: inline-block; float:left;">
-                            <p><b>Fecha de Emisión:</b> {{$fecha}}</p>
+                            <p><b>Fecha de Emisión:</b> @php echo date("d-m-Y", strtotime($fecha)); @endphp</p>
                             <p><b>Nombre o Razón Social:</b> {{$cliente}}</p>
                             <p><b>RUC:</b> {{$ruc}}</p>
                             <p><b>Dirección:</b>{{$direccion}}</p>
@@ -439,7 +447,7 @@ return $num_letrammd;
                                 <th rowspan="2">CANTIDAD</th>
                                 <th rowspan="2">CLASE DE MERCADERIA Y/O SERVICIOS</th>
                                 <th rowspan="2">PRECIO UNITARIO</th>
-                                <th colspan="3">VALOR DE VENTAS</th>
+                                <th colspan="3">VALOR DE VENTA</th>
                             </tr>
                             <tr style="text-align:center">
                                 <th>EXENTAS</th>
@@ -464,7 +472,7 @@ return $num_letrammd;
                             @php $cant = 15-$cant;@endphp
                             @for($i=0;$i<=$cant;$i++)
                             <tr>
-                                <td style = "text-align:center;" class="white">.</td>
+                                <td style = "text-align:center; color:white;" class="white">.</td>
                                 <td></td>
                                 <td style = "text-align:center;"></td>
                                 <td style = "text-align:center;"></td>
@@ -473,7 +481,7 @@ return $num_letrammd;
                             </tr>
                             @endfor
                             <tr>
-                                <td colspan="3">SUB TOTAL</td>
+                                <td colspan="3"><b>SUB TOTAL</b></td>
                                 <td></td>
                                 <td></td>
                                 <td style = "text-align:center;">{{number_format($subtotal, 0,',','.')}}.-</td>
@@ -488,13 +496,13 @@ return $num_letrammd;
                                     $textoFactura = 'DUPLICADO: ARCHIVO TRIBUTARIO';
                                 }                       
                             @endphp
-                                <td colspan="5">TOTAL A PAGAR: {{$monto_letras}} </td>
+                                <td colspan="5"><b>TOTAL A PAGAR: </b> {{$monto_letras}} </td>
                                 <td style = "text-align:center;">{{number_format($subtotal, 0,',','.')}}.-</td>
                             </tr>
                             <tr>
-                                <td colspan="2">LIQUIDACION DE I.V.A. (5%) .-</td>
-                                <td colspan="2">(10%) {{$iva}} .-</td>
-                                <td colspan="2">TOTAL IVA: {{$iva}}.-</td>
+                                <td colspan="2"><b>LIQUIDACION DE I.V.A.: (5%) </b> .-</td>
+                                <td colspan="2"><b>(10%) </b> {{$iva}} .-</td>
+                                <td colspan="2"><b>TOTAL IVA: </b> {{$iva}}.-</td>
                             </tr>
                         </table>
                     </div>

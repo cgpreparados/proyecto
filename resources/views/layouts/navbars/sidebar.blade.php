@@ -3,11 +3,11 @@
     Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
 -->
     <div class="logo">
-        <a href="{{ route('home') }}" class="simple-text logo-mini">
+        <!--a href="{{ route('home') }}" class="simple-text logo-mini">
             {{ __('Caro') }}
-        </a>
+        </a-->
         <a href="{{ route('home') }}" class="simple-text logo-normal">
-            {{ __('Ice Cream Bases') }}
+        <center><img src="{{ asset('assets/img/logo_caro_vector.png') }}" style="width:35%"alt=""></center>
         </a>
     </div>
     <div class="sidebar-wrapper" id="sidebar-wrapper">

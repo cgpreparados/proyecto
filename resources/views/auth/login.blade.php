@@ -30,8 +30,8 @@
                 @csrf
             <div class="card card-login card-plain">
                 <div class="card-header ">
-                <div class="logo-container">
-                    <img src="{{ asset('assets/img/logo-caro.png') }}" style="width:150%"alt="">
+                <div class="">
+                    <center><img src="{{ asset('assets/img/logo_caro_vector.png') }}" style="width:45%"alt=""></center>
                 </div>
                 </div>
                 <div class="card-body ">
