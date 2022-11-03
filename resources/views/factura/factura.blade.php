@@ -397,7 +397,7 @@ return $num_letrammd;
                     <div class="col-7" style="float:left; display:inline-block; text-align:right; padding-top:35px;">
                         
                         <b>
-                            <p style="line-height: 34%;"> Maria Carlota Gracia de Soerensen EIRL</p>
+                            <p style="line-height: 34%; size:5px;"> Maria Carlota Gracia de Soerensen EIRL</p>
                         </b>
                         <p >ELABORACIÓN DE OTROS PRODUCTOS ALIMENTICIOS N.C.P.</p>
                         <br>

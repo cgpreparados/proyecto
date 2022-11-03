@@ -12,35 +12,76 @@
     <link href="{{ asset('assets') }}/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/now-ui-dashboard.css?v=1.3.0" rel="stylesheet" />
     <link href="{{ asset('assets') }}/demo/demo.css" rel="stylesheet" />
+    <style>
+    #borde {
+        border-style: groove;
+        border-radius: 5px;
+        height: 200px;
+    }
+
+    #datos {
+        border-style: groove;
+        border-radius: 5px;
+        height: 120px;
+    }
+
+    .white {
+        color: white;
+    }
+    </style>
 </head>
 
 <body>
     <div class="wrapper">
         <section class="invoice">
-            <div class="row">
-                <div class="col-12">
-                    <h2 style="font-size: 20px;">
-                        <img src="{{ asset('assets') }}/img/logo-caro.png" style=" width: 50px;height: 50px;"></i>
-                        NOTA DE ENVIO <br>
-                        Maria C. Gracia EIRL - 80111418-7<br>
-                        Chile esq. Roma
+            <div class="row" style="margin:10px;">
+                <div id='borde' style="margin-right:20px; width:55%;float:left; display:inline-block;">
+                    <div class="col-5" style="display:inline-block; float:left; padding-top:30px; ">
+                        <img src="{{ asset('assets') }}/img/logo_caro_vector.png"
+                            style=" width: 120px;height:130px; padding-top:10px;">
+                    </div>
+                    <div class="col-7" style="float:left; display:inline-block; text-align:right; padding-top:35px;">
 
-                        <small class="float-right" style="font-size: 20px;">NRO.: {{$id}} </small>
-                    </h2>
+                        <b>
+                            <p style="line-height: 34%; size:5px;"> Maria Carlota Gracia de Soerensen EIRL</p>
+                        </b>
+                        <p>ELABORACIÓN DE OTROS PRODUCTOS ALIMENTICIOS N.C.P.</p>
+                        <br>
+                        <p style="line-height: 34%;">Roma y Chile N° 1596</p>
+                        <p style="line-height: 34%;">Cel.: (0983)352-111</p>
+                        <p style="line-height: 34%;">Asunción - Paraguay</p>
+
+                    </div>
+
+                </div>
+                <div style=" width:1%; float:left; display:inline-block; "></div>
+
+                <div id='borde' style=" width:42%; float:left; display:inline-block; ">
+                    <div style=" text-align:center; padding:25px; ">
+                        <b>
+                            <p>RUC: 80111418-7</p>
+                        </b>
+                        <b>
+                            <h3>NOTA DE REMISIÓN</h3>
+                        </b>
+                        <h4>N° {{$id}}</h4>
+                    </div>
+                </div>
+                <div class="col-12" id='datos' style="margin-top:20px">
+                    <div class="col-6" style="display: inline-block; float:left; padding-top:7px;">
+                        <p><b>Fecha:</b> @php echo date("d-m-Y", strtotime($fecha)); @endphp</p>
+                        <p><b>Nombre o Razón Social:</b> {{$destino}}</p>
+                        <p><b>Dirección:</b>{{$direccion}}</p>
+                    </div>
+                    <div class="col-6" style="display: inline-block; float:left; padding-top:7px;">
+                        <p><b>Realizado por:</b> {{$user}}</p>
+                    </div>
+
                 </div>
             </div>
-            <div class="row invoice-info">
-                <div class="col-sm-4 invoice-col">
-                    <address>
-                        <strong>REALIZADO POR: </strong> {{$user}}<br>
-                        <strong>FECHA: </strong> {{$fecha}}<br>
-                        <strong>DESTINO: </strong> {{$destino}}<br>
-                        <strong>DIRECCION: </strong> {{$direccion}}<br>
 
-                    </address>
-                </div>
-            </div>
-            <div class="row">
+
+            <div class="col-12">
                 <div class="col-12 table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -61,9 +102,9 @@
                                 <td>{{$deta->codigo}}</td>
                                 <td>{{$deta->descripcion}}</td>
                                 <td>{{$deta->nro}}</td>
-                                <td>{{$deta->op}}</td> 
-                                <td>{{$deta->fecha}}</td> 
-                                <td>{{$deta->vencimiento}}</td> 
+                                <td>{{$deta->op}}</td>
+                                <td>{{$deta->fecha}}</td>
+                                <td>{{$deta->vencimiento}}</td>
                                 <td>{{$deta->cantidad}}</td>
                                 <td>{{$deta->unidad}}</td>
 
