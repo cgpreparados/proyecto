@@ -126,7 +126,7 @@
                 </div>
             </li>
             @endif
-            @if((auth()->user()->type) == 1 || (auth()->user()->type) == 2 || (auth()->user()->type) == 3 || (auth()->user()->type) == 4 )
+            @if((auth()->user()->type) == 1 || (auth()->user()->type) == 2 || (auth()->user()->type) == 3 )
             <li class="@if ($activePage == 'productos') active @endif">
                 <a href="{{ route('productos') }}">
                     <i class="now-ui-icons shopping_tag-content"></i>
@@ -134,7 +134,7 @@
                 </a>
             </li>
             @endif
-            @if((auth()->user()->type) == 1 || (auth()->user()->type) == 3 || (auth()->user()->type) == 5 )
+            @if((auth()->user()->type) == 1 || (auth()->user()->type) == 3 || (auth()->user()->type) == 5 || (auth()->user()->type) == 4 )
             <li>
                 <a data-toggle="collapse" href="#cgCompras">
                     <i class="now-ui-icons shopping_cart-simple"></i>
@@ -200,7 +200,7 @@
                 </div>
             </li>
             @endif
-            @if((auth()->user()->type) == 1 || (auth()->user()->type) == 5 )
+            @if((auth()->user()->type) == 1 || (auth()->user()->type) == 5  || (auth()->user()->type) == 4)
             <li class="@if ($activePage == 'lista_facturas') active @endif">
                 <a href="{{ route('lista_facturas') }}">
                     <i class="now-ui-icons ui-1_send"></i>

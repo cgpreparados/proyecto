@@ -114,11 +114,14 @@ class ComprasController extends Controller
     public function imprimir_compra(Int $id){
 
         $compra = Compras::on('cg')->where('id_compras',$id)->get();
+        
         foreach($compra as $comp){
+            $ruc = Proveedores::on('cg')->where('id_proveedor',$comp->id_proveedor)->first();
+            $ruc = $ruc['ruc_proveedor'];
             $fecha = $comp->fecha_compra;
             $user = $comp->usuario;
             $factura = $comp->factura_nro;
-            $ruc = $comp->id_proveedor;
+            //$ruc = $comp->id_proveedor;
             $tipo = $comp->factura_tipo;
             $total = $comp->factura_total;
         }

@@ -30,7 +30,7 @@
             <div class="row">
                 <div class="col-6">
                     <h2 style="font-size: 20px;">
-                        <img src="{{ asset('assets') }}/img/logo-caro.png" style=" width: 80px;height: 90px;"></i>
+                        <img src="{{ asset('assets') }}/img/logo_caro_vector.png" style=" width: 80px;height: 90px;"></i>
                         Orden de Producción
 
                         

@@ -16,19 +16,27 @@
     <div class="wrapper">
         <section class="invoice">
             <div class="row">
-                <div class="col-12">
+                <div class="col-6">
                     <h2 style="font-size: 20px;">
-                        <img src="{{ asset('assets') }}/img/logo_caro_vector.png" style=" width: 50px;height: 50px;"></i>
-                        MOVIMIENTO MATERIALES - {{$operacion}}.
+                        <img src="{{ asset('assets') }}/img/logo-caro.png" style=" width: 80px;height: 90px;"></i>
+                        Movimiento de Materiales - {{$operacion}}
 
-                        <small class="float-right" style="font-size: 20px;">FECHA: {{$fecha}} </small>
+                        
                     </h2>
                 </div>
+                <div class="col-6" style="float:right; padding-top:2.5%; padding-left:40%">
+                <b><p style="font-size:20px;">Nro.: {{$id}}</p> </b>
+                </div>
             </div>
+            
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
                     <address>
-                        <strong>REALIZADO POR: </strong>{{$user}}
+                        <strong>Realizado por: </strong>{{$user}}
+                        
+                    </address>
+                    <address>
+                        <strong>Fecha: </strong>{{$fecha}}
                         
                     </address>
                 </div>
