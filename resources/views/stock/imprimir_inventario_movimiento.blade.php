@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-12">
                     <h2 style="font-size: 20px;">
-                        <img src="{{ asset('assets') }}/img/logo_final.png" style=" width: 50px;height: 50px;"></i>
+                        <img src="{{ asset('assets') }}/img/logo_caro_vector.png" style=" width: 50px;height: 50px;"></i>
                         MOVIMIENTO MATERIALES - {{$operacion}}.
 
                         <small class="float-right" style="font-size: 20px;">FECHA: {{$fecha}} </small>

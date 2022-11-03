@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,18 +12,32 @@
     <link href="{{ asset('assets') }}/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/now-ui-dashboard.css?v=1.3.0" rel="stylesheet" />
     <link href="{{ asset('assets') }}/demo/demo.css" rel="stylesheet" />
+
+
 </head>
+<style>
+.titulo-tabla {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+    border-bottom: 1px solid black;
+}
+</style>
+
 <body style="max-width:60%;">
     <div class="wrapper">
         <section class="invoice">
             <div class="row">
-                <div class="col-12" >
+                <div class="col-6">
                     <h2 style="font-size: 20px;">
-                        <img src="{{ asset('assets') }}/img/logo-caro.png" style=" width: 50px;height: 50px;"></i>
-                        Orden de Producción.
+                        <img src="{{ asset('assets') }}/img/logo-caro.png" style=" width: 80px;height: 90px;"></i>
+                        Orden de Producción
 
-                        <small class="float-right" style="font-size: 20px;">ORDEN NRO: {{$id}} </small>
+                        
                     </h2>
+                </div>
+                <div class="col-6" style="float:right; padding-top:2.5%; padding-left:40%">
+                <b><p style="font-size:20px;">Nro.: {{$id}}</p> </b>  
                 </div>
             </div>
             <div class="row invoice-info">
@@ -40,31 +55,25 @@
                     </address>
                 </div>
             </div>
+            <br><br>
             <div class="row">
                 <div class="col-12 table-responsive">
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Descripcion</th>
-                                <th>Cantidad</th>
-                                <th>Unidad</th>
-                            </tr>
+
                         </thead>
                         <tbody>
                             @foreach($detalle as $deta)
-                            <tr style='background-color:#00004d; color:#fff;'>
-                               <td><u>{{$deta['codigo']}}</u></td>
-                                <td><u>{{$deta['descripcion']}}</u></td>
-                                <td><u>{{$deta['cantidad']}}</u></td>
-                                <td><u>{{$deta['unidad']}}</u></td>
+                            <tr class="titulo-tabla" style="border-bottom:2px solid grey;">
+                                <th>{{$deta['codigo']}}</th>
+                                <th>{{$deta['descripcion']}}</th>
+                                <th>{{$deta['cantidad']}} {{$deta['unidad']}}</th>
                             </tr>
                             @foreach($deta['listado'] as $list)
                             <tr>
                                 <td>{{$list['codigo']}}</td>
                                 <td>{{$list['descripcion']}}</td>
-                                <td>{{$list['cantidad']}}</td>
-                                <td>{{$list['unidad']}}</td>
+                                <td>{{$list['cantidad']}} {{$list['unidad']}}</td>
                             </tr>
                             @endforeach
                             @endforeach
@@ -78,12 +87,12 @@
                     <strong>TOTAL A ENTREGAR: </strong>
                     <table class="table table-striped">
                         <thead>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Descripcion</th>
-                                <th>Cantidad</th>
-                                <th>Unidad</th>
-                            </tr>
+                            <tr><strong>
+                                    <th>Codigo</th>
+                                    <th>Descripcion</th>
+                                    <th>Cantidad</th>
+                                    <th>Unidad</th>
+                                </strong></tr>
                         </thead>
                         <tbody>
                             @foreach($totales as $total)
@@ -112,4 +121,5 @@
         </section>
     </div>
 </body>
+
 </html>

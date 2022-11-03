@@ -331,6 +331,14 @@ Copyright (c) 2015 Daniel Eden
     width: 11px;
 }
 
+@media print {
+
+    .titulo-tabla {
+        background-color:#00004d !important; 
+        color:#fff !important;
+    }
+
+}
 
 /* MS supports */
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,25 +13,35 @@
     <link href="{{ asset('assets') }}/css/now-ui-dashboard.css?v=1.3.0" rel="stylesheet" />
     <link href="{{ asset('assets') }}/demo/demo.css" rel="stylesheet" />
 </head>
+
 <body>
-   @foreach($listado as $list)
-   <div style="width: 200px; margin: 0.5%;  border: 1px solid black; float: left;display: inline-block; box-sizing: border-box; line-height: 30%">
-        <div style="margin-top: 10px; margin-left: 10px; box-sizing: border-box; float: left;display: inline-block; width: 100%;">
-          <div style="width: 50%; float: left;display: inline-block;">
-             <p style=" font-size: 100%;"><strong>N.C.: {{$list['lote']}}</strong></p>
-          </div>
-          <div style="width: 50%; float: left;display: inline-block;">
-             <p style=" font-size: 80%;">L: {{$list['orden']}}</p>
-          </div>
-          <br><br>
-       
-       <p style=" font-size: 80%;"><strong> {{$list['descripcion']}}</strong>  </p>
-        <p style=" font-size: 80%;"><strong>CANT.:</strong> {{$list['cantidad']}} UN.</p>
-        <p style=" font-size: 80%;"><strong>ELAB.:</strong> {{$list['fecha_elab']}}  </p>
-        <p style=" font-size: 80%;"><strong>VTO.:</strong> {{$list['fecha_vto']}}  </p>
+
+        @foreach($listado as $list)
+        <div style="width: 200px; margin: 0.5%;  padding-left: 10px; border: 1px solid black; float: left;display: inline-block; box-sizing: border-box; line-height: 30%">
+            <div style="margin-top: 5px; box-sizing: border-box; float: left;display: inline-block; width: 100%; padding-bottom:10px;">
+                <div style="width: 30%; float: left;display: inline-block;margin-right:0px">
+                    <img src="{{ asset('assets') }}/img/logo_caro_vector.png" style=" width: 45px;height:50px; ">
+                </div> <br><br>
+                <div style="width: 35%; float: left;display: inline-block;">
+                  <p style=" font-size: 100%;"><strong>N.C.: {{$list['lote']}}</strong></p>
+                </div>
+                <div style="width: 35%; float: left;display: inline-block;">
+                  <p style=" font-size: 100%;"><strong>L: {{$list['orden']}}</strong></p>
+                </div>
+            </div>
+            
+            <br><br>
+            <div style="padding-top:5px;">
+               <p style=" font-size: 80%;"><strong> {{$list['descripcion']}}</strong> </p>
+               <p style=" font-size: 80%;"><strong>CANT.:</strong> {{$list['cantidad']}} UN.</p>
+               <p style=" font-size: 80%;"><strong>ELAB.:</strong> {{$list['fecha_elab']}} </p>
+               <p style=" font-size: 80%;"><strong>VTO.:</strong> {{$list['fecha_vto']}} </p>
+            </div>
         </div>
-        
-      </div>
-   @endforeach
+
+    </div>
+    @endforeach
+
 </body>
+
 </html>
