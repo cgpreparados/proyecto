@@ -27,7 +27,7 @@
       &copy;
       <script>
         document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-      </script>, {{__(" Propiedad de Maria Carlota Gracia EIRL. Todos los derechos reservados")}}
+      </script>, {{__(" MCG Todos los derechos reservados")}}
       <!--a href="https://www.invisionapp.com" target="_blank">{{__(" CG EIRL")}}</a-->
 
     </div>
