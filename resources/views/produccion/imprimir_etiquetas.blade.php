@@ -23,19 +23,19 @@
                     <img src="{{ asset('assets') }}/img/logo_caro_vector.png" style=" width: 45px;height:50px; ">
                 </div> <br><br>
                 <div style="width: 35%; float: left;display: inline-block;">
-                  <p style=" font-size: 100%;"><strong>N.C.: {{$list['lote']}}</strong></p>
+                  <p style=" font-size: 120%;"><strong>N.C.: {{$list['lote']}}</strong></p>
                 </div>
                 <div style="width: 35%; float: left;display: inline-block;">
-                  <p style=" font-size: 100%;"><strong>L: {{$list['orden']}}</strong></p>
+                  <p style=" font-size: 120%;"><strong>L: {{$list['orden']}}</strong></p>
                 </div>
             </div>
             
             <br><br>
             <div style="padding-top:5px;">
-               <p style=" font-size: 80%;"><strong> {{$list['descripcion']}}</strong> </p>
-               <p style=" font-size: 80%;"><strong>CANT.:</strong> {{$list['cantidad']}} UN.</p>
-               <p style=" font-size: 80%;"><strong>ELAB.:</strong> {{$list['fecha_elab']}} </p>
-               <p style=" font-size: 80%;"><strong>VTO.:</strong> {{$list['fecha_vto']}} </p>
+               <p style=" font-size: 100%;"><strong> {{$list['descripcion']}}</strong> </p>
+               <p style=" font-size: 100%;"><strong>CANT.:</strong> {{$list['cantidad']}} UN.</p>
+               <p style=" font-size: 100%;"><strong>ELAB.:</strong> {{$list['fecha_elab']}} </p>
+               <p style=" font-size: 100%;"><strong>VTO.:</strong> {{$list['fecha_vto']}} </p>
             </div>
         </div>
 
