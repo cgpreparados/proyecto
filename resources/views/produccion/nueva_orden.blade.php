@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-md-7" style="display:inline-block;float:left;">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="margin-bottom:0px;padding-top:0px;">
                     <div class="alert alert-success" id="notificacion_orden" style="display:none">
                         <button type="button" aria-hidden="true" class="close" id='cerrar_noti_orden'>
                             <i class="now-ui-icons ui-1_simple-remove"></i>
@@ -61,12 +61,10 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="modal-footer">
-
-                        </div>
+                        
                     </form>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="margin-top:0px; padding-top:0px;">
                     <div class="table-responsive">
                         <table class="table" id='tabla_orden_temp'>
                             <thead class=" text-primary">

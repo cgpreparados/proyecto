@@ -102,16 +102,22 @@
             <div class="modal-body">
                 <table>
                     <tbody>
-                        <tr>
-                            <input type="hidden" id="orden" name="">
-                            <td>Fecha:</td>
-                            <td><input type="date" id="fecha_fin" value="" class="form-control"></td>
-                        </tr>
+                        <div id="fecha_seleccion" style="display:block;">
+                            <tr>
+                                <input type="hidden" id="orden" name="">
+                                <td>Fecha:</td>
+                                <td><input type="date" id="fecha_fin" value="" class="form-control"></td>
+                            </tr>
+                        </div>
+                        <div id="mensaje_espera" style="display:none;">
+                            <p style="color:green">Generando Lotes. Favor Aguarde...</p>
+                        </div>
+                        
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelar_orden">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="terminar_orden">Guardar</button>
             </div>
         </div>
@@ -181,6 +187,10 @@ $('#tabla_orden_temp ').on('click', '#terminar', function() {
 });
 
 $('#terminar_orden').on('click', function() {
+    document.getElementById('terminar_orden').disabled = true;
+    document.getElementById('cancelar_orden').disabled = true;
+    document.getElementById('mensaje_espera').style.display = 'block';
+    
     var fechas = $('#fecha_fin').val();
     var ids = $('#orden').val();
     var user = $('#usuario').val();
@@ -209,9 +219,9 @@ $('#terminar_orden').on('click', function() {
                 var url = '{{ route("imprimir_etiquetas", ":id") }}';
                 url = url.replace(':id', ids);
                 window.open(url, '_blank');
-                url = '{{ route("imprimir_etiquetas", ":id") }}';
-                url = url.replace(':id', ids);
-                window.open(url, '_blank');
+                // url = '{{ route("imprimir_etiquetas", ":id") }}';
+                // url = url.replace(':id', ids);
+                // window.open(url, '_blank');
                 location.reload();
             } else {
                 document.getElementById('alert_orden').style.display = 'block';
