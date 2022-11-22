@@ -63,6 +63,9 @@
                                     Usuario
                                 </th>
                                 <th>
+                                    Estado
+                                </th>
+                                <th>
                                     Herramientas
                                 </th>
                             </thead>
@@ -72,11 +75,13 @@
                                     <td>{{$lista->id_orden}}</td>
                                     <td>{{$lista->fecha_inicio}}</td>
                                     <td>{{$lista->usuario}}</td>
+                                    <td>{{$lista->estado}}</td>
                                     <td>
-                                        <a id='terminar' data-toggle="modal" data-target="#terminarOrdenModal"><i
-                                                class='now-ui-icons ui-1_check'></i> </a>
+                                        <a id='lotear' data-toggle="modal" data-target="#terminarOrdenModal"><i
+                                                class='now-ui-icons files_box'></i> </a>
                                         <a id='eliminar'><i class='now-ui-icons ui-1_simple-remove'></i> </a>
                                         <a id='imprimir'><i class='now-ui-icons files_paper'></i> </a>
+                                        <a id='terminar' data-toggle="modal" data-target="#terminarOrdenModalEstado"><i class='now-ui-icons ui-1_check'></i> </a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -94,7 +99,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="card-title" id="exampleModalLongTitle">Terminar Orden</h6>
+                <h6 class="card-title" id="exampleModalLongTitle">Lotear</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -119,6 +124,41 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelar_orden">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="terminar_orden">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!---------------------------- MODAL TERMINAR ORDEN ESTADO---------------------------------//!-->
+<div class="modal fade" id="terminarOrdenModalEstado" tabindex="-1" role="dialog" aria-labelledby="terminarOrdenModalEstado"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="card-title" id="exampleModalLongTitle">Terminar Orden</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tbody>
+                        <div id="fecha_seleccion" style="display:block;">
+                            <tr>
+                                <input type="hidden" id="orden_estado" name="">
+                                <td>Fecha:</td>
+                                <td><input type="date" id="fecha_fin_estado" value="" class="form-control"></td>
+                            </tr>
+                        </div>
+                        <div id="mensaje_espera_terminar" style="display:none;">
+                            <p style="color:green">Terminando Orden. Favor Aguarde...</p>
+                        </div>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelar_orden">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="terminar_orden_estado">Guardar</button>
             </div>
         </div>
     </div>
@@ -177,7 +217,7 @@ $('#cerrar_alert_orden').on('click', function() {
 
 //---------------------------- TERMINAR ORDEN  ---------------------------------//
 
-$('#tabla_orden_temp ').on('click', '#terminar', function() {
+$('#tabla_orden_temp ').on('click', '#lotear', function() {
 
     var id = $(this).closest('tr').find('td').eq(0).text();
     $('#orden').val(id);
@@ -299,6 +339,57 @@ $('#search_orden').keypress(function(e) {
         });
         return false;
     }
+});
+
+//---------------------------- TERMINAR ORDEN ESTADO ---------------------------------//
+
+$('#tabla_orden_temp ').on('click', '#terminar', function() {
+
+var id = $(this).closest('tr').find('td').eq(0).text();
+$('#orden_estado').val(id);
+var id = $(this).closest('tr').data('id');
+$('#terminarOrdenEstadoModal').data('orden_estado', id);
+
+});
+
+$('#terminar_orden_estado').on('click', function() {
+ document.getElementById('terminar_orden_estado').disabled = true;
+// document.getElementById('cancelar_orden').disabled = true;
+ document.getElementById('mensaje_espera_terminar').style.display = 'block';
+
+var fechas = $('#fecha_fin_estado').val();
+var ids = $('#orden_estado').val();
+var user = $('#usuario').val();
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+    type: "POST",
+    url: "{{route('terminar_orden_estado')}}",
+    data: {
+        id: ids,
+        fecha: fechas,
+        usuario: user
+    },
+    datatype: 'json',
+    success: function(r) {
+
+        $('#terminarOrdenModalEstado').modal('hide');
+        var array = r;
+
+        if (array.code == 0) {
+            document.getElementById('notificacion_orden').style.display = 'block';
+            //location.reload();
+        } else {
+            document.getElementById('alert_orden').style.display = 'block';
+            document.getElementById('texto_noti').innerHTML = array.msg;
+        }
+    }
+});
+return false;
 });
 </script>
 @endsection

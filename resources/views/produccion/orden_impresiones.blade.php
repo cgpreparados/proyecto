@@ -43,7 +43,8 @@
                     <div class="col-md-2" style='float:left; display:inline-block'>
                         <label for="">Estado:</label>
                         <select id="estado" name="" value="" class='form-control'>
-                            <option value="EN PROCESO">En proceso</option>
+                            <option value="PROCESO">En proceso</option>
+                            <option value="LOTEADO">Loteado</option>
                             <option value="TERMINADO">Terminado</option>
                             <option value="ANULADO">Anulado</option>
                             <option value="TODAS">Todas</option>

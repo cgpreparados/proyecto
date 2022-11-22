@@ -32,6 +32,7 @@ Route::get('/orden_print/{id}', 'App\Http\Controllers\ProduccionController@orden
 //******************************ORDEN EN PROCESO***************************//
 Route::get('/orden_proceso', 'App\Http\Controllers\ProduccionController@orden_proceso')->name('orden_proceso')->middleware('auth');
 Route::post('/terminar_orden', 'App\Http\Controllers\ProduccionController@terminar_orden')->name('terminar_orden')->middleware('auth');
+Route::post('/terminar_orden_estado', 'App\Http\Controllers\ProduccionController@terminar_orden_estado')->name('terminar_orden_estado')->middleware('auth');
 Route::get('/imprimir_etiquetas/{id}', 'App\Http\Controllers\ProduccionController@imprimir_etiquetas')->name('imprimir_etiquetas')->middleware('auth');
 Route::post('/buscar_orden', 'App\Http\Controllers\ProduccionController@buscar_orden')->name('buscar_orden')->middleware('auth');
 Route::post('/anular_orden', 'App\Http\Controllers\ProduccionController@anular_orden')->name('anular_orden')->middleware('auth');

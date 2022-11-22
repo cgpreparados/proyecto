@@ -325,7 +325,7 @@ class ProduccionController extends Controller
     }
     public function orden_proceso()
     {
-        $orden = OrdenProduccion::on('cg')->where('estado','PROCESO')->get();
+        $orden = OrdenProduccion::on('cg')->where('estado','PROCESO')->orWhere('estado', '=', 'LOTEADO')->get();
         return view('produccion.orden_proceso',['listado'=>$orden]);
     }
     public function terminar_orden(Request $request){
@@ -343,7 +343,7 @@ class ProduccionController extends Controller
             return response()->json($response,200);
         }
 
-        $data = array('estado'=>'TERMINADO', 'fecha_fin'=>$fecha);
+        $data = array('estado'=>'LOTEADO', 'fecha_fin'=>$fecha);
 
         try{
             OrdenProduccion::on('cg')->where('id_orden','=',$id)->update($data);
@@ -400,7 +400,7 @@ class ProduccionController extends Controller
                 }
 
                 $cant 		= 1;
-                $en_stock	= 1;
+                $en_stock	= 0;
                 $justificacion = "INGRESO AL SISTEMA - ".$user;
 
                 $dias = Materiales::on('cg')->select('dias_vencimiento')->where('cod_material',$material)->first();
@@ -757,5 +757,61 @@ class ProduccionController extends Controller
         ->get();
 
         echo($productos);
+    }
+    public function terminar_orden_estado(Request $request){
+        $request = $request->all();
+
+        $fecha = $request['fecha'];
+        $id    = $request['id'];
+        $user  = $request['usuario'];
+        
+
+        if(is_null($fecha)){
+            $texto= 'Favor indicar Fecha de Termino de Orden'; 
+            $response =array('code'=>1,'msg'=>$texto);
+            return response()->json($response,200);
+        }
+
+        $data = array('estado'=>'TERMINADO', 'fecha_fin'=>$fecha);
+
+        try{
+            OrdenProduccion::on('cg')->where('id_orden','=',$id)->update($data);
+            $response =array('code'=>0);
+        }catch(Exception $e){
+            $texto = 'Error al actualizar orden de produccion';
+            $response =array('code'=>1,'msg'=>$texto);
+            return response()->json($response,200);
+        }
+
+        $detalle = OrdenProduccionDetalle::on('cg')->where('id_orden',$id)->get();
+
+
+         foreach($detalle as $deta){
+
+            $codigo   = $deta->codigo_material;
+            $cantidad = $deta->cantidad;
+
+            $cant=$cantidad;
+            $contador = intval($cant);
+            
+            $lotes= DB::connection('cg')->table('lotes')->where('orden_produccion', $id)->get();
+
+         	foreach($lotes as $l){
+
+                $en_stock	= 1;
+
+                $data = array('en_stock'=>$en_stock);
+
+                try{
+                    Lotes::on('cg')->where('orden_produccion','=',$id)->update($data); 
+                }catch(Exception $e){
+                    $texto = 'Error al actualizar lote';
+                    $response =array('code'=>1,'msg'=>$texto);
+                    return response()->json($response,200);
+                }
+         	}
+        }
+         
+        return response()->json($response,200);
     }
 }
