@@ -77,9 +77,11 @@
                                     <td>{{$lista->usuario}}</td>
                                     <td>{{$lista->estado}}</td>
                                     <td>
-                                        <a id='lotear' data-toggle="modal" data-target="#terminarOrdenModal"><i
+                                        @if($lista->estado == "PROCESO")
+                                            <a id='lotear' data-toggle="modal" data-target="#terminarOrdenModal"><i
                                                 class='now-ui-icons files_box'></i> </a>
-                                        <a id='eliminar'><i class='now-ui-icons ui-1_simple-remove'></i> </a>
+                                            <a id='eliminar'><i class='now-ui-icons ui-1_simple-remove'></i> </a>
+                                        @endif                                        
                                         <a id='imprimir'><i class='now-ui-icons files_paper'></i> </a>
                                         <a id='terminar' data-toggle="modal" data-target="#terminarOrdenModalEstado"><i class='now-ui-icons ui-1_check'></i> </a>
                                     </td>
