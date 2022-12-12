@@ -17,7 +17,7 @@
 <body>
 
         @foreach($listado as $list)
-        <div style="width: 300px; margin: 0.5%;  padding-left: 10px; border: 1px solid black; float: left;display: inline-block; box-sizing: border-box; line-height: 30%">
+        <div style="width: 250px; margin: 0.5%;  padding-left: 10px; border: 1px solid black; float: left;display: inline-block; box-sizing: border-box; line-height: 30%">
             <div style="margin-top: 5px; box-sizing: border-box; float: left;display: inline-block; width: 100%; padding-bottom:10px;">
                 <div style="width: 30%; float: left;display: inline-block;margin-right:0px">
                     <img src="{{ asset('assets') }}/img/logo_caro_vector.png" style=" width: 45px;height:50px; ">

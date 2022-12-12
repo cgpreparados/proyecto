@@ -64,13 +64,13 @@
                         </thead>
                         <tbody>
                             @foreach($detalle as $deta)
-                            <tr class="titulo-tabla" style="border-bottom:2px solid grey;">
+                            <tr style=" border-bottom: 2px solid black;">
                                 <th>{{$deta['codigo']}}</th>
                                 <th>{{$deta['descripcion']}}</th>
                                 <th>{{$deta['cantidad']}} {{$deta['unidad']}}</th>
                             </tr>
                             @foreach($deta['listado'] as $list)
-                            <tr>
+                            <tr style="color:black">
                                 <td>{{$list['codigo']}}</td>
                                 <td>{{$list['descripcion']}}</td>
                                 <td>{{$list['cantidad']}} {{$list['unidad']}}</td>
@@ -86,14 +86,14 @@
                 <div class="table-responsive">
                     <strong>TOTAL A ENTREGAR: </strong>
                     <table class="table table-striped">
-                        <thead>
-                            <tr><strong>
+                        
+                            <tr style="color:black"><strong>
                                     <th>Codigo</th>
-                                    <th>Descripcion</th>
+                                    <th>Descripción</th>
                                     <th>Cantidad</th>
                                     <th>Unidad</th>
                                 </strong></tr>
-                        </thead>
+                        
                         <tbody>
                             @foreach($totales as $total)
                             <tr>
