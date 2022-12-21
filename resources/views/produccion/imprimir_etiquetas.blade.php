@@ -33,9 +33,9 @@
             <br><br>
             <div style="padding-top:5px;">
                <p style=" font-size: 100%;"><strong> {{$list['descripcion']}}</strong> </p>
-               <p style=" font-size: 100%;"><strong>CANT.:</strong> {{$list['cantidad']}} UN.</p>
-               <p style=" font-size: 100%;"><strong>ELAB.:</strong> {{$list['fecha_elab']}} </p>
-               <p style=" font-size: 100%;"><strong>VTO.:</strong> {{$list['fecha_vto']}} </p>
+               <p style=" font-size: 100%; color:black;"><strong>CANT.:</strong> {{$list['cantidad']}} UN.</p>
+               <p style=" font-size: 100%; color:black;"><strong>ELAB.:</strong> {{$list['fecha_elab']}} </p>
+               <p style=" font-size: 100%; color:black;"><strong>VTO.:</strong> {{$list['fecha_vto']}} </p>
             </div>
         </div>
 

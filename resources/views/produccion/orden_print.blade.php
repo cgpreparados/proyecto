@@ -58,11 +58,7 @@
             <br><br>
             <div class="row">
                 <div class="col-12 table-responsive">
-                    <table class="table">
-                        <thead>
-
-                        </thead>
-                        <tbody>
+                    <table style="width:100%" cellpadding="15" cellspacing="10">
                             @foreach($detalle as $deta)
                             <tr style=" border-bottom: 2px solid black;">
                                 <th>{{$deta['codigo']}}</th>
@@ -77,33 +73,33 @@
                             </tr>
                             @endforeach
                             @endforeach
-                        </tbody>
+                      
                     </table>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-8">
                 <br><br>
-                <div class="table-responsive">
+                <div>
                     <strong>TOTAL A ENTREGAR: </strong>
-                    <table class="table table-striped">
+                    <table style="width:100%" cellpadding="10" >
                         
-                            <tr style="color:black"><strong>
+                                <tr style=" border-bottom: 2px solid black;"><strong>
                                     <th>Codigo</th>
                                     <th>Descripción</th>
                                     <th>Cantidad</th>
                                     <th>Unidad</th>
                                 </strong></tr>
                         
-                        <tbody>
+                        
                             @foreach($totales as $total)
-                            <tr>
+                            <tr style="color:black">
                                 <td>{{$total['codigo']}}</td>
                                 <td>{{$total['descripcion']}}</td>
                                 <td>{{$total['total']}}</td>
                                 <td>{{$total['unidad']}}</td>
                             </tr>
                             @endforeach
-                        </tbody>
+                        
                     </table>
                 </div>
             </div>
@@ -111,11 +107,11 @@
             <div class="row">
                 <div class="col-12">
                     <br>
-                    <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                        <strong>PREPARADO POR:</strong>___________________________________ <strong>RECIBIDO
+                    <p class="text-muted well well-sm shadow-none" style="margin-top: 10px; color:black">
+                        <strong style="color:black">PREPARADO POR:</strong>___________________________________ <strong style="color:black">RECIBIDO
                             POR:</strong>___________________________________
                     </p>
-                    <p class="lead" style="font-size: 15px;">Orden de Producción #{{$id}}</p>
+                    <p class="lead" style="font-size: 15px; color:black">Orden de Producción #{{$id}}</p>
                 </div>
             </div>
         </section>

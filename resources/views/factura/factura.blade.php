@@ -421,7 +421,7 @@ return $num_letrammd;
                         <b>
                             <h3 style="line-height: 45%;">FACTURA</h3>
                         </b>
-                        <h4 style="line-height: 34%;">N° 001-001-{{$factura}}</h4>
+                        <h4 style="line-height: 34%;">N° 001-002-{{$factura}}</h4>
                     </div>
                 </div>
                 <div class="col-12" id='datos' style="margin-top:25px;">
