@@ -55,9 +55,9 @@
 
 <script>
 //----------------------------CERRAR NOTIFICACION  ---------------------------------//
-$('#cerrar_alert_orden').on('click', function() {
-    document.getElementById('alert_orden').style.display = 'none';
-});
+// $('#cerrar_alert_orden').on('click', function() {
+//     document.getElementById('alert_orden').style.display = 'none';
+// });
 //---------------------------- IMPRIMIR ORDEN  ---------------------------------//
 
 $('#tabla_impresion ').on('click', '#imprimir', function() {
