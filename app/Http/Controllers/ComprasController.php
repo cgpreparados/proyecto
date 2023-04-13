@@ -117,11 +117,11 @@ class ComprasController extends Controller
         
         foreach($compra as $comp){
             $ruc = Proveedores::on('cg')->where('id_proveedor',$comp->id_proveedor)->first();
+            $prov = $ruc['nombre_proveedor'];
             $ruc = $ruc['ruc_proveedor'];
             $fecha = $comp->fecha_compra;
             $user = $comp->usuario;
             $factura = $comp->factura_nro;
-            //$ruc = $comp->id_proveedor;
             $tipo = $comp->factura_tipo;
             $total = $comp->factura_total;
         }
@@ -137,7 +137,7 @@ class ComprasController extends Controller
         ->get();
  
 
-        return view('compras.imprimir_compra',['listado'=>$listado,'fecha'=>$fecha,'user'=>$user,'factura'=>$factura,'ruc'=>$ruc,'tipo'=>$tipo,'total'=>$total,'id'=>$id]);
+        return view('compras.imprimir_compra',['listado'=>$listado,'fecha'=>$fecha,'user'=>$user,'factura'=>$factura,'ruc'=>$ruc,'proveedor'=>$prov,'tipo'=>$tipo,'total'=>$total,'id'=>$id]);
 
     }
 

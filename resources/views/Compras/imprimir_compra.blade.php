@@ -20,7 +20,7 @@
             <div class="row"> 
                 <div class="col-12">
                     <h2 style="font-size: 20px;">
-                        <img src="{{ asset('assets') }}/img/logo_caro_vector.png" style=" width: 50px;height: 50px;"></i>
+                    <img src="{{ asset('assets') }}/img/logo_caro_vector.png" style=" width: 80px;height: 90px;"></i>
                         NOTA DE COMPRA.
 
                         <small class="float-right" style="font-size: 20px;">NRO.: {{$id}} </small>
@@ -30,10 +30,11 @@
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
                     <address>
-                        <strong>REALIZADO POR: </strong> {{$user}}<br>
-                        <strong>FECHA: </strong> {{$fecha}}<br>
+                        <strong>Cargado por: </strong> {{$user}}<br>
+                        <strong>Fecha Compra: </strong> {{$fecha}}<br>
+                        <strong>Proveedor: </strong> {{$proveedor}}<br>
                         <strong>RUC: </strong> {{$ruc}}<br>
-                        <strong>Factura: </strong> {{$tipo}}
+                        <strong>Factura Nro.: </strong> {{$factura}}
 
                     </address>
                 </div>
