@@ -257,6 +257,14 @@
                 </a>
             </li>
             @endif
+            @if((auth()->user()->type) == 1 )
+            <li class="@if ($activePage == 'informes') active @endif">
+                <a href="{{ route('lista_informes',['usuario' => auth()->user()->id]) }}">
+                    <i class="now-ui-icons design_bullet-list-67"></i>
+                    <p> {{ __("Informes") }} </p>
+                </a>
+            </li>
+            @endif
             <!--li class="@if ($activePage == 'icons') active @endif">
                 <a href="{{ route('page.index','icons') }}">
                     <i class="now-ui-icons education_atom"></i>

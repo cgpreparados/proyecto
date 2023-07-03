@@ -23,6 +23,7 @@ class StockController extends Controller
         $listado = DB::connection('cg')->table('materiales_stock as s')
         ->selectRaw('m.cod_material as codigo, m.desc_material as descripcion,s.cantidad as cantidad, m.unidad_material as unidad')
         ->join('materiales as m','m.cod_material','=','s.codigo_material')
+        ->where('activo',1)
         ->get();
         return view('stock.stock_materiales',['listado'=>$listado]);
     }
@@ -82,6 +83,22 @@ class StockController extends Controller
 
         return response()->json($listado,200);
 
+    }
+
+    public function imprimir_detalle_lotes_disponibles(){
+
+        $listado = DB::connection('cg')->table('lotes as l')
+        ->selectRaw('l.cod_material as codigo, m.desc_material as descripcion, l.lote_nro as lote,
+        l.nro as nro, l.fecha_lote as fechal, l.fecha_vencimiento as fechav,l.orden_produccion as op ')
+        ->join('materiales as m','m.cod_material','l.cod_material')
+        ->where('l.en_stock',1)
+        ->orderBy('desc_material','ASC')
+        ->orderBy('l.nro','ASC')
+        ->get();
+
+        $hoy = date("d-m-Y");
+
+        return view('stock.imprimir_detalle_lotes_disponibles',['listado'=>$listado,'fecha'=>$hoy]);
     }
 
     public function inventario_materiales(){

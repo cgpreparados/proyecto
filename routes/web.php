@@ -58,6 +58,7 @@ Route::get('/stock_materiales', 'App\Http\Controllers\StockController@stock_mate
 //******************************STOCK LOTES***************************//
 Route::get('/stock_lotes', 'App\Http\Controllers\StockController@stock_lotes')->name('stock_lotes')->middleware('auth');
 Route::post('/detalle_lotes_stock', 'App\Http\Controllers\StockController@detalle_lotes_stock')->name('detalle_lotes_stock')->middleware('auth');
+Route::get('/imprimir_detalle_lotes_disponibles', 'App\Http\Controllers\StockController@imprimir_detalle_lotes_disponibles')->name('imprimir_detalle_lotes_disponibles')->middleware('auth');
 //******************************INVENTARIO MATERIALES***************************//
 Route::get('/inventario_materiales', 'App\Http\Controllers\StockController@inventario_materiales')->name('inventario_materiales')->middleware('auth');
 Route::post('/guardar_inventario_materiales', 'App\Http\Controllers\StockController@guardar_inventario_materiales')->name('guardar_inventario_materiales')->middleware('auth');
@@ -131,6 +132,12 @@ Route::get('/productos_precio', 'App\Http\Controllers\PreciosController@producto
 Route::post('/guardar_precio', 'App\Http\Controllers\PreciosController@guardar_precio')->name('guardar_precio')->middleware('auth');
 Route::post('/guardar_edicion_precio', 'App\Http\Controllers\PreciosController@guardar_edicion_precio')->name('guardar_edicion_precio')->middleware('auth');
 Route::post('/eliminar_precio', 'App\Http\Controllers\PreciosController@eliminar_precio')->name('eliminar_precio')->middleware('auth');
+
+//------------------------------INFORMES----------------------------//
+Route::get('/informes/{usuario}', 'App\Http\Controllers\InformesController@lista_informes')->name('lista_informes')->middleware('auth');
+Route::get('movimiento_materiales', 'App\Http\Controllers\InformesController@movimiento_materiales')->name('movimiento_materiales')->middleware('auth');
+Route::post('/buscar_movimientos', 'App\Http\Controllers\InformesController@buscar_movimientos')->name('buscar_movimientos')->middleware('auth');
+
 
 
 Route::group(['middleware' => 'auth'], function () {

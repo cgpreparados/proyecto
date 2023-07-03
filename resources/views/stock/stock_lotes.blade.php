@@ -25,7 +25,9 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                    <h5>Resumen</h5>
+                    <div class="col-md-4" style='float:left; display:inline-block'>
+                       <a href="{{route('imprimir_detalle_lotes_disponibles')}}" target="_blank"><button id="" class="btn btn-primary btn-round">Imprimir Detalle</button></a> 
+                    </div>
                         <table class="table" id='tabla_stock_lotes'>
                             <thead>
                                 <tr>
