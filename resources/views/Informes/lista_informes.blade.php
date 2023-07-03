@@ -28,7 +28,7 @@
                         <tbody>
                             @foreach ($listado as $list)
                             <tr>
-                                <td><a href="{{route('movimiento_materiales')}}">{{$list->descripcion}}</a></td>
+                                <td><a href="{{route($list->ruta)}}">{{$list->descripcion}}</a></td>
                             </tr>
                             @endforeach
                         </tbody>

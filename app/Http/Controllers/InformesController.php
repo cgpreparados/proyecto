@@ -15,7 +15,7 @@ class InformesController extends Controller
     public function lista_informes(Int $usuario){
 
         $listado = DB::connection('cg')->table('acceso_informes as a')
-        ->selectRaw('i.descripcion as descripcion')
+        ->selectRaw('i.descripcion as descripcion, i.ruta as ruta')
         ->join('cg.informes as i','i.id_informe','a.id_informe')
         ->where('a.id_usuario',$usuario)->get();
 
@@ -24,7 +24,7 @@ class InformesController extends Controller
 
     }
 
-    public function movimiento_materiales(){
+    public function movimiento_materiales_informe(){
 
         $materiales = Materiales::on('cg')->where('tipo_material',1)->get();
 

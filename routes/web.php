@@ -135,7 +135,7 @@ Route::post('/eliminar_precio', 'App\Http\Controllers\PreciosController@eliminar
 
 //------------------------------INFORMES----------------------------//
 Route::get('/informes/{usuario}', 'App\Http\Controllers\InformesController@lista_informes')->name('lista_informes')->middleware('auth');
-Route::get('movimiento_materiales', 'App\Http\Controllers\InformesController@movimiento_materiales')->name('movimiento_materiales')->middleware('auth');
+Route::get('movimiento_materiales_informe', 'App\Http\Controllers\InformesController@movimiento_materiales_informe')->name('movimiento_materiales_informe')->middleware('auth');
 Route::post('/buscar_movimientos', 'App\Http\Controllers\InformesController@buscar_movimientos')->name('buscar_movimientos')->middleware('auth');
 
 
