@@ -65,10 +65,10 @@ return [
         'cg' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => 'cg.cgl3pc5olr5v.us-east-2.rds.amazonaws.com',
+            'host' => '127.0.0.1',
             'port' => '3306',
             'database' => 'cg',
-            'username' => 'admin',
+            'username' => 'sistema',
             'password' => 'pr3p4r4d0s.2K21',
             'charset' => 'utf8',
             'prefix' => '',
