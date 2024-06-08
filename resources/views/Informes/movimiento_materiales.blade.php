@@ -53,8 +53,17 @@
                         <button id="buscar_movimiento" class="btn btn-primary btn-round">Consultar</button>
                     </div>
                     <div class="table-responsive">
+                        <h4 style='display:none' id='titulo_compras'>Compras</h4>
                         <table class="table" id='tabla_compras'>
-                                <caption>Compras</caption>
+                        </table>
+                        <h4 style='display:none' id='titulo_ordenes'>Ordenes de Produccion</h4>
+                        <table class="table" id='tabla_ordenes'>
+                        </table>
+                        <h4 style='display:none' id='titulo_alta'>Alta de Stock</h4>
+                        <table class="table" id='tabla_alta'>
+                        </table>
+                        <h4 style='display:none' id='titulo_baja'>Baja de Stock</h4>
+                        <table class="table" id='tabla_baja'>
                         </table>
                     </div>
                     <button id="export" class="btn btn-primary btn-round" style = "display:none; float:right" onclick="exportTableToExcel('tabla_compras')"><i
@@ -142,8 +151,8 @@ $('#buscar_movimiento').on('click', function() {
                 var nuevaFila = "";
                 var data_length = array.length;
                 // alert(data_length);
-
-                nuevaFila += " <thead class=' text-primary'><tr>";
+                
+                nuevaFila += "<thead class=' text-primary'><tr>";
                 nuevaFila += "<th>Fecha Compra</th>";
                 nuevaFila += " <th>Cantidad</th>";
                 nuevaFila += " <th>Unidad Medida</th>";
@@ -200,8 +209,6 @@ $('#buscar_movimiento').on('click', function() {
                         maximumFractionDigits: 3,
                     }).format(total_cantidad);
 
-
-
                 nuevaFila += "</tbody>";
                 nuevaFila += "<tfoot>"
                 nuevaFila += "<tr>"
@@ -213,8 +220,184 @@ $('#buscar_movimiento').on('click', function() {
                 nuevaFila += "</tr>"
                 nuevaFila += "</tfoot>"
                 $("#tabla_compras").empty().append(nuevaFila);
-                document.getElementById('export').style.display = 'block';
-            
+                document.getElementById('titulo_compras').style.display = 'block';
+            //-----------------------------------------------------------------
+                var array = r.ordenes;
+                var nuevaFila = "";
+                var data_length = array.length;
+                // alert(data_length);
+                
+                nuevaFila += "<thead class=' text-primary'><tr>";
+                nuevaFila += "<th>Fecha</th>";
+                nuevaFila += " <th>Cantidad</th>";
+                nuevaFila += " <th>Observacion</th>";
+                nuevaFila += "<th>Usuario</th>";
+
+                nuevaFila += " </tr></thead>";
+
+                nuevaFila += "<tbody>";
+                var total_ordenes=0;
+                for (var i = 0; i < data_length; i++) {
+
+                    var fecha = array[i].fecha;
+                    var usuario = array[i].user;
+
+                    let current_datetime = new Date(fecha);
+
+                    let formatted_date = current_datetime.getDate() + "/" + (current_datetime.getMonth() + 1) + "/" + current_datetime.getFullYear();
+                    const precio = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 0,
+                    }).format(array[i].precio);
+
+                    const cantidad = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 3,
+                    }).format(array[i].cantidad);
+
+                    const total = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 0,
+                    }).format(array[i].cantidad * array[i].precio);
+
+                    nuevaFila += "<tr>";
+                    nuevaFila += "<td>" + formatted_date + " </td>";
+                    nuevaFila += "<td>" + cantidad + "</td>";
+                    nuevaFila += "<td>" + array[i].observacion + "</td>";
+                    nuevaFila += "<td>" + usuario + " </td>";
+                    nuevaFila += "</tr>";
+                    total_ordenes= parseFloat(total_ordenes) + parseFloat(array[i].cantidad);
+                   // console.log(total_cantidad);
+                }
+
+                    total_ordenes = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 3,
+                    }).format(total_ordenes);
+
+                nuevaFila += "</tbody>";
+                nuevaFila += "<tfoot>"
+                nuevaFila += "<tr>"
+                nuevaFila += "<td colspan='1'><b> Total</b></td>"
+                nuevaFila += "<td colspan='3'><b>"+ total_ordenes +"</b></td>"
+                nuevaFila += "</tr>"
+                nuevaFila += "</tfoot>"
+                $("#tabla_ordenes").empty().append(nuevaFila);
+                document.getElementById('titulo_ordenes').style.display = 'block';
+                //-----------------------------------------------------------------
+                var array = r.alta;
+                var nuevaFila = "";
+                var data_length = array.length;
+                // alert(data_length);
+                
+                nuevaFila += "<thead class=' text-primary'><tr>";
+                nuevaFila += "<th>Fecha</th>";
+                nuevaFila += " <th>Cantidad</th>";
+                nuevaFila += " <th>Observacion</th>";
+                nuevaFila += "<th>Usuario</th>";
+
+                nuevaFila += " </tr></thead>";
+
+                nuevaFila += "<tbody>";
+                var total_alta=0;
+                for (var i = 0; i < data_length; i++) {
+
+                    var fecha = array[i].fecha;
+                    var usuario = array[i].user;
+
+                    let current_datetime = new Date(fecha);
+
+                    let formatted_date = current_datetime.getDate() + "/" + (current_datetime.getMonth() + 1) + "/" + current_datetime.getFullYear();
+                    const precio = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 0,
+                    }).format(array[i].precio);
+
+                    const cantidad = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 3,
+                    }).format(array[i].cantidad);
+
+                    const total = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 0,
+                    }).format(array[i].cantidad * array[i].precio);
+
+                    nuevaFila += "<tr>";
+                    nuevaFila += "<td>" + formatted_date + " </td>";
+                    nuevaFila += "<td>" + cantidad + "</td>";
+                    nuevaFila += "<td>" + array[i].observacion + "</td>";
+                    nuevaFila += "<td>" + usuario + " </td>";
+                    nuevaFila += "</tr>";
+                    total_alta= parseFloat(total_alta) + parseFloat(array[i].cantidad);
+                   // console.log(total_cantidad);
+                }
+
+                    total_alta = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 3,
+                    }).format(total_alta);
+
+                nuevaFila += "</tbody>";
+                nuevaFila += "<tfoot>"
+                nuevaFila += "<tr>"
+                nuevaFila += "<td colspan='1'><b> Total</b></td>"
+                nuevaFila += "<td colspan='3'><b>"+ total_alta +"</b></td>"
+                nuevaFila += "</tr>"
+                nuevaFila += "</tfoot>"
+                $("#tabla_alta").empty().append(nuevaFila);
+                document.getElementById('titulo_alta').style.display = 'block';
+                //-----------------------------------------------------------------
+                var array = r.baja;
+                var nuevaFila = "";
+                var data_length = array.length;
+                // alert(data_length);
+                
+                nuevaFila += "<thead class=' text-primary'><tr>";
+                nuevaFila += "<th>Fecha</th>";
+                nuevaFila += " <th>Cantidad</th>";
+                nuevaFila += " <th>Observacion</th>";
+                nuevaFila += "<th>Usuario</th>";
+
+                nuevaFila += " </tr></thead>";
+
+                nuevaFila += "<tbody>";
+                var total_baja=0;
+                for (var i = 0; i < data_length; i++) {
+
+                    var fecha = array[i].fecha;
+                    var usuario = array[i].user;
+
+                    let current_datetime = new Date(fecha);
+
+                    let formatted_date = current_datetime.getDate() + "/" + (current_datetime.getMonth() + 1) + "/" + current_datetime.getFullYear();
+                    const precio = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 0,
+                    }).format(array[i].precio);
+
+                    const cantidad = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 3,
+                    }).format(array[i].cantidad);
+
+                    const total = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 0,
+                    }).format(array[i].cantidad * array[i].precio);
+
+                    nuevaFila += "<tr>";
+                    nuevaFila += "<td>" + formatted_date + " </td>";
+                    nuevaFila += "<td>" + cantidad + "</td>";
+                    nuevaFila += "<td>" + array[i].observacion + "</td>";
+                    nuevaFila += "<td>" + usuario + " </td>";
+                    nuevaFila += "</tr>";
+                    total_baja= parseFloat(total_baja) + parseFloat(array[i].cantidad);
+                   // console.log(total_cantidad);
+                }
+
+                    total_baja = new Intl.NumberFormat("es-ES", {
+                        maximumFractionDigits: 3,
+                    }).format(total_baja);
+
+                nuevaFila += "</tbody>";
+                nuevaFila += "<tfoot>"
+                nuevaFila += "<tr>"
+                nuevaFila += "<td colspan='1'><b> Total</b></td>"
+                nuevaFila += "<td colspan='3'><b>"+ total_baja +"</b></td>"
+                nuevaFila += "</tr>"
+                nuevaFila += "</tfoot>"
+                $("#tabla_baja").empty().append(nuevaFila);
+                document.getElementById('titulo_baja').style.display = 'block';
         }
     });
     return false;

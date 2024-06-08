@@ -50,9 +50,35 @@ class InformesController extends Controller
         ->orderBy('c.fecha_compra','ASC')
         ->get();
 
+        $ordenes = DB::connection('cg')->table('materiales_operaciones')
+        ->selectRaw('id_operacion,fecha,cantidad,observacion,user')
+        ->where('fecha','>=',$fecha_inicio)
+        ->where('fecha','<=',$fecha_fin)
+        ->where('codigo_material',$codigo)
+        ->where('operacion','Ruta')
+        ->orderBy('fecha','ASC')
+        ->get();
+
+        $alta = DB::connection('cg')->table('materiales_operaciones')
+        ->selectRaw('id_operacion,fecha,cantidad,observacion,user')
+        ->where('fecha','>=',$fecha_inicio)
+        ->where('fecha','<=',$fecha_fin)
+        ->where('codigo_material',$codigo)
+        ->where('operacion','Alta')
+        ->orderBy('fecha','ASC')
+        ->get();
+
+        $baja = DB::connection('cg')->table('materiales_operaciones')
+        ->selectRaw('id_operacion,fecha,cantidad,observacion,user')
+        ->where('fecha','>=',$fecha_inicio)
+        ->where('fecha','<=',$fecha_fin)
+        ->where('codigo_material',$codigo)
+        ->where('operacion','Baja')
+        ->orderBy('fecha','ASC')
+        ->get();
     
 
-        $response = array('compras'=>$compras);
+        $response = array('compras'=>$compras,'ordenes'=>$ordenes,'alta'=>$alta,'baja'=>$baja);
         return response()->json($response,200);
 
     }
