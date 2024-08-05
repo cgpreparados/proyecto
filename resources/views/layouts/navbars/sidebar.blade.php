@@ -184,6 +184,12 @@
                                 <p> {{ __("Nuevo Envio") }} </p>
                             </a>
                         </li>
+                        <li class="@if ($activePage == 'envio_materiales') active @endif">
+                            <a href="{{ route('envio_materiales') }}">
+                                <i class="now-ui-icons transportation_bus-front-12"></i>
+                                <p> {{ __("Envio Materiales") }} </p>
+                            </a>
+                        </li>
                         <li class="@if ($activePage == 'envios_impresiones') active @endif">
                             <a href="{{ route('envios_impresiones') }}">
                                 <i class="now-ui-icons education_paper"></i>

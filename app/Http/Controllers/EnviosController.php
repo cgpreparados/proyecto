@@ -17,7 +17,8 @@ use App\Models\Factura;
 use App\Models\FacturaDetalle;
 use App\Models\DatosFactura;
 use App\Models\ProductosPrecio;
-
+use App\Models\MaterialesStock;
+use App\Models\MaterialesOperaciones;
 
 class EnviosController extends Controller
 {
@@ -161,10 +162,11 @@ class EnviosController extends Controller
             }
             
         }
+        $tipo_factura=1;
         $nro_factura = $nro_factura+1;
         $update_datos = array('ultima_factura'=>$nro_factura);
         DatosFactura::on("cg")->where('id_timbrado',$timbrado)->update($update_datos);
-        $datos_factura = array('fecha'=>$fecha,'cliente'=>$cliente,'nota_envio'=>$id,'nro_factura'=>$nro_factura,'timbrado'=>$timbrado,'total_factura'=>$totalFactura);
+        $datos_factura = array('fecha'=>$fecha,'cliente'=>$cliente,'nota_envio'=>$id,'nro_factura'=>$nro_factura,'timbrado'=>$timbrado,'total_factura'=>$totalFactura,'tipo_factura'=>$tipo_factura);
         Factura::on('cg')->insert($datos_factura);
         $response =array('code'=>0,'id'=>$id,'id_factura'=>$id_factura);
         return response()->json($response,200);
@@ -238,5 +240,145 @@ class EnviosController extends Controller
         }
         
         return response()->json($listado,200);
+    }
+
+    public function envio_materiales(){
+
+        $materiales = Materiales::on('cg')->where('activo',1)->where('tipo_material',1)->get();
+        $clientes = Clientes::on('cg')->get();
+
+        return view('envios.envio_materiales',['materiales'=>$materiales,'cliente'=>$clientes]);
+    }
+
+    public function guardar_envio_materiales(Request $request){ 
+
+        $request = $request->all();
+
+        $user = $request['user'];
+        $cliente = $request['cliente'];
+        $listado = $request['valores'];
+        $fecha = $request['fecha'];
+
+        if(is_null($fecha) || is_null($cliente)){
+
+            $texto= 'Favor completar todos los campos'; 
+            $response =array('code'=>1,'msg'=>$texto);
+            return response()->json($response,200);
+        }
+
+        $cont = 0;
+        foreach($listado as $list){
+            $cont = $cont+1;
+        }
+        
+        if($cont<2){
+            $texto= 'Favor Agregar Detalles'; 
+            $response =array('code'=>1,'msg'=>$texto);
+            return response()->json($response,200);
+        }
+
+        foreach($listado as $list){
+            $codigo = $list['codigo'];
+            $cantidad = $list['cantidad'];
+            $precio= $list['precio'];
+            if(!(is_null($codigo))){
+               // $stock = DB::select('SELECT COUNT(*) as stock FROM cg.lotes AS l WHERE l.en_stock=1 AND l.cod_material="'. $codigo.'"');
+
+                $stock = DB::connection('cg')->table('materiales_stock as l')
+                ->selectRaw('l.cantidad as stock')
+                ->where('l.codigo_material',$codigo)
+                ->get();
+
+                foreach($stock as $st){
+                    $en_stock = $st->stock;
+                }
+
+                $nombre = Materiales::on('cg')->select('desc_material')->where('cod_material',$codigo)->first();
+                $nombre = $nombre['desc_material'];
+
+                if($en_stock < $cantidad){
+                    $texto = 'No hay suficiente stock de '.$nombre." Cantidad Disponible: ".$en_stock;
+                    $response =array('code'=>1,'msg'=>$texto);
+                    return response()->json($response,200);
+                }
+            }
+        }
+
+        $factura = DB::connection('cg')->table('datos_factura')
+        ->selectRaw('ultima_factura as factura, id_timbrado as timbrado')
+        ->orderBy('id_timbrado','desc')
+        ->limit(1)
+        ->get();
+
+        foreach($factura as $fac){
+            $nro_factura = $fac->factura;
+            $timbrado = $fac->timbrado;
+        }
+        
+        $id_factura = Factura::on('cg')->select('id_factura')->orderBy('id_factura','desc')->first();
+        if(is_null($id_factura)){
+            $id_factura=1;
+        }else{
+            $id_factura = $id_factura['id_factura'];
+             $id_factura=$id_factura+1;
+        }
+        
+        $totalFactura = 0;
+        foreach($listado as $list){
+            $codigo = $list['codigo'];
+            $cantidad = $list['cantidad'];
+            $precio = $list['precio'];
+
+            if(!(is_null($codigo))){
+                
+                $fac=$nro_factura + 1;
+                $obs= "VENTA - FACTURA NRO. ".$fac;
+                    $op='Venta';
+
+                    $datos_operacion = array('codigo_material'=>$codigo, 'cantidad'=>$cantidad,'operacion'=>$op, 'user'=> $user,'observacion'=>$obs );
+
+                    $stock = MaterialesStock::on('cg')->where('codigo_material','=',$codigo)->get();
+
+                    foreach($stock as $st){
+                        $cant_stock = $st->cantidad;
+                    }
+
+                    $uso = $cant_stock-$cantidad;
+                    $data = array('cantidad'=>$uso);
+
+                    try{
+                        $stock = MaterialesStock::on('cg')->where('codigo_material','=',$codigo)->update($data);
+                    }catch(Exception $e){
+                        $texto = 'Error al actualizar stock';
+                        $response =array('code'=>1,'msg'=>$texto);
+                        return response()->json($response,200);
+                    }
+                    
+                    try{
+                        $datos_operacion = MaterialesOperaciones::on('cg')->insert($datos_operacion);
+                    }catch(Exception $e){
+                        $texto = 'Error al cargar movimiento de materiales';
+                        $response =array('code'=>1,'msg'=>$texto);
+                        return response()->json($response,200);
+                    }
+
+                    $totalFactura = $totalFactura + ($cantidad * $precio);
+                    $detalle_factura=array('id_factura'=>$id_factura,'codigo_material'=>$codigo,'cantidad'=>$cantidad,'precio'=>$precio);
+                    FacturaDetalle::on('cg')->insert($detalle_factura);
+                    
+                }
+                
+        }
+            
+        $id=-999;
+        $tipo_factura=2;
+        $nro_factura = $nro_factura+1;
+        $update_datos = array('ultima_factura'=>$nro_factura);
+        DatosFactura::on("cg")->where('id_timbrado',$timbrado)->update($update_datos);
+        $datos_factura = array('fecha'=>$fecha,'cliente'=>$cliente,'nota_envio'=>$id,'nro_factura'=>$nro_factura,'timbrado'=>$timbrado,'total_factura'=>$totalFactura,'tipo_factura'=>$tipo_factura);
+        Factura::on('cg')->insert($datos_factura);
+        $response =array('code'=>0,'id'=>$id,'id_factura'=>$id_factura);
+        return response()->json($response,200);
+
     }
 }

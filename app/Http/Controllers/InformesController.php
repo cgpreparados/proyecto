@@ -76,9 +76,18 @@ class InformesController extends Controller
         ->where('operacion','Baja')
         ->orderBy('fecha','ASC')
         ->get();
+
+        $venta = DB::connection('cg')->table('materiales_operaciones')
+        ->selectRaw('id_operacion,fecha,cantidad,observacion,user')
+        ->where('fecha','>=',$fecha_inicio)
+        ->where('fecha','<=',$fecha_fin)
+        ->where('codigo_material',$codigo)
+        ->where('operacion','Venta')
+        ->orderBy('fecha','ASC')
+        ->get();
     
 
-        $response = array('compras'=>$compras,'ordenes'=>$ordenes,'alta'=>$alta,'baja'=>$baja);
+        $response = array('compras'=>$compras,'ordenes'=>$ordenes,'alta'=>$alta,'baja'=>$baja,'venta'=>$venta );
         return response()->json($response,200);
 
     }

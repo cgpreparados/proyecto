@@ -461,7 +461,11 @@ return $num_letrammd;
                             @foreach($total as $tot)
                             @php $cant = $cant+1; @endphp
                             <tr>
+                                @if($tot->unidad == 'UN.')
                                 <td style = "text-align:center;">{{number_format($tot->cantidad, 0,',','.')}}</td>
+                                @else
+                                <td style = "text-align:center;">{{number_format($tot->cantidad, 2,',','.')}}</td>
+                                @endif
                                 <td>{{$tot->descripcion}}</td>
                                 <td style = "text-align:center;">{{number_format($tot->precio, 0,',','.')}}</td>
                                 <td style = "text-align:center;"></td>

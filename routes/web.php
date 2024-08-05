@@ -99,6 +99,10 @@ Route::get('/imprimir_envio/{id}', 'App\Http\Controllers\EnviosController@imprim
 Route::get('/envios_impresiones', 'App\Http\Controllers\EnviosController@envios_impresiones')->name('envios_impresiones')->middleware('auth');
 Route::post('/buscar_envios', 'App\Http\Controllers\EnviosController@buscar_envios')->name('buscar_envios')->middleware('auth');
 
+//******************************NUEVO ENVIO MATERIALES***************************//
+Route::get('/envio_materiales', 'App\Http\Controllers\EnviosController@envio_materiales')->name('envio_materiales')->middleware('auth');
+Route::post('/guardar_envio_materiales', 'App\Http\Controllers\EnviosController@guardar_envio_materiales')->name('guardar_envio_materiales')->middleware('auth');
+
 //------------------------------FACTURAS----------------------------//
 Route::get('proyecto/public/factura/{id}/{tipo}', 'App\Http\Controllers\FacturaController@factura')->name('factura')->middleware('auth');
 Route::get('/lista_facturas', 'App\Http\Controllers\FacturaController@lista_facturas')->name('lista_facturas')->middleware('auth');
