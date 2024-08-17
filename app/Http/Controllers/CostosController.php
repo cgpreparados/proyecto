@@ -14,7 +14,7 @@ use App\Models\Envios;
 use App\Models\EnviosDetalle;
 use App\Models\CostosIndirectos;
 use App\Models\CostosTotales;
-
+//use Barryvdh\Debugbar\Facades\Debugbar;
 
 class CostosController extends Controller
 {
@@ -133,13 +133,13 @@ class CostosController extends Controller
         ->groupBy('opd.codigo_material')->get();
 
         $sumatoria = array();
-
-
+        //Debugbar::info($producciones);
+       // print_r($sumatoria);exit();
         //----POR CADA PRODUCTO RECORRER SU RUTA PARA CALCULAR COSTOS DE MP SEGUN PRECIO DE COMPRA ----//
         foreach($producciones as $produccion)
         {
             
-            $cantidad= $produccion->sumatoria;
+            $cantidad_prod= $produccion->sumatoria;
             $codigo =  $produccion->codigo;            
             
             $mat_saliente= DB::connection('cg')->table('materiales_relacion')->where('materiales_relacion.codigo_material_entrante', $codigo)->get();
@@ -186,7 +186,8 @@ class CostosController extends Controller
             $sum = $sum+$costo;
         }
 
-            $costo_mp_unitario = $sum / $cantidad;
+            //$costo_mp_unitario = $sum / $cantidad_prod;
+            $costo_mp_unitario = $sum;
 
             //------------------------INGRESAR COSTOS DE MATERIA PRIMA ------------------------------//
 
@@ -243,8 +244,7 @@ class CostosController extends Controller
             ->join('orden_produccion as op','op.id_orden','opd.id_orden')
             ->whereMonth('fecha_carga',$mes)
             ->whereYear('fecha_carga',$año)
-            ->where('estado','TERMINADO')
-            ->groupBy('opd.codigo_material')->get();
+            ->where('estado','TERMINADO')->get();
 
             foreach($producido as $prod){
                 $cant_prod = $prod->sumatoria;
