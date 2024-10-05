@@ -310,7 +310,7 @@ class StockController extends Controller
 
     public function movimiento_materiales(){
 
-        $listado = Materiales::on('cg')->where('tipo_material',1)->get();
+        $listado = Materiales::on('cg')->whereNotIn('tipo_material', [2, 3])->get();
 
         return view('stock.movimiento_materiales',['elegir'=>$listado]);
 

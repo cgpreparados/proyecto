@@ -50,6 +50,7 @@
                             <option value="ALTA">ALTA</option>
                             <option value="BAJA">BAJA</option>
                             <option value="Perdida">Perdida</option>
+                            <option value="USO INTERNO">USO INTERNO</option>
 
                         </select>
                     </div>
