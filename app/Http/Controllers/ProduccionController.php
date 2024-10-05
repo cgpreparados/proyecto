@@ -482,7 +482,7 @@ class ProduccionController extends Controller
 
                 $obs= 'Alta de material por anulacion de OP nro.'.$id;
 
-                $datos_operacion = array('codigo_material'=>$codigoD, 'cantidad'=>$cantidadD,'operacion'=>$id, 'user'=> $usuario,'observacion'=>$obs );
+                $datos_operacion = array('codigo_material'=>$codigoD, 'cantidad'=>$cantidadD,'operacion'=>"Alta", 'user'=> $usuario,'observacion'=>$obs );
 
                 $stock = MaterialesStock::on('cg')->where('codigo_material','=',$codigo)->get();
 
