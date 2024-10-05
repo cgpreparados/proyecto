@@ -591,7 +591,7 @@ class ProduccionController extends Controller
     public function rutas(){
 
         $materiales = DB::connection('cg')->table('materiales')->where('materiales.activo',1)->where('materiales.tipo_material',2)->get();
-        $mat_elegir = Materiales::on('cg')->where('tipo_material',1)->get();
+        $mat_elegir = Materiales::on('cg')->whereNotIn('tipo_material', [2, 3])->get();
         $mat_resultado = Materiales::on('cg')->where('tipo_material',3)->get();
 
         return view('produccion.rutas',['materiales'=>$materiales, 'elegir'=>$mat_elegir,'resultado'=>$mat_resultado]);
