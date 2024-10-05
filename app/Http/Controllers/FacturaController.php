@@ -50,16 +50,16 @@ class FacturaController extends Controller
 
         if($factura < 10){
             $factura = '000000'.$factura;
-        }elseif($factura >= 10){
+        }elseif($factura >= 10 & $factura < 99){
             $factura = '00000'.$factura;
         }
-        elseif($factura > 99){
+        elseif($factura > 99 & $factura < 999){
             $factura = '0000'.$factura; 
-        }elseif($factura > 999){
+        }elseif($factura > 999 & $factura < 9999){
             $factura = '000'.$factura;
-        }elseif($factura > 9999){
+        }elseif($factura > 9999 & $factura < 99999){
             $factura = '00'.$factura;
-        }elseif($factura > 99999){
+        }elseif($factura > 99999 & $factura < 999999){
             $factura = '0'.$factura;
         }elseif($factura > 999999){
             $factura = $factura;
@@ -89,7 +89,7 @@ class FacturaController extends Controller
         $clientes = Clientes::on('cg')->get();
         return view('factura.lista_facturas',['cliente'=>$clientes]);
     }
-
+ 
     public function buscar_facturas(Request $request){
         $request = $request->all();
         $fecha_inicio = $request['fecha_inicio'];
