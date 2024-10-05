@@ -103,6 +103,12 @@
                                     <td>Producto Base</td>
                                     @elseif($material->tipo_material == 3)
                                     <td>Producto Terminado</td>
+                                    @elseif($material->tipo_material == 4)
+                                    <td>Empaque</td>
+                                    @elseif($material->tipo_material == 5)
+                                    <td>Producto de limpieza</td>
+                                    @elseif($material->tipo_material == 6)
+                                    <td>Utiles de Oficina</td>
                                     @endif
                                     
                                     <td>
@@ -164,6 +170,9 @@
                                 <option value="1">Materia Prima</option>
                                 <option value="2">Producto Base</option>
                                 <option value="3">Producto Terminado</option>
+                                <option value="4">Empaque</option>
+                                <option value="5">Producto de Limpieza</option>
+                                <option value="6">Utiles de Oficina</option>
                             </select></td>
                     </tr>
                 </table>
@@ -218,6 +227,9 @@
                                 <option value="1">Materia Prima</option>
                                 <option value="2">Producto Base</option>
                                 <option value="3">Producto Terminado</option>
+                                <option value="4">Empaque</option>
+                                <option value="5">Producto de Limpieza</option>
+                                <option value="6">Utiles de Oficina</option>
                             </select></td>
                     </tr>
                 </table>
