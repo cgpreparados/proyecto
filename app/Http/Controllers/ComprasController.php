@@ -17,7 +17,7 @@ class ComprasController extends Controller
 {
 
     public function nuevas_compras(){
-        $materiales = Materiales::on('cg')->where('activo',1)->where('tipo_material',1)->get();
+        $materiales = Materiales::on('cg')->where('activo',1)->whereNotIn('tipo_material', [2, 3])->get();
         $proveedor = Proveedores::on('cg')->get();
 
         return view('compras.nuevas_compras',['materiales'=>$materiales,'proveedor'=>$proveedor]);
