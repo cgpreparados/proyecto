@@ -179,7 +179,7 @@ $('#buscar_orden').on('click', function() {
                     nuevaFila += "<td>" + usuario + " </td>";
                     
                     var estado="";
-                    if(array[i].estado == 1){
+                    if(array[i].estado == "1"){
                         estado="ANULADO";
                         stotal=0;
                     }else{
