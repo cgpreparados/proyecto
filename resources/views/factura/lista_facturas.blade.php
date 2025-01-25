@@ -154,6 +154,7 @@ $('#buscar_orden').on('click', function() {
                 nuevaFila += " <th>Fecha</th>";
                 nuevaFila += "<th>Cliente</th>";
                 nuevaFila += "<th>Total</th>";
+                nuevaFila += "<th>Estado</th>";
                 nuevaFila += "<th>Herramientas</th>";
 
                 nuevaFila += " </tr></thead>";
@@ -176,7 +177,16 @@ $('#buscar_orden').on('click', function() {
                     nuevaFila += "<td>" + array[i].factura + "</td>";
                     nuevaFila += "<td>" + formatted_date + " </td>";
                     nuevaFila += "<td>" + usuario + " </td>";
+                    
+                    var estado="";
+                    if(array[i].estado == 1){
+                        estado="ANULADO";
+                        stotal=0;
+                    }else{
+                        estado="ACTIVA";
+                    }
                     nuevaFila += "<td>" + stotal + " </td>";
+                    nuevaFila += "<td>" + estado + " </td>";
                     nuevaFila +=
                         ' <td><a id="imprimir"><i class="now-ui-icons files_paper"></i> </a></td>';
 
