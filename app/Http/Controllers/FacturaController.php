@@ -104,7 +104,7 @@ class FacturaController extends Controller
             // where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'"');
 
             $listado = DB::connection('cg')->table('factura as f')
-            ->selectRaw('f.fecha as fecha , c.nombre_cliente as cliente, f.nro_factura as factura, f.estado_factura as estado, 
+            ->selectRaw('f.fecha as fecha , c.nombre_cliente as cliente, f.nro_factura as factura, f.estado_factura as estado,
             total_factura as total, f.id_factura as idf')
             ->join('clientes as c','c.id_cliente','f.cliente')
             ->where('f.fecha','>=',$fecha_inicio)
@@ -134,7 +134,7 @@ class FacturaController extends Controller
             // where f.fecha BETWEEN "'.$fecha_inicio.'" and "'.$fecha_fin.'" and f.cliente='.$cliente);
 
             $listado = DB::connection('cg')->table('factura as f')
-            ->selectRaw('f.fecha as fecha , c.nombre_cliente as cliente, f.nro_factura as factura, 
+            ->selectRaw('f.fecha as fecha , c.nombre_cliente as cliente, f.nro_factura as factura, f.estado_factura as estado,
             total_factura as total, f.id_factura as idf')
             ->join('clientes as c','c.id_cliente','f.cliente')
             ->where('f.fecha','>=',$fecha_inicio)
@@ -151,6 +151,7 @@ class FacturaController extends Controller
             ->where('f.fecha','>=',$fecha_inicio)
             ->where('f.fecha','<=',$fecha_fin)
             ->where('f.cliente',$cliente)
+            ->where('f.estado_factura',0)
             ->get();
 
             foreach($total as $st){
