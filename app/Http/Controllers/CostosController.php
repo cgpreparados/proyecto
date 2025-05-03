@@ -253,16 +253,16 @@ class CostosController extends Controller
             $total_ind = $costo_ind/$cant_prod;
 
 
-            //Obtener cantidad producida por item
+            /*Obtener cantidad producida por item
 
             $producido_item = DB::connection('cg')->table('orden_produccion_detalle as opd')
             ->selectRaw('SUM(opd.cantidad) as sumatoria')
             ->join('orden_produccion as op','op.id_orden','opd.id_orden')
             ->whereMonth('fecha_carga',$mes)
             ->whereYear('fecha_carga',$año)
-            ->where('opd.codigo_material',$codigo)
+            ->where('codigo_material',$codigo)
             ->where('estado','TERMINADO')->first();
-            $producido_item= $producido_item['sumatoria'];
+            $producido_item= $producido_item['sumatoria'];*/
 
 
             //------------------------INGRESAR OTROS COSTOS ------------------------------//
@@ -299,7 +299,7 @@ class CostosController extends Controller
                     'costo_mp'=>number_format($costo_mp_unitario,2,',','.'),
                     'costo_indirecto'=>number_format($total_ind,2,',','.'),
                     'costo_total'=> number_format($total,2,',','.'),
-                    'cant_produccion'=>number_format($producido_item,0,',','.'),
+                    'cant_produccion'=>number_format($cantidad_prod,0,',','.'),
                 )
             );
         }
