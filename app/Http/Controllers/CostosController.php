@@ -286,7 +286,8 @@ class CostosController extends Controller
                     'codigo'=> $codigo,
                     'costo_mp'=>number_format($costo_mp_unitario,2,',','.'),
                     'costo_indirecto'=>number_format($total_ind,2,',','.'),
-                    'costo_total'=> number_format($total,2,',','.')
+                    'costo_total'=> number_format($total,2,',','.'),
+                    'cant_produccion'=>number_format($cant_prod,0,',','.'),
                 )
             );
         }

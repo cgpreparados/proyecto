@@ -87,7 +87,7 @@ function exportTableToExcel(tableID, filename = '') {
 $('#cerrar_alert_orden').on('click', function() {
     document.getElementById('alert_orden').style.display = 'none';
 });
-
+ 
 
 //---------------------------- BUSCAR COSTOS  ---------------------------------//
 
@@ -120,6 +120,7 @@ $('#buscar_costos').on('click', function() {
 
                 nuevaFila += " <th>Codigo</th>";
                 nuevaFila += "<th>Descripción</th>";
+                nuevaFila += "<th>Cant. Producida</th>";
                 nuevaFila += " <th>Materia Prima</th>";
                 nuevaFila += " <th>Costos Indirectos</th>";
                 nuevaFila += " <th>Costo Total</th>";
@@ -135,13 +136,16 @@ $('#buscar_costos').on('click', function() {
                     var costo_mp = array[i].costo_mp;
                     var costo_indirecto = array[i].costo_indirecto;
                     var costo_total = array[i].costo_total;
+                    var cant_producida = array[i].cant_produccion;
                     costo_mp = String(costo_mp).replace(/(.)(?=(\d{3})+$)/g, '$1.');
                     costo_indirecto = String(costo_indirecto).replace(/(.)(?=(\d{3})+$)/g, '$1.');
                     costo_total = String(costo_total).replace(/(.)(?=(\d{3})+$)/g, '$1.');
+                    cant_producida = String(cant_producida).replace(/(.)(?=(\d{3})+$)/g, '$1.');
 
                     nuevaFila += "<tr>";
                     nuevaFila += "<td>" + codigo + " </td>";
                     nuevaFila += "<td>" + descripcion + "</td>";
+                    nuevaFila += "<td>" + cant_producida + "</td>";
                     nuevaFila += "<td>" + costo_mp + " </td>";
                     nuevaFila += "<td>" + costo_indirecto + " </td>";
                     nuevaFila += "<td><b>" + costo_total + "</b> </td>";
