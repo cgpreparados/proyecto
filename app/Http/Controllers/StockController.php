@@ -218,6 +218,7 @@ class StockController extends Controller
                 $diferencia = DB::connection('cg')->table('lotes as l')
                 ->selectRaw('COUNT(l.cantidad) as cantidad')
                 ->where('l.cod_material',$codigo)
+                ->where('l.en_stock',1)
                 ->get(); 
                 
                 foreach($diferencia as $dif){
