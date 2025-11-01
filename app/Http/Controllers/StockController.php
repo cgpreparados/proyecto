@@ -255,7 +255,7 @@ class StockController extends Controller
             $user = $list->user;
         }
 
-        return view('stock.imprimir_inventario_lotes',['listado'=>$listado,'fecha'=>$fecha,'user'=>$user]);
+        return view('stock.imprimir_inventario_lotes',['listado'=>$diferencia,'fecha'=>$fecha,'user'=>$user]);
     }
 
     public function inventario_impresiones(Request $request){
