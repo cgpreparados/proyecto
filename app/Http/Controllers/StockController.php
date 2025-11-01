@@ -251,7 +251,7 @@ class StockController extends Controller
         ->whereDate('s.fecha_carga',$fecha)
         ->get();
 
-        foreach ($listado as $list){
+        foreach ($diferencia as $list){
             $user = $list->user;
         }
 
