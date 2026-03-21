@@ -174,11 +174,11 @@ class CostosController extends Controller
             $precioRegistro = DB::connection('cg')->table('compras_detalle as cd')
                 ->join('compras as c', 'c.id_compras', '=', 'cd.id_compra')
                 ->select('cd.precio_unitario')
-                ->where('cd.codigo_material', $rut->codigo_material)
+                ->where('cd.codigo_material', $rut->codigo)
                 ->orderByRaw("CASE 
                     WHEN MONTH(c.fecha_compra) = ? AND YEAR(c.fecha_compra) = ? THEN 1 
                     ELSE 2 
-                END", [$mes, $año])
+                END", [$mes, $anho])
                 ->orderBy('c.fecha_compra', 'desc') // Trae el más nuevo si no coincide la fecha
                 ->first();
 
