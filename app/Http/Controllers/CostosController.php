@@ -169,21 +169,22 @@ class CostosController extends Controller
             ->where('f.codigo_material_saliente','=',$material)->get();
 
         $sum = 0;
-        foreach($ruta as $rut){
-            $codigo = $rut->codigo;
-            $cantidad = $rut->cantidad;
+        foreach ($ruta as $rut) {
+            // Buscamos el precio más relevante
+            $precioRegistro = DB::connection('cg')->table('compras_detalle as cd')
+                ->join('compras as c', 'c.id_compras', '=', 'cd.id_compra')
+                ->select('cd.precio_unitario')
+                ->where('cd.codigo_material', $rut->codigo_material)
+                ->orderByRaw("CASE 
+                    WHEN MONTH(c.fecha_compra) = ? AND YEAR(c.fecha_compra) = ? THEN 1 
+                    ELSE 2 
+                END", [$mes, $año])
+                ->orderBy('c.fecha_compra', 'desc') // Trae el más nuevo si no coincide la fecha
+                ->first();
 
-            $precios=DB::connection('cg')->table('compras_detalle as cd')
-            ->selectRaw('cd.precio_unitario as precio')
-            ->join('compras as c','c.id_compras','=','cd.id_compra')
-            ->where('cd.codigo_material','=',$codigo)->get();
-
-            foreach($precios as $prec){
-                $total = $prec->precio;
-            }
-
-            $costo = $total * $cantidad;
-            $sum = $sum+$costo;
+            $precio = $precioRegistro ? $precioRegistro->precio_unitario : 0;
+            
+            $sum += ($precio * $rut->cantidad);
         }
 
             //$costo_mp_unitario = $sum / $cantidad_prod;
