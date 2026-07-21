@@ -103,7 +103,7 @@ class StockController extends Controller
 
     public function inventario_materiales(){
 
-        $listado = Materiales::on('cg')->where('tipo_material',"!=",1)->get();
+         $listado = Materiales::on('cg')->whereNotIn('tipo_material', [2, 3])->get();
 
         return view('stock.inventario_materiales',['listado'=>$listado]);
     }
@@ -178,7 +178,7 @@ class StockController extends Controller
     }
     public function inventario_lotes(){
 
-        $listado = Materiales::on('cg')->whereNotIn('tipo_material', [2, 3])->get();
+        $listado = Materiales::on('cg')->where('tipo_material',3)->get()
 
         return view('stock.inventario_lotes',['listado'=>$listado]);
     }
