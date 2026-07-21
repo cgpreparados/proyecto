@@ -26,7 +26,7 @@ class InformesController extends Controller
 
     public function movimiento_materiales_informe(){
 
-        $materiales = Materiales::on('cg')->where('tipo_material','!=',3)->get();
+        $materiales = Materiales::on('cg')->whereNotIn('tipo_material', [2, 3])->get();
 
         return view('Informes.movimiento_materiales',['materiales'=>$materiales]);
 
