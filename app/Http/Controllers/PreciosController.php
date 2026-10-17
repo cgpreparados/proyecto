@@ -11,7 +11,7 @@ class PreciosController extends Controller
 {
     public function productos_precio(){
 
-        $productos = Materiales::on('cg')->where('tipo_material',3)
+        $productos = Materiales::on('cg')->where('tipo_material',3)->where('activo',1)
                     ->join('productos_precio as pp','pp.codigo_material','=','cod_material')
                     ->get();
         $materiales = Materiales::on('cg')->where('tipo_material',3)->get();
